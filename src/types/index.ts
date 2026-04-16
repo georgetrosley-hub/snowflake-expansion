@@ -29,19 +29,6 @@ export interface Persona {
   loomScript: string;
 }
 
-/** Industry / sector icon used in the territory console */
-export type TerritoryIconKey = "pharma" | "financial" | "healthcare" | "manufacturing";
-
-export type PlaybookKey = TerritoryIconKey;
-
-/** Shared library: personas + exec trigger ideas by industry (no generic use-case list). */
-export interface IndustryPlaybook {
-  color: string;
-  iconKey: TerritoryIconKey;
-  personas: Persona[];
-  execTriggers: string[];
-}
-
 /**
  * Account-scoped wedge: business problem, initial workload, and the persona demo that proves it.
  */
@@ -99,8 +86,7 @@ export interface AccountConfig {
   name: string;
   tier: AccountTier;
   color: string;
-  iconKey: TerritoryIconKey;
-  /** Industry label shown with the account (e.g. “Pharma / Life Sciences”). */
+  /** Industry label shown with the account (account-scoped context, not a navigation axis). */
   industry: string;
   /** One-line context under industry (executive briefing). */
   briefDescriptor: string;

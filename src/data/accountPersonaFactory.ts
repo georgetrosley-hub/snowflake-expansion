@@ -1,5 +1,4 @@
-import type { AccountConfig, Persona, PlaybookKey } from "@/types";
-import { INDUSTRY_PLAYBOOKS } from "@/data/territoryPlaybooks";
+import type { AccountConfig, Persona } from "@/types";
 
 /** Build a stable persona id and substitute [Account] in loom scripts. */
 export function persona(
@@ -15,14 +14,10 @@ export function persona(
   };
 }
 
-/** Assemble account config from playbook styling + account-defined personas and wedges. */
+/** Validate account-defined personas and wedges; color and industry live on each account. */
 export function buildAccount(
-  playbook: PlaybookKey,
-  spec: Omit<AccountConfig, "color" | "iconKey"> & {
-    execTriggers?: string[];
-  }
+  spec: Omit<AccountConfig, "execTriggers"> & { execTriggers?: string[] }
 ): AccountConfig {
-  const lib = INDUSTRY_PLAYBOOKS[playbook];
   const ids = new Set(spec.personas.map((p) => p.id));
   for (const uc of spec.useCases) {
     if (!ids.has(uc.demoPersonaId)) {
@@ -32,8 +27,6 @@ export function buildAccount(
     }
   }
   return {
-    color: lib.color,
-    iconKey: lib.iconKey,
     ...spec,
     execTriggers: spec.execTriggers ?? []
   };

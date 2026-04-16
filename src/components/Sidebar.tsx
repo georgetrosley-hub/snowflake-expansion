@@ -1,7 +1,7 @@
 "use client";
 
 import type { AccountConfig, MotionKey, Persona } from "@/types";
-import { TerritoryGlyph } from "@/components/icons/TerritoryGlyph";
+import { AccountGlyph } from "@/components/icons/AccountGlyph";
 import { MOTION_DISPLAY } from "@/lib/motionLabels";
 
 const MOTIONS: MotionKey[] = [
@@ -86,7 +86,7 @@ export function Sidebar({
                         }}
                         aria-hidden="true"
                       />
-                      <TerritoryGlyph iconKey={a.iconKey} className="shrink-0 text-sf-foreground-muted" size={18} />
+                      <AccountGlyph className="shrink-0 text-sf-foreground-muted" size={18} />
                       <span className="flex-1 pl-1">{a.name}</span>
                       <span
                         className={[

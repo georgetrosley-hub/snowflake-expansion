@@ -1,7 +1,7 @@
 "use client";
 
 import type { AccountConfig, TabKey } from "@/types";
-import { TerritoryGlyph } from "@/components/icons/TerritoryGlyph";
+import { AccountGlyph } from "@/components/icons/AccountGlyph";
 
 const TABS: TabKey[] = ["territory", "deal-view", "personas", "usecases", "demo", "outreach", "exec-triggers"];
 
@@ -35,7 +35,7 @@ export function AccountHeader({
             className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-sf-border bg-sf-surface-muted text-sf-foreground-muted shadow-panel"
             aria-hidden="true"
           >
-            <TerritoryGlyph iconKey={account.iconKey} size={18} />
+            <AccountGlyph size={18} />
           </div>
           <div className="min-w-0 text-xs text-sf-foreground-muted">
             <span className="font-medium text-sf-foreground">Territory run</span>

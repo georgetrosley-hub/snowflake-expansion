@@ -14,7 +14,8 @@ import {
 } from "@/data/territoryPersonas";
 
 export const ACCOUNTS: AccountConfig[] = [
-  buildAccount("healthcare", {
+  buildAccount({
+    color: "#10B981",
     id: "acc-health-union",
     name: "Health Union",
     tier: 1,
@@ -88,7 +89,8 @@ export const ACCOUNTS: AccountConfig[] = [
     ]
   }),
 
-  buildAccount("financial", {
+  buildAccount({
+    color: "#8B5CF6",
     id: "acc-everstage",
     name: "Everstage",
     tier: 1,
@@ -161,7 +163,8 @@ export const ACCOUNTS: AccountConfig[] = [
     ]
   }),
 
-  buildAccount("healthcare", {
+  buildAccount({
+    color: "#10B981",
     id: "acc-chalice-ai",
     name: "Chalice AI",
     tier: 2,
@@ -234,7 +237,8 @@ export const ACCOUNTS: AccountConfig[] = [
     ]
   }),
 
-  buildAccount("manufacturing", {
+  buildAccount({
+    color: "#F59E0B",
     id: "acc-ciena",
     name: "Ciena",
     tier: 2,
@@ -307,7 +311,8 @@ export const ACCOUNTS: AccountConfig[] = [
     ]
   }),
 
-  buildAccount("financial", {
+  buildAccount({
+    color: "#8B5CF6",
     id: "acc-sagent",
     name: "Sagent",
     tier: 2,
@@ -380,7 +385,8 @@ export const ACCOUNTS: AccountConfig[] = [
     ]
   }),
 
-  buildAccount("financial", {
+  buildAccount({
+    color: "#8B5CF6",
     id: "acc-us-financial-technology",
     name: "U.S. Financial Technology",
     tier: "2B",
@@ -453,7 +459,8 @@ export const ACCOUNTS: AccountConfig[] = [
     ]
   }),
 
-  buildAccount("financial", {
+  buildAccount({
+    color: "#8B5CF6",
     id: "acc-billtrust",
     name: "Billtrust",
     tier: "2B",
@@ -526,7 +533,8 @@ export const ACCOUNTS: AccountConfig[] = [
     ]
   }),
 
-  buildAccount("financial", {
+  buildAccount({
+    color: "#8B5CF6",
     id: "acc-the-bancorp",
     name: "The Bancorp",
     tier: "2B",
@@ -599,7 +607,8 @@ export const ACCOUNTS: AccountConfig[] = [
     ]
   }),
 
-  buildAccount("financial", {
+  buildAccount({
+    color: "#8B5CF6",
     id: "acc-sprinklr",
     name: "Sprinklr",
     tier: 3,
@@ -648,7 +657,7 @@ export const ACCOUNTS: AccountConfig[] = [
       competitorStatusQuo:
         "Per-channel reporting; warehouse for finance only; spreadsheets for QBRs.",
       landStrategy:
-        "Pick one vertical (e.g., retail enterprise) and one churn save.",
+        "Pick one customer segment (e.g., retail enterprise) and one churn save.",
       expandStrategy:
         "Turn internal pattern into customer-facing premium analytics."
     },
@@ -672,7 +681,8 @@ export const ACCOUNTS: AccountConfig[] = [
     ]
   }),
 
-  buildAccount("healthcare", {
+  buildAccount({
+    color: "#10B981",
     id: "acc-lyric",
     name: "Lyric",
     tier: 3,

@@ -1,7 +1,7 @@
 "use client";
 
 import type { AccountConfig } from "@/types";
-import { TerritoryGlyph } from "@/components/icons/TerritoryGlyph";
+import { AccountGlyph } from "@/components/icons/AccountGlyph";
 
 const TIER_HEADINGS: Record<AccountConfig["tier"], string> = {
   1: "Tier 1 · Primary focus",
@@ -58,7 +58,7 @@ export function LandingView({
                       onClick={() => onSelectAccount(a.id)}
                       className="group flex w-full items-center gap-3 rounded-lg border border-sf-border bg-white px-4 py-3 text-left text-sm text-sf-foreground shadow-panel transition hover:border-slate-300"
                     >
-                      <TerritoryGlyph iconKey={a.iconKey} className="shrink-0 text-sf-foreground-muted" size={18} />
+                      <AccountGlyph className="shrink-0 text-sf-foreground-muted" size={18} />
                       <span className="flex-1 font-medium">{a.name}</span>
                       <span
                         className="h-2 w-2 shrink-0 rounded-full opacity-60 transition group-hover:opacity-100"
