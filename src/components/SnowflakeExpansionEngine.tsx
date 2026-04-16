@@ -4,33 +4,14 @@ import { useCallback, useEffect, useMemo } from "react";
 import { ACCOUNTS, ACCOUNTS_BY_ID } from "@/data/accounts";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { buildEmail } from "@/lib/email";
-import type { AccountUseCase, MotionKey, Persona, TabKey } from "@/types";
+import type { AccountUseCase, MotionKey, Persona } from "@/types";
 import { ProductMark } from "@/components/ProductMark";
 import { Sidebar } from "@/components/Sidebar";
-import { AccountHeader } from "@/components/AccountHeader";
-import { AccountOverview } from "@/components/AccountOverview";
-import { TerritoryPanel } from "@/components/TerritoryPanel";
-import { PersonaGrid } from "@/components/PersonaGrid";
-import { UseCaseSelector } from "@/components/UseCaseSelector";
-import { DemoPanel } from "@/components/DemoPanel";
-import { OutreachPanel } from "@/components/OutreachPanel";
-import { ExecTriggersPanel } from "@/components/ExecTriggersPanel";
-import { DealViewPanel } from "@/components/DealViewPanel";
+import { AccountWorkspace } from "@/components/AccountWorkspace";
 import { LandingView } from "@/components/LandingView";
 import { ToastProvider, useToast } from "@/components/ToastProvider";
 
 const DEFAULT_MOTION: MotionKey = "Mix of all three";
-const DEFAULT_TAB: TabKey = "territory";
-
-const VALID_TABS: TabKey[] = [
-  "territory",
-  "deal-view",
-  "personas",
-  "usecases",
-  "demo",
-  "outreach",
-  "exec-triggers"
-];
 
 function resolveAccountId(stored: string | null): string | null {
   if (!stored) return null;
@@ -53,12 +34,6 @@ function AppInner() {
     null
   );
   const [motion, setMotion] = useLocalStorage<MotionKey>("see:motion", DEFAULT_MOTION);
-  const [activeTab, setActiveTab] = useLocalStorage<TabKey>("see:activeTab", DEFAULT_TAB);
-  const [personaSearch, setPersonaSearch] = useLocalStorage<string>("see:personaSearch", "");
-
-  useEffect(() => {
-    if (!VALID_TABS.includes(activeTab)) setActiveTab(DEFAULT_TAB);
-  }, [activeTab, setActiveTab]);
 
   const resolvedAccountId = resolveAccountId(selectedAccountId);
   const account = resolvedAccountId ? ACCOUNTS_BY_ID[resolvedAccountId] ?? null : null;
@@ -95,14 +70,6 @@ function AppInner() {
     if (!selectedPersona || !selectedUseCase || !account) return null;
     return buildEmail(motion, selectedPersona, selectedUseCase, account.industry);
   }, [motion, selectedPersona, selectedUseCase, account]);
-
-  const breadcrumb = useMemo(() => {
-    const parts: string[] = [];
-    if (selectedPersona) parts.push(selectedPersona.title);
-    if (selectedUseCase) parts.push(selectedUseCase.title);
-    if (parts.length === 0) return "Territory brief → stakeholders → wedges";
-    return parts.join(" · ");
-  }, [selectedPersona, selectedUseCase]);
 
   const handleCopy = useCallback(
     async (text: string, label: string) => {
@@ -153,22 +120,30 @@ function AppInner() {
         setSelectedPersonaId(null);
         setSelectedUseCaseId(null);
       }
-      setPersonaSearch("");
-      setActiveTab("territory");
     },
-    [setActiveTab, setPersonaSearch, setSelectedAccountId, setSelectedPersonaId, setSelectedUseCaseId]
+    [setSelectedAccountId, setSelectedPersonaId, setSelectedUseCaseId]
   );
 
-  /** Ensure a valid primary path when the account has no selection or stale ids in localStorage. */
+  /** Ensure localStorage never leaves the account on stale ids. */
   useEffect(() => {
     if (!account?.primaryMotion) return;
     const personaValid =
       selectedPersonaId != null && account.personas.some((p) => p.id === selectedPersonaId);
     const useCaseValid =
       selectedUseCaseId != null && account.useCases.some((u) => u.id === selectedUseCaseId);
-    if (personaValid && useCaseValid) return;
-    setSelectedPersonaId(account.primaryMotion.personaId);
-    setSelectedUseCaseId(account.primaryMotion.useCaseId);
+
+    if (!selectedPersonaId && !selectedUseCaseId) {
+      setSelectedPersonaId(account.primaryMotion.personaId);
+      setSelectedUseCaseId(account.primaryMotion.useCaseId);
+      return;
+    }
+
+    if (selectedPersonaId && !personaValid) {
+      setSelectedPersonaId(account.primaryMotion.personaId);
+    }
+    if (selectedUseCaseId && !useCaseValid) {
+      setSelectedUseCaseId(account.primaryMotion.useCaseId);
+    }
   }, [
     account,
     selectedPersonaId,
@@ -180,19 +155,26 @@ function AppInner() {
   const handlePersonaSelect = useCallback(
     (persona: Persona) => {
       setSelectedPersonaId(persona.id);
-      setActiveTab("demo");
+      if (selectedUseCase && selectedUseCase.demoPersonaId !== persona.id) {
+        setSelectedUseCaseId(null);
+      }
     },
-    [setActiveTab, setSelectedPersonaId]
+    [selectedUseCase, setSelectedPersonaId, setSelectedUseCaseId]
   );
 
   const handleUseCaseSelect = useCallback(
     (useCase: AccountUseCase) => {
       setSelectedUseCaseId(useCase.id);
       setSelectedPersonaId(useCase.demoPersonaId);
-      setActiveTab("outreach");
     },
-    [setActiveTab, setSelectedPersonaId, setSelectedUseCaseId]
+    [setSelectedPersonaId, setSelectedUseCaseId]
   );
+
+  const handleUseRecommendedPath = useCallback(() => {
+    if (!account?.primaryMotion) return;
+    setSelectedPersonaId(account.primaryMotion.personaId);
+    setSelectedUseCaseId(account.primaryMotion.useCaseId);
+  }, [account, setSelectedPersonaId, setSelectedUseCaseId]);
 
   const showLanding = ACCOUNTS.length > 0 && !account;
 
@@ -206,10 +188,10 @@ function AppInner() {
           ) : (
             <div className="min-w-0">
               <div className="truncate text-base font-semibold tracking-tight text-sf-foreground">
-                Territory Operating Console
+                Expansion workspace
               </div>
               <div className="truncate text-xs text-sf-foreground-muted">
-                Named accounts · tiered coverage · stakeholder → wedge → demo → touch
+                Account brief, stakeholder, wedge, demo, touch
               </div>
             </div>
           )}
@@ -221,18 +203,16 @@ function AppInner() {
           <LandingView accounts={ACCOUNTS} onSelectAccount={handleAccountSelect} />
         </main>
       ) : (
-        <div className="mx-auto grid max-w-6xl grid-cols-1 bg-white md:grid-cols-[280px_1fr] md:border-x md:border-sf-border">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 bg-white md:grid-cols-[250px_1fr] md:border-x md:border-sf-border">
           <Sidebar
             accounts={ACCOUNTS}
             selectedAccount={account}
             onAccountSelect={handleAccountSelect}
             motion={motion}
             onMotionSelect={setMotion}
-            selectedPersona={selectedPersona}
-            selectedUseCaseId={selectedUseCaseId}
           />
 
-          <main className="min-h-[calc(100vh-73px)] bg-sf-surface-muted">
+          <main className="bg-sf-surface-muted">
             {!account ? (
               <div className="grid h-full place-items-center px-6 py-16">
                 <div className="max-w-xl text-center">
@@ -246,115 +226,18 @@ function AppInner() {
                 </div>
               </div>
             ) : (
-            <>
-              <div className="px-6 pt-6">
-                <div
-                  className="rounded-xl border border-sf-border bg-sf-surface shadow-panel"
-                  style={{ borderLeftWidth: 4, borderLeftColor: account.color }}
-                >
-                  <AccountOverview account={account} />
-                  <AccountHeader
-                    account={account}
-                    activeTab={activeTab}
-                    onTabChange={setActiveTab}
-                    breadcrumb={breadcrumb}
-                  />
-                </div>
-              </div>
-
-              <div className="px-6 py-6">
-                {activeTab === "territory" && <TerritoryPanel account={account} />}
-
-                {activeTab === "deal-view" && <DealViewPanel account={account} />}
-
-                {activeTab === "personas" && (
-                  <PersonaGrid
-                    account={account}
-                    personas={account.personas}
-                    selectedPersonaId={selectedPersona?.id ?? null}
-                    search={personaSearch}
-                    onSearchChange={setPersonaSearch}
-                    onPersonaSelect={(p) => handlePersonaSelect(p)}
-                  />
-                )}
-
-                {activeTab === "usecases" && (
-                  <UseCaseSelector
-                    account={account}
-                    selectedPersona={selectedPersona}
-                    selectedUseCaseId={selectedUseCaseId}
-                    onSelectUseCase={handleUseCaseSelect}
-                  />
-                )}
-
-                {activeTab === "demo" && (
-                  <DemoPanel
-                    account={account}
-                    selectedPersona={selectedPersona}
-                    selectedUseCase={selectedUseCase}
-                    onPickPersona={() => setActiveTab("personas")}
-                    onCopy={handleCopy}
-                  />
-                )}
-
-                {activeTab === "outreach" && (
-                  <OutreachPanel
-                    account={account}
-                    selectedPersona={selectedPersona}
-                    selectedUseCase={selectedUseCase}
-                    motion={motion}
-                    email={email}
-                    onPickPersona={() => setActiveTab("personas")}
-                    onPickUseCase={() => setActiveTab("usecases")}
-                    onCopy={handleCopy}
-                    onExportTxt={handleExportTxt}
-                  />
-                )}
-
-                {activeTab === "exec-triggers" && <ExecTriggersPanel account={account} />}
-
-                <div className="mt-10 flex flex-col gap-3 rounded-xl border border-sf-border bg-white p-5 shadow-panel sm:flex-row sm:items-center sm:justify-between">
-                  <div className="text-sm text-sf-foreground-muted">
-                    <span className="font-semibold text-sf-foreground">Move next:</span>{" "}
-                    {!selectedPersona
-                      ? "Target a stakeholder (or lead with a wedge to load one)."
-                      : !selectedUseCase
-                        ? "Lead with a wedge to draft the touch."
-                        : "Copy the lines, then send this."}
-                  </div>
-                  <div className="flex flex-col gap-2 sm:flex-row">
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("territory")}
-                      className="rounded-xl border border-sf-border bg-sf-surface px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition duration-150 hover:bg-sf-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                    >
-                      Territory
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("personas")}
-                      className="rounded-xl border border-sf-border bg-sf-surface px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition duration-150 hover:bg-sf-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                    >
-                      Stakeholders
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("usecases")}
-                      className="rounded-xl border border-sf-border bg-sf-surface px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition duration-150 hover:bg-sf-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                    >
-                      Wedges
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("outreach")}
-                      className="rounded-xl border border-sf-primary bg-sf-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition duration-150 hover:bg-sf-primary-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                    >
-                      Touch
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </>
+              <AccountWorkspace
+                account={account}
+                selectedPersona={selectedPersona}
+                selectedUseCase={selectedUseCase}
+                motion={motion}
+                email={email}
+                onPersonaSelect={handlePersonaSelect}
+                onUseCaseSelect={handleUseCaseSelect}
+                onUseRecommendedPath={handleUseRecommendedPath}
+                onCopy={handleCopy}
+                onExportTxt={handleExportTxt}
+              />
             )}
           </main>
         </div>
