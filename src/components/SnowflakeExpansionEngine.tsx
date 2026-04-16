@@ -200,7 +200,7 @@ function AppInner() {
     <div className="min-h-screen bg-sf-surface-muted">
       <header className="border-b border-sf-border bg-white">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-4">
-          <ProductMark className="h-10 w-10 shrink-0" />
+          <ProductMark className="h-10 w-10 shrink-0" size={40} priority />
           {showLanding ? (
             <span className="sr-only">Expansion Territory Operating Plan</span>
           ) : (
@@ -237,7 +237,7 @@ function AppInner() {
               <div className="grid h-full place-items-center px-6 py-16">
                 <div className="max-w-xl text-center">
                   <div className="mx-auto mb-6 flex justify-center">
-                    <ProductMark className="h-16 w-16" />
+                    <ProductMark className="h-16 w-16" size={64} />
                   </div>
                   <div className="text-xl font-semibold text-sf-foreground">No account data</div>
                   <div className="mt-2 text-sm text-sf-foreground-muted">

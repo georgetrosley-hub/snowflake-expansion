@@ -1,16 +1,14 @@
 "use client";
 
-import { Building2 } from "lucide-react";
+import { SnowflakeSymbol } from "@/components/SnowflakeSymbol";
 
-/** Neutral account mark — navigation is account-scoped, not industry/vertical. */
+/** Compact Snowflake symbol for account rows and in-app accents (decorative). */
 export function AccountGlyph({
   className,
-  size = 18,
-  strokeWidth = 2
+  size = 18
 }: {
   className?: string;
   size?: number;
-  strokeWidth?: number;
 }) {
-  return <Building2 className={className} size={size} strokeWidth={strokeWidth} aria-hidden />;
+  return <SnowflakeSymbol className={className} size={size} alt="" />;
 }

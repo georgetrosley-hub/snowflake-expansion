@@ -11,7 +11,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Territory Operating Console",
-  description: "Named accounts, tiered coverage — stakeholder, wedge, demo, touch"
+  description: "Named accounts, tiered coverage — stakeholder, wedge, demo, touch",
+  icons: {
+    icon: "/snowflake-symbol.png",
+    apple: "/snowflake-symbol.png"
+  }
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

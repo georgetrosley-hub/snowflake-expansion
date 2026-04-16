@@ -86,7 +86,7 @@ export function Sidebar({
                         }}
                         aria-hidden="true"
                       />
-                      <AccountGlyph className="shrink-0 text-sf-foreground-muted" size={18} />
+                      <AccountGlyph className="shrink-0 opacity-90" size={18} />
                       <span className="flex-1 pl-1">{a.name}</span>
                       <span
                         className={[
