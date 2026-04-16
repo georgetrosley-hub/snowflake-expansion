@@ -10,8 +10,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Snowflake Expansion Engine",
-  description: "Persona → Demo Recipe → Outreach"
+  title: "Territory Operating Console",
+  description: "Named accounts, tiered coverage, persona → demo → outreach"
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

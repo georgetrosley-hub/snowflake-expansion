@@ -21,21 +21,40 @@ export interface Persona {
   loomScript: string;
 }
 
-export type VerticalIconKey = "pharma" | "financial" | "healthcare" | "manufacturing";
+/** Industry / sector icon used in the territory console */
+export type TerritoryIconKey = "pharma" | "financial" | "healthcare" | "manufacturing";
 
-export interface VerticalConfig {
+export type PlaybookKey = TerritoryIconKey;
+
+export interface TerritoryPlaybook {
   color: string;
-  iconKey: VerticalIconKey;
+  iconKey: TerritoryIconKey;
   personas: Persona[];
   useCases: string[];
   execTriggers: string[];
 }
 
-export type VerticalKey =
-  | "Pharma / Life Sciences"
-  | "Financial Services"
-  | "Healthcare"
-  | "Manufacturing / Industrial";
+export type AccountTier = 1 | 2 | 3;
+
+export interface DealPath {
+  stakeholders: string[];
+  expansionFlow: string[];
+}
+
+/** Named enterprise account with playbook content (personas, use cases, exec triggers). */
+export interface AccountConfig extends TerritoryPlaybook {
+  id: string;
+  name: string;
+  tier: AccountTier;
+  industry: string;
+  why_now: string;
+  whats_broken: string;
+  hypothesis: string;
+  first_workload: string;
+  proof_point: string;
+  economic_impact: string;
+  deal_path: DealPath;
+}
 
 export type MotionKey =
   | "Mix of all three"
@@ -43,10 +62,15 @@ export type MotionKey =
   | "Exec escalation"
   | "Use case mapping";
 
-export type TabKey = "personas" | "usecases" | "demo" | "outreach" | "exec-triggers";
+export type TabKey =
+  | "territory"
+  | "personas"
+  | "usecases"
+  | "demo"
+  | "outreach"
+  | "exec-triggers";
 
 export interface EmailDraft {
   subject: string;
   body: string;
 }
-

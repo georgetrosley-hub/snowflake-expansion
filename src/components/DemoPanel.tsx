@@ -2,7 +2,7 @@
 
 import type { LucideIcon } from "lucide-react";
 import { Anchor, Database, Video, Wrench, Zap } from "lucide-react";
-import type { Persona, VerticalConfig } from "@/types";
+import type { AccountConfig, Persona } from "@/types";
 
 function LoomLeadBadge({ lead }: { lead: Persona["loomLead"] }) {
   const isSe = lead === "SE";
@@ -36,12 +36,12 @@ function Section({ label, value, Icon }: { label: string; value: string; Icon: L
 }
 
 export function DemoPanel({
-  vd,
+  account,
   selectedPersona,
   onPickPersona,
   onCopy
 }: {
-  vd: VerticalConfig;
+  account: AccountConfig;
   selectedPersona: Persona | null;
   onPickPersona: () => void;
   onCopy: (text: string, label: string) => Promise<void>;
@@ -81,7 +81,7 @@ export function DemoPanel({
       <div className="rounded-xl border border-sf-border bg-white p-5 shadow-panel">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <div className="text-xs font-semibold uppercase tracking-[0.14em]" style={{ color: vd.color }}>
+            <div className="text-xs font-semibold uppercase tracking-[0.14em]" style={{ color: account.color }}>
               Demo
             </div>
             <div className="mt-1 truncate text-lg font-semibold text-sf-foreground">
@@ -90,7 +90,7 @@ export function DemoPanel({
           </div>
           <div
             className="hidden shrink-0 rounded-lg border px-3 py-2 text-xs font-semibold md:block"
-            style={{ borderColor: `${vd.color}44`, backgroundColor: `${vd.color}12`, color: vd.color }}
+            style={{ borderColor: `${account.color}44`, backgroundColor: `${account.color}12`, color: account.color }}
           >
             Anchor: {selectedPersona.anchorDemo}
           </div>

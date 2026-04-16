@@ -9,17 +9,17 @@ import {
   Handshake,
   Microscope
 } from "lucide-react";
-import type { Persona, VerticalConfig } from "@/types";
+import type { AccountConfig, Persona } from "@/types";
 
 const USE_CASE_ICONS = [Microscope, CircleDollarSign, Building2, Handshake, ClipboardList, Brain] as const;
 
 export const UseCaseSelector = memo(function UseCaseSelector({
-  vd,
+  account,
   selectedPersona,
   selectedUseCase,
   onSelectUseCase
 }: {
-  vd: VerticalConfig;
+  account: AccountConfig;
   selectedPersona: Persona | null;
   selectedUseCase: string | null;
   onSelectUseCase: (useCase: string) => void;
@@ -34,11 +34,11 @@ export const UseCaseSelector = memo(function UseCaseSelector({
       {selectedPersona ? (
         <div
           className="mb-4 rounded-xl border p-3"
-          style={{ borderColor: `${vd.color}44`, backgroundColor: `${vd.color}0d` }}
+          style={{ borderColor: `${account.color}44`, backgroundColor: `${account.color}0d` }}
         >
           <div className="text-xs text-sf-foreground-muted">
             Persona:{" "}
-            <span className="font-semibold" style={{ color: vd.color }}>
+            <span className="font-semibold" style={{ color: account.color }}>
               {selectedPersona.title}
             </span>{" "}
             <span className="text-slate-400">·</span> Recommended anchor demo:{" "}
@@ -52,7 +52,7 @@ export const UseCaseSelector = memo(function UseCaseSelector({
       )}
 
       <div className="grid gap-3">
-        {vd.useCases.map((uc, i) => {
+        {account.useCases.map((uc, i) => {
           const selected = selectedUseCase === uc;
           const Icon = USE_CASE_ICONS[i % USE_CASE_ICONS.length];
           return (
@@ -67,8 +67,8 @@ export const UseCaseSelector = memo(function UseCaseSelector({
               style={
                 selected
                   ? {
-                      borderColor: `${vd.color}66`,
-                      boxShadow: `0 0 0 1px ${vd.color}33`
+                      borderColor: `${account.color}66`,
+                      boxShadow: `0 0 0 1px ${account.color}33`
                     }
                   : { borderColor: "rgb(226 232 240)" }
               }

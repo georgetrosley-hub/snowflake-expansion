@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo } from "react";
-import { VERTICALS } from "@/data/verticals";
+import { useCallback, useEffect, useMemo } from "react";
+import { ACCOUNTS, ACCOUNTS_BY_ID, DEFAULT_ACCOUNT_ID } from "@/data/accounts";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { buildEmail } from "@/lib/email";
-import type { MotionKey, TabKey, VerticalKey } from "@/types";
+import type { MotionKey, Persona, TabKey } from "@/types";
 import { ProductMark } from "@/components/ProductMark";
 import { Sidebar } from "@/components/Sidebar";
-import { VerticalHeader } from "@/components/VerticalHeader";
+import { AccountHeader } from "@/components/AccountHeader";
+import { TerritoryPanel } from "@/components/TerritoryPanel";
 import { PersonaGrid } from "@/components/PersonaGrid";
 import { UseCaseSelector } from "@/components/UseCaseSelector";
 import { DemoPanel } from "@/components/DemoPanel";
@@ -16,13 +17,27 @@ import { ExecTriggersPanel } from "@/components/ExecTriggersPanel";
 import { ToastProvider, useToast } from "@/components/ToastProvider";
 
 const DEFAULT_MOTION: MotionKey = "Mix of all three";
-const DEFAULT_TAB: TabKey = "personas";
+const DEFAULT_TAB: TabKey = "territory";
+
+const VALID_TABS: TabKey[] = [
+  "territory",
+  "personas",
+  "usecases",
+  "demo",
+  "outreach",
+  "exec-triggers"
+];
+
+function resolveAccountId(stored: string | null): string | null {
+  if (!stored) return null;
+  return ACCOUNTS_BY_ID[stored] ? stored : null;
+}
 
 function AppInner() {
   const toast = useToast();
 
-  const [selectedVertical, setSelectedVertical] = useLocalStorage<VerticalKey | null>(
-    "see:selectedVertical",
+  const [selectedAccountId, setSelectedAccountId] = useLocalStorage<string | null>(
+    "see:selectedAccountId",
     null
   );
   const [selectedPersonaId, setSelectedPersonaId] = useLocalStorage<string | null>(
@@ -37,30 +52,41 @@ function AppInner() {
   const [activeTab, setActiveTab] = useLocalStorage<TabKey>("see:activeTab", DEFAULT_TAB);
   const [personaSearch, setPersonaSearch] = useLocalStorage<string>("see:personaSearch", "");
 
-  const vd = selectedVertical ? VERTICALS[selectedVertical] : null;
+  useEffect(() => {
+    if (!VALID_TABS.includes(activeTab)) setActiveTab(DEFAULT_TAB);
+  }, [activeTab, setActiveTab]);
 
-  const selectedPersona = useMemo(() => {
-    if (!vd || !selectedPersonaId) return null;
-    return vd.personas.find((p) => p.id === selectedPersonaId) ?? null;
-  }, [vd, selectedPersonaId]);
+  const accountId = resolveAccountId(selectedAccountId) ?? DEFAULT_ACCOUNT_ID;
+  const account = ACCOUNTS_BY_ID[accountId] ?? null;
 
   useEffect(() => {
-    if (!vd) return;
+    if (selectedAccountId && !ACCOUNTS_BY_ID[selectedAccountId] && DEFAULT_ACCOUNT_ID) {
+      setSelectedAccountId(DEFAULT_ACCOUNT_ID);
+    }
+  }, [selectedAccountId, setSelectedAccountId]);
+
+  const selectedPersona = useMemo(() => {
+    if (!account || !selectedPersonaId) return null;
+    return account.personas.find((p) => p.id === selectedPersonaId) ?? null;
+  }, [account, selectedPersonaId]);
+
+  useEffect(() => {
+    if (!account) return;
     if (!selectedPersonaId) return;
-    const stillExists = vd.personas.some((p) => p.id === selectedPersonaId);
+    const stillExists = account.personas.some((p) => p.id === selectedPersonaId);
     if (!stillExists) setSelectedPersonaId(null);
-  }, [vd, selectedPersonaId, setSelectedPersonaId]);
+  }, [account, selectedPersonaId, setSelectedPersonaId]);
 
   const email = useMemo(() => {
-    if (!selectedPersona || !selectedUseCase || !selectedVertical) return null;
-    return buildEmail(motion, selectedPersona, selectedUseCase, selectedVertical);
-  }, [motion, selectedPersona, selectedUseCase, selectedVertical]);
+    if (!selectedPersona || !selectedUseCase || !account) return null;
+    return buildEmail(motion, selectedPersona, selectedUseCase, account.industry);
+  }, [motion, selectedPersona, selectedUseCase, account]);
 
   const breadcrumb = useMemo(() => {
     const parts: string[] = [];
     if (selectedPersona) parts.push(selectedPersona.title);
     if (selectedUseCase) parts.push(selectedUseCase.split("(")[0].trim());
-    if (parts.length === 0) return "Persona → demo recipe → outreach";
+    if (parts.length === 0) return "Territory brief → personas → plays";
     return parts.join(" · ");
   }, [selectedPersona, selectedUseCase]);
 
@@ -102,19 +128,19 @@ function AppInner() {
     [selectedPersona?.title, selectedUseCase, toast]
   );
 
-  const handleVerticalSelect = useCallback(
-    (name: VerticalKey) => {
-      setSelectedVertical(name);
+  const handleAccountSelect = useCallback(
+    (id: string) => {
+      setSelectedAccountId(id);
       setSelectedPersonaId(null);
       setSelectedUseCase(null);
       setPersonaSearch("");
-      setActiveTab("personas");
+      setActiveTab("territory");
     },
-    [setActiveTab, setPersonaSearch, setSelectedPersonaId, setSelectedUseCase, setSelectedVertical]
+    [setActiveTab, setPersonaSearch, setSelectedAccountId, setSelectedPersonaId, setSelectedUseCase]
   );
 
   const handlePersonaSelect = useCallback(
-    (persona: NonNullable<typeof selectedPersona>) => {
+    (persona: Persona) => {
       setSelectedPersonaId(persona.id);
       setActiveTab("demo");
     },
@@ -136,10 +162,10 @@ function AppInner() {
           <ProductMark className="h-10 w-10 shrink-0" />
           <div className="min-w-0">
             <div className="truncate text-base font-semibold tracking-tight text-sf-foreground">
-              Snowflake Expansion Engine
+              Territory Operating Console
             </div>
             <div className="truncate text-xs text-sf-foreground-muted">
-              Persona · Demo recipe · Loom script · Outreach
+              Named accounts · tiered coverage · persona → demo → outreach
             </div>
           </div>
         </div>
@@ -147,10 +173,9 @@ function AppInner() {
 
       <div className="mx-auto grid max-w-6xl grid-cols-1 bg-white md:grid-cols-[280px_1fr] md:border-x md:border-sf-border">
         <Sidebar
-          verticals={VERTICALS}
-          selectedVertical={selectedVertical}
-          selectedVerticalData={vd}
-          onVerticalSelect={handleVerticalSelect}
+          accounts={ACCOUNTS}
+          selectedAccount={account}
+          onAccountSelect={handleAccountSelect}
           motion={motion}
           onMotionSelect={setMotion}
           selectedPersona={selectedPersona}
@@ -158,41 +183,34 @@ function AppInner() {
         />
 
         <main className="min-h-[calc(100vh-73px)] bg-sf-surface-muted">
-          {!selectedVertical || !vd ? (
+          {!account ? (
             <div className="grid h-full place-items-center px-6 py-16">
               <div className="max-w-xl text-center">
                 <div className="mx-auto mb-6 flex justify-center">
                   <ProductMark className="h-16 w-16" />
                 </div>
-                <div className="text-xl font-semibold text-sf-foreground">Select a vertical to begin</div>
+                <div className="text-xl font-semibold text-sf-foreground">No account data</div>
                 <div className="mt-2 text-sm text-sf-foreground-muted">
-                  Pick a persona, choose a use case, then generate a demo recipe and outreach draft.
-                </div>
-                <div className="mt-6 rounded-xl border border-sf-border bg-white p-5 text-left text-sm text-sf-foreground-muted shadow-panel">
-                  <div className="font-semibold text-sf-foreground">Suggested flow</div>
-                  <ol className="mt-3 list-decimal space-y-1 pl-5">
-                    <li>Choose a vertical in the sidebar</li>
-                    <li>Select a persona (searchable)</li>
-                    <li>Select a use case, then review outreach</li>
-                  </ol>
+                  Add accounts in the data layer, then reload.
                 </div>
               </div>
             </div>
           ) : (
             <>
-              <VerticalHeader
-                selectedVertical={selectedVertical}
-                vd={vd}
+              <AccountHeader
+                account={account}
                 activeTab={activeTab}
                 onTabChange={setActiveTab}
                 breadcrumb={breadcrumb}
               />
 
               <div className="px-6 py-6">
+                {activeTab === "territory" && <TerritoryPanel account={account} />}
+
                 {activeTab === "personas" && (
                   <PersonaGrid
-                    vd={vd}
-                    personas={vd.personas}
+                    account={account}
+                    personas={account.personas}
                     selectedPersonaId={selectedPersona?.id ?? null}
                     search={personaSearch}
                     onSearchChange={setPersonaSearch}
@@ -202,7 +220,7 @@ function AppInner() {
 
                 {activeTab === "usecases" && (
                   <UseCaseSelector
-                    vd={vd}
+                    account={account}
                     selectedPersona={selectedPersona}
                     selectedUseCase={selectedUseCase}
                     onSelectUseCase={handleUseCaseSelect}
@@ -211,7 +229,7 @@ function AppInner() {
 
                 {activeTab === "demo" && (
                   <DemoPanel
-                    vd={vd}
+                    account={account}
                     selectedPersona={selectedPersona}
                     onPickPersona={() => setActiveTab("personas")}
                     onCopy={handleCopy}
@@ -220,7 +238,7 @@ function AppInner() {
 
                 {activeTab === "outreach" && (
                   <OutreachPanel
-                    vd={vd}
+                    account={account}
                     selectedPersona={selectedPersona}
                     selectedUseCase={selectedUseCase}
                     motion={motion}
@@ -232,7 +250,7 @@ function AppInner() {
                   />
                 )}
 
-                {activeTab === "exec-triggers" && <ExecTriggersPanel vd={vd} />}
+                {activeTab === "exec-triggers" && <ExecTriggersPanel account={account} />}
 
                 <div className="mt-10 flex flex-col gap-3 rounded-xl border border-sf-border bg-white p-5 shadow-panel sm:flex-row sm:items-center sm:justify-between">
                   <div className="text-sm text-sf-foreground-muted">
@@ -244,6 +262,13 @@ function AppInner() {
                         : "Copy or export the outreach email."}
                   </div>
                   <div className="flex flex-col gap-2 sm:flex-row">
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab("territory")}
+                      className="rounded-lg border border-sf-border bg-white px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition hover:bg-sf-surface-muted"
+                    >
+                      Territory
+                    </button>
                     <button
                       type="button"
                       onClick={() => setActiveTab("personas")}

@@ -1,7 +1,7 @@
-import type { VerticalConfig, VerticalKey } from "@/types";
+import type { PlaybookKey, TerritoryPlaybook } from "@/types";
 
-export const VERTICALS: Record<VerticalKey, VerticalConfig> = {
-  "Pharma / Life Sciences": {
+export const TERRITORY_PLAYBOOKS: Record<PlaybookKey, TerritoryPlaybook> = {
+  pharma: {
     color: "#0EA5E9",
     iconKey: "pharma",
     personas: [
@@ -138,7 +138,7 @@ export const VERTICALS: Record<VerticalKey, VerticalConfig> = {
     ]
   },
 
-  "Financial Services": {
+  financial: {
     color: "#8B5CF6",
     iconKey: "financial",
     personas: [
@@ -275,7 +275,7 @@ export const VERTICALS: Record<VerticalKey, VerticalConfig> = {
     ]
   },
 
-  Healthcare: {
+  healthcare: {
     color: "#10B981",
     iconKey: "healthcare",
     personas: [
@@ -414,7 +414,7 @@ export const VERTICALS: Record<VerticalKey, VerticalConfig> = {
     ]
   },
 
-  "Manufacturing / Industrial": {
+  manufacturing: {
     color: "#F59E0B",
     iconKey: "manufacturing",
     personas: [

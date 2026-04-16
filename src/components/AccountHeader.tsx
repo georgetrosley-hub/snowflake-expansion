@@ -1,11 +1,12 @@
 "use client";
 
-import type { TabKey, VerticalConfig, VerticalKey } from "@/types";
-import { VerticalGlyph } from "@/components/icons/VerticalGlyph";
+import type { AccountConfig, TabKey } from "@/types";
+import { TerritoryGlyph } from "@/components/icons/TerritoryGlyph";
 
-const TABS: TabKey[] = ["personas", "usecases", "demo", "outreach", "exec-triggers"];
+const TABS: TabKey[] = ["territory", "personas", "usecases", "demo", "outreach", "exec-triggers"];
 
 const TAB_LABELS: Record<TabKey, string> = {
+  territory: "Territory",
   personas: "Personas",
   usecases: "Use Cases",
   demo: "Demo Recipe",
@@ -13,15 +14,19 @@ const TAB_LABELS: Record<TabKey, string> = {
   "exec-triggers": "Exec Triggers"
 };
 
-export function VerticalHeader({
-  selectedVertical,
-  vd,
+const TIER_LABEL: Record<AccountConfig["tier"], string> = {
+  1: "Tier 1 · Primary focus",
+  2: "Tier 2 · Active expansion",
+  3: "Tier 3 · Monitor / opportunistic"
+};
+
+export function AccountHeader({
+  account,
   activeTab,
   onTabChange,
   breadcrumb
 }: {
-  selectedVertical: VerticalKey;
-  vd: VerticalConfig;
+  account: AccountConfig;
   activeTab: TabKey;
   onTabChange: (tab: TabKey) => void;
   breadcrumb: string;
@@ -34,17 +39,26 @@ export function VerticalHeader({
             className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-sf-border bg-sf-surface-muted text-sf-foreground-muted shadow-panel"
             aria-hidden="true"
           >
-            <VerticalGlyph iconKey={vd.iconKey} size={20} />
+            <TerritoryGlyph iconKey={account.iconKey} size={20} />
           </div>
           <div className="min-w-0">
-            <div className="truncate text-base font-semibold text-sf-foreground">{selectedVertical}</div>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="truncate text-base font-semibold text-sf-foreground">{account.name}</div>
+              <span
+                className="shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-semibold"
+                style={{ borderColor: `${account.color}44`, backgroundColor: `${account.color}12`, color: account.color }}
+              >
+                {TIER_LABEL[account.tier]}
+              </span>
+            </div>
+            <div className="truncate text-xs text-sf-foreground-muted">{account.industry}</div>
             <div className="truncate text-xs text-sf-foreground-muted">{breadcrumb}</div>
           </div>
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: vd.color }} />
-          <div className="text-xs text-sf-foreground-muted">Context locked to this vertical</div>
+          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: account.color }} />
+          <div className="text-xs text-sf-foreground-muted">Workspace locked to this account</div>
         </div>
       </div>
 
@@ -67,7 +81,7 @@ export function VerticalHeader({
                   "absolute inset-x-3 bottom-0 h-0.5 rounded-full transition-opacity",
                   selected ? "opacity-100" : "opacity-0"
                 ].join(" ")}
-                style={{ backgroundColor: vd.color }}
+                style={{ backgroundColor: account.color }}
                 aria-hidden="true"
               />
             </button>

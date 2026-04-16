@@ -2,21 +2,21 @@
 
 import React, { memo, useMemo } from "react";
 import { Video, Zap } from "lucide-react";
-import type { Persona, VerticalConfig } from "@/types";
+import type { AccountConfig, Persona } from "@/types";
 
 function includesLoose(haystack: string, needle: string) {
   return haystack.toLowerCase().includes(needle.toLowerCase());
 }
 
 export const PersonaGrid = memo(function PersonaGrid({
-  vd,
+  account,
   personas,
   selectedPersonaId,
   search,
   onSearchChange,
   onPersonaSelect
 }: {
-  vd: VerticalConfig;
+  account: AccountConfig;
   personas: Persona[];
   selectedPersonaId: string | null;
   search: string;
@@ -92,8 +92,8 @@ export const PersonaGrid = memo(function PersonaGrid({
                 style={
                   selected
                     ? {
-                        borderColor: `${vd.color}66`,
-                        boxShadow: `0 0 0 1px ${vd.color}33`
+                        borderColor: `${account.color}66`,
+                        boxShadow: `0 0 0 1px ${account.color}33`
                       }
                     : undefined
                 }
@@ -105,7 +105,7 @@ export const PersonaGrid = memo(function PersonaGrid({
                   </div>
                   <div
                     className="shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold"
-                    style={{ backgroundColor: `${vd.color}18`, color: vd.color }}
+                    style={{ backgroundColor: `${account.color}18`, color: account.color }}
                   >
                     {p.level}
                   </div>

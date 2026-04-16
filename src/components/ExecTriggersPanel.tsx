@@ -1,9 +1,9 @@
 "use client";
 
 import { Target } from "lucide-react";
-import type { VerticalConfig } from "@/types";
+import type { AccountConfig } from "@/types";
 
-export function ExecTriggersPanel({ vd }: { vd: VerticalConfig }) {
+export function ExecTriggersPanel({ account }: { account: AccountConfig }) {
   return (
     <div className="animate-fade-in space-y-3">
       <div className="mb-2">
@@ -13,11 +13,11 @@ export function ExecTriggersPanel({ vd }: { vd: VerticalConfig }) {
         </div>
       </div>
 
-      {vd.execTriggers.map((trigger) => (
+      {account.execTriggers.map((trigger) => (
         <div key={trigger} className="flex gap-4 rounded-xl border border-sf-border bg-white p-4 shadow-panel">
           <div
             className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-sf-border bg-sf-surface-muted"
-            style={{ color: vd.color }}
+            style={{ color: account.color }}
             aria-hidden="true"
           >
             <Target className="h-5 w-5" strokeWidth={2} />

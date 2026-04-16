@@ -2,22 +2,22 @@
 
 import type { LucideIcon } from "lucide-react";
 import { Factory, FlaskConical, HeartPulse, Landmark } from "lucide-react";
-import type { VerticalIconKey } from "@/types";
+import type { TerritoryIconKey } from "@/types";
 
-const GLYPHS: Record<VerticalIconKey, LucideIcon> = {
+const GLYPHS: Record<TerritoryIconKey, LucideIcon> = {
   pharma: FlaskConical,
   financial: Landmark,
   healthcare: HeartPulse,
   manufacturing: Factory
 };
 
-export function VerticalGlyph({
+export function TerritoryGlyph({
   iconKey,
   className,
   size = 18,
   strokeWidth = 2
 }: {
-  iconKey: VerticalIconKey;
+  iconKey: TerritoryIconKey;
   className?: string;
   size?: number;
   strokeWidth?: number;

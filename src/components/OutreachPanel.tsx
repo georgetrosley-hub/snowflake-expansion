@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Layers, User } from "lucide-react";
-import type { EmailDraft, MotionKey, Persona, VerticalConfig } from "@/types";
+import type { AccountConfig, EmailDraft, MotionKey, Persona } from "@/types";
 
 function Pill({
   children,
@@ -26,7 +26,7 @@ function Pill({
 }
 
 export function OutreachPanel({
-  vd,
+  account,
   selectedPersona,
   selectedUseCase,
   motion,
@@ -36,7 +36,7 @@ export function OutreachPanel({
   onCopy,
   onExportTxt
 }: {
-  vd: VerticalConfig;
+  account: AccountConfig;
   selectedPersona: Persona | null;
   selectedUseCase: string | null;
   motion: MotionKey;
@@ -87,7 +87,7 @@ export function OutreachPanel({
         <div className="ml-auto">
           <div
             className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold"
-            style={{ borderColor: `${vd.color}44`, backgroundColor: `${vd.color}12`, color: vd.color }}
+            style={{ borderColor: `${account.color}44`, backgroundColor: `${account.color}12`, color: account.color }}
           >
             {motion}
           </div>
@@ -145,7 +145,7 @@ export function OutreachPanel({
         <div className="rounded-xl border border-sf-border bg-white p-4 text-sm shadow-panel">
           <div className="text-xs font-semibold text-sf-foreground">Reference on the call</div>
           <div className="mt-2">
-            <span className="font-semibold" style={{ color: vd.color }}>
+            <span className="font-semibold" style={{ color: account.color }}>
               {selectedPersona.unconsumedSurface.join(" · ")}
             </span>
           </div>
@@ -154,7 +154,7 @@ export function OutreachPanel({
         <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950">
           <div className="text-xs font-semibold text-amber-900">Next step before sending</div>
           <div className="mt-2 text-amber-900/90">
-            Search: <span className="font-semibold text-amber-950">{`"${vd.execTriggers[0]}"`}</span>
+            Search: <span className="font-semibold text-amber-950">{`"${account.execTriggers[0]}"`}</span>
           </div>
         </div>
       </div>

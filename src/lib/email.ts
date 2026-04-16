@@ -1,12 +1,12 @@
-import type { EmailDraft, MotionKey, Persona, VerticalKey } from "@/types";
+import type { EmailDraft, MotionKey, Persona } from "@/types";
 
 export function buildEmail(
   motion: MotionKey,
   persona: Persona,
   useCase: string,
-  verticalName: VerticalKey
+  industryLabel: string
 ): EmailDraft {
-  const shortVertical = verticalName.split("/")[0].trim();
+  const shortIndustry = industryLabel.split("/")[0].trim();
   const shortUseCase = useCase.split("(")[0].trim();
   const firstUnconsumed = persona.unconsumedSurface[0];
 
@@ -19,7 +19,7 @@ export function buildEmail(
           "",
           `Your team has been running Snowflake for [X] months. There's meaningful platform surface that hasn't been activated -- specifically around ${useCase.toLowerCase()}.`,
           "",
-          `For ${shortVertical} organizations at your scale, the gap usually shows up as consumption concentrated in one team while adjacent functions work around it. ${firstUnconsumed} is live in your contract and hasn't been turned on.`,
+          `For ${shortIndustry} organizations at your scale, the gap usually shows up as consumption concentrated in one team while adjacent functions work around it. ${firstUnconsumed} is live in your contract and hasn't been turned on.`,
           "",
           "I'd like to bring a short brief directly to you -- 20 minutes. I'll have my SE walk through a working demo we built for this exact use case. No deck, just a working session.",
           "",
@@ -29,11 +29,11 @@ export function buildEmail(
 
     case "New persona outreach":
       return {
-        subject: `${shortVertical} data question -- ${persona.title}`,
+        subject: `${shortIndustry} data question -- ${persona.title}`,
         body: [
           "Hi [Name],",
           "",
-          `I support [Account]'s Snowflake relationship on the ${shortVertical} side.`,
+          `I support [Account]'s Snowflake relationship on the ${shortIndustry} side.`,
           "",
           `I've been looking at where the platform is being underutilized relative to what your ${persona.dept} team could be doing -- specifically around ${useCase.toLowerCase()}. The gap is usually a persona problem: the platform was stood up by data engineering, but ${persona.dept} never got a seat at the table.`,
           "",
@@ -51,7 +51,7 @@ export function buildEmail(
           "",
           `Quick note -- I was reviewing [Account]'s Snowflake footprint and ${firstUnconsumed} hasn't been activated yet.`,
           "",
-          `For ${persona.dept} teams in ${shortVertical}, that's typically where ${shortUseCase.toLowerCase()} starts. The build time is shorter than most expect and it layers directly on what your data engineering team has already stood up.`,
+          `For ${persona.dept} teams in ${shortIndustry}, that's typically where ${shortUseCase.toLowerCase()} starts. The build time is shorter than most expect and it layers directly on what your data engineering team has already stood up.`,
           "",
           "My SE built a working version of this. Happy to walk through it -- even a quick call works. I'd rather show it than describe it.",
           "",
