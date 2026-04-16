@@ -30,6 +30,13 @@ const config: Config = {
       },
       animation: {
         "fade-in": "fade-in 180ms ease-out"
+      },
+      transitionDuration: {
+        DEFAULT: "150ms"
+      },
+      fontSize: {
+        /** Section labels — match TerritoryPanel Field */
+        "sf-eyebrow": ["11px", { lineHeight: "1rem", letterSpacing: "0.14em" }]
       }
     }
   },

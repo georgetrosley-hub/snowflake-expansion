@@ -72,7 +72,7 @@ export function Sidebar({
                       type="button"
                       onClick={() => onAccountSelect(a.id)}
                       className={[
-                        "group relative flex w-full items-center gap-2 rounded-lg py-2 pl-3 pr-2 text-left text-sm transition",
+                        "group relative flex w-full items-center gap-2 rounded-xl py-2 pl-3 pr-2 text-left text-sm transition duration-150 outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-sf-surface-muted",
                         selected
                           ? "bg-white text-sf-foreground shadow-panel ring-1 ring-sf-border"
                           : "text-sf-foreground-muted hover:bg-white/80 hover:text-sf-foreground"
@@ -105,7 +105,7 @@ export function Sidebar({
         )}
       </div>
 
-      <div className="mt-6 rounded-xl border border-sf-border bg-white p-3 shadow-panel">
+      <div className="mt-6 rounded-xl border border-sf-border bg-sf-surface p-3 shadow-panel">
         <div className="flex items-center justify-between">
           <div className="text-xs font-semibold text-sf-foreground">Coverage</div>
           <div className="text-[11px] text-sf-foreground-muted">Step {currentStep} of 3</div>
@@ -169,7 +169,7 @@ export function Sidebar({
                   type="button"
                   onClick={() => onMotionSelect(m)}
                   className={[
-                    "w-full rounded-lg px-3 py-2 text-left text-sm transition",
+                    "w-full rounded-xl px-3 py-2 text-left text-sm transition duration-150 outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-sf-surface-muted",
                     selected
                       ? "bg-white font-medium text-sf-foreground shadow-panel ring-1 ring-sf-border"
                       : "text-sf-foreground-muted hover:bg-white/80 hover:text-sf-foreground"

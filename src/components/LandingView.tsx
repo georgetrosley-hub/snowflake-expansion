@@ -34,7 +34,7 @@ export function LandingView({
           <p>Data exists across these accounts, but it is not operationalized at decision speed.</p>
           <p>Snowflake is present, but not the operating layer.</p>
         </div>
-        <p className="mt-8 border-l-2 border-sf-border pl-4 text-sm text-sf-foreground-muted">
+        <p className="mt-8 border-l-4 border-sf-primary/40 pl-4 text-sm text-sf-foreground-muted">
           Each motion starts with one workload, one proof point, and expands from there
         </p>
       </div>
@@ -56,7 +56,7 @@ export function LandingView({
                       key={a.id}
                       type="button"
                       onClick={() => onSelectAccount(a.id)}
-                      className="group flex w-full items-center gap-3 rounded-lg border border-sf-border bg-white px-4 py-3 text-left text-sm text-sf-foreground shadow-panel transition hover:border-slate-300"
+                      className="group flex w-full items-center gap-3 rounded-xl border border-sf-border bg-sf-surface px-4 py-3 text-left text-sm text-sf-foreground shadow-panel transition duration-150 hover:border-sf-primary/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                     >
                       <AccountGlyph className="shrink-0 opacity-90" size={18} />
                       <span className="flex-1 font-medium">{a.name}</span>

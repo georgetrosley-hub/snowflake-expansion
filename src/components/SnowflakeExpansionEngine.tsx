@@ -198,7 +198,7 @@ function AppInner() {
 
   return (
     <div className="min-h-screen bg-sf-surface-muted">
-      <header className="border-b border-sf-border bg-white">
+      <header className="border-b border-sf-border bg-sf-surface">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-4">
           <ProductMark className="h-10 w-10 shrink-0" size={40} priority />
           {showLanding ? (
@@ -248,15 +248,19 @@ function AppInner() {
             ) : (
             <>
               <div className="px-6 pt-6">
-                <AccountOverview account={account} />
+                <div
+                  className="rounded-xl border border-sf-border bg-sf-surface shadow-panel"
+                  style={{ borderLeftWidth: 4, borderLeftColor: account.color }}
+                >
+                  <AccountOverview account={account} />
+                  <AccountHeader
+                    account={account}
+                    activeTab={activeTab}
+                    onTabChange={setActiveTab}
+                    breadcrumb={breadcrumb}
+                  />
+                </div>
               </div>
-
-              <AccountHeader
-                account={account}
-                activeTab={activeTab}
-                onTabChange={setActiveTab}
-                breadcrumb={breadcrumb}
-              />
 
               <div className="px-6 py-6">
                 {activeTab === "territory" && <TerritoryPanel account={account} />}
@@ -322,28 +326,28 @@ function AppInner() {
                     <button
                       type="button"
                       onClick={() => setActiveTab("territory")}
-                      className="rounded-lg border border-sf-border bg-white px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition hover:bg-sf-surface-muted"
+                      className="rounded-xl border border-sf-border bg-sf-surface px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition duration-150 hover:bg-sf-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                     >
                       Territory
                     </button>
                     <button
                       type="button"
                       onClick={() => setActiveTab("personas")}
-                      className="rounded-lg border border-sf-border bg-white px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition hover:bg-sf-surface-muted"
+                      className="rounded-xl border border-sf-border bg-sf-surface px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition duration-150 hover:bg-sf-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                     >
                       Stakeholders
                     </button>
                     <button
                       type="button"
                       onClick={() => setActiveTab("usecases")}
-                      className="rounded-lg border border-sf-border bg-white px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition hover:bg-sf-surface-muted"
+                      className="rounded-xl border border-sf-border bg-sf-surface px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition duration-150 hover:bg-sf-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                     >
                       Wedges
                     </button>
                     <button
                       type="button"
                       onClick={() => setActiveTab("outreach")}
-                      className="rounded-lg border border-sf-border bg-sf-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sf-primary-deep"
+                      className="rounded-xl border border-sf-primary bg-sf-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition duration-150 hover:bg-sf-primary-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                     >
                       Touch
                     </button>
