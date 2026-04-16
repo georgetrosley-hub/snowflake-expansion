@@ -55,6 +55,19 @@ export interface DealPath {
   expansionFlow: string[];
 }
 
+export type DealLikelihood = "High" | "Medium" | "Low";
+
+/** Lightweight pipeline fields shown next to account overview. */
+export interface PipelineSnapshot {
+  /** Display string, e.g. "$1.2M – $2.5M" */
+  estimatedAcvRange: string;
+  dealLikelihood: DealLikelihood;
+  /** e.g. "Q2 FY26" or "Q3–Q4" */
+  timeline: string;
+  /** Specific role/title for first meeting */
+  firstMeetingTarget: string;
+}
+
 /** How the deal lands, who decides, and how it expands after the first win. */
 export interface DealIntelligence {
   /** First persona / role to engage (wedge owner). */
@@ -90,6 +103,7 @@ export interface AccountConfig {
   economic_impact: string;
   deal_path: DealPath;
   dealIntelligence: DealIntelligence;
+  pipelineSnapshot: PipelineSnapshot;
   personas: Persona[];
   useCases: AccountUseCase[];
   execTriggers: string[];

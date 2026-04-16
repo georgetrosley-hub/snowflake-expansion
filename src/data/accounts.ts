@@ -1,4 +1,11 @@
-import type { AccountConfig, AccountTier, DealIntelligence, DealPath, PlaybookKey } from "@/types";
+import type {
+  AccountConfig,
+  AccountTier,
+  DealIntelligence,
+  DealPath,
+  PipelineSnapshot,
+  PlaybookKey
+} from "@/types";
 import { INDUSTRY_PLAYBOOKS } from "@/data/territoryPlaybooks";
 import {
   clonePlaybookPersonas,
@@ -22,6 +29,7 @@ function assembleAccount(
     economic_impact: string;
     deal_path: DealPath;
     dealIntelligence: DealIntelligence;
+    pipelineSnapshot: PipelineSnapshot;
     personaIndices: number[];
     useCases: AccountUseCaseInput[];
     execTriggers?: string[];
@@ -46,6 +54,7 @@ function assembleAccount(
     economic_impact: spec.economic_impact,
     deal_path: spec.deal_path,
     dealIntelligence: spec.dealIntelligence,
+    pipelineSnapshot: spec.pipelineSnapshot,
     personas,
     useCases,
     execTriggers: spec.execTriggers ?? lib.execTriggers
@@ -104,6 +113,12 @@ export const ACCOUNTS: AccountConfig[] = [
         "Anchor a single trial cohort score in Snowflake with a wall-clock comparison to the SAS job, then lock a 30-day success path with R&D leadership.",
       expandStrategy:
         "Sequence governance and Cortex to the regulatory narrative, then fund Streamlit commercial plays off the same governed data products."
+    },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$1.5M – $2.8M",
+      dealLikelihood: "High",
+      timeline: "Q2 FY26 · initial land",
+      firstMeetingTarget: "VP Data Science (R&D)"
     },
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
@@ -208,6 +223,12 @@ export const ACCOUNTS: AccountConfig[] = [
       expandStrategy:
         "Use the risk win to unlock Snowpark for quants, then push AML narrative and Dynamic Tables to retire parallel Spark chains."
     },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$2.0M – $4.2M",
+      dealLikelihood: "High",
+      timeline: "Q2–Q3 FY26 · exam-aligned",
+      firstMeetingTarget: "Chief Risk Officer"
+    },
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
       {
@@ -309,6 +330,12 @@ export const ACCOUNTS: AccountConfig[] = [
         "Pick one attributed population and one plain-English question; deliver the intervention list in a live session with care managers.",
       expandStrategy:
         "Tie denial ML and daily refresh to revenue integrity, then sell FHIR landing as the unlock for analyst self-service."
+    },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$850K – $1.5M",
+      dealLikelihood: "Medium",
+      timeline: "Q3 FY26",
+      firstMeetingTarget: "Chief Analytics Officer"
     },
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
@@ -417,6 +444,12 @@ export const ACCOUNTS: AccountConfig[] = [
       expandStrategy:
         "Layer supplier risk and quality ML as follow-on modules, then position the twin as the enterprise data foundation."
     },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$1.1M – $1.9M",
+      dealLikelihood: "Medium",
+      timeline: "Q3 FY26 · OT pilot window",
+      firstMeetingTarget: "VP Operations Technology"
+    },
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
       {
@@ -518,6 +551,12 @@ export const ACCOUNTS: AccountConfig[] = [
         "Pick one region and one daily list tied to a named Stars measure; show before/after freshness in the same forum.",
       expandStrategy:
         "Roll geography by geography with LOB expansion, then sell governance + clean rooms as the enterprise cross-LOB story."
+    },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$1.2M – $2.6M",
+      dealLikelihood: "Medium",
+      timeline: "Q2–Q3 FY26",
+      firstMeetingTarget: "Chief Analytics Officer (Medicare Advantage)"
     },
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
@@ -621,6 +660,12 @@ export const ACCOUNTS: AccountConfig[] = [
       expandStrategy:
         "After the first proof, attach Snowpark cohort and commercial Streamlit to specific launch or enrollment pressure."
     },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$450K – $950K",
+      dealLikelihood: "Low",
+      timeline: "Q3–Q4 FY26 · trigger-led",
+      firstMeetingTarget: "Director, RWE"
+    },
     personaIndices: [0, 3, 4],
     useCases: [
       {
@@ -700,6 +745,12 @@ export const ACCOUNTS: AccountConfig[] = [
       expandStrategy:
         "Use the pilot to win Dynamic Tables for risk feeds, then attach AML/Cortex when exam pressure resurfaces."
     },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$350K – $750K",
+      dealLikelihood: "Low",
+      timeline: "Q3–Q4 FY26 · initiative gate",
+      firstMeetingTarget: "Head of Client Analytics (Wealth)"
+    },
     personaIndices: [4, 3, 2],
     useCases: [
       {
@@ -778,6 +829,12 @@ export const ACCOUNTS: AccountConfig[] = [
         "Deliver masked views + clean room aggregate in one walkthrough — IRB and security in the same room.",
       expandStrategy:
         "After trust, land FHIR + Streamlit for trial cohorts; then widen to population health queries with the same governance spine."
+    },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$400K – $900K",
+      dealLikelihood: "Low",
+      timeline: "Q4 FY26 · IRB / security path",
+      firstMeetingTarget: "CIO / CISO (research governance)"
     },
     personaIndices: [4, 2, 3],
     useCases: [

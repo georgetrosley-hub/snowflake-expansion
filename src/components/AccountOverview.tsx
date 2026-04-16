@@ -3,6 +3,7 @@
 import { Fragment, type ReactNode } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import type { AccountConfig } from "@/types";
+import { PipelineSnapshotCard } from "@/components/PipelineSnapshotCard";
 
 const TIER_LABEL: Record<AccountConfig["tier"], string> = {
   1: "Tier 1 · Primary focus",
@@ -56,8 +57,8 @@ export function AccountOverview({ account }: { account: AccountConfig }) {
       aria-labelledby="account-overview-title"
     >
       <div className="border-b border-stone-200/80 bg-[#f7f4ef] px-6 py-6 md:px-8 md:py-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-          <div className="min-w-0">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
+          <div className="min-w-0 flex-1">
             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-500">Account overview</p>
             <h1 id="account-overview-title" className="mt-2 font-serif text-3xl font-bold tracking-tight text-slate-950 md:text-[2.15rem] md:leading-tight">
               {account.name}
@@ -68,14 +69,17 @@ export function AccountOverview({ account }: { account: AccountConfig }) {
               <span className="text-slate-700">{account.briefDescriptor}</span>
             </p>
           </div>
-          <div
-            className="shrink-0 self-start rounded-md border px-3 py-1.5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-800"
-            style={{
-              borderColor: `${account.color}55`,
-              backgroundColor: `${account.color}14`
-            }}
-          >
-            {TIER_LABEL[account.tier]}
+          <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-start lg:flex-col">
+            <div
+              className="shrink-0 self-start rounded-md border px-3 py-1.5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-800"
+              style={{
+                borderColor: `${account.color}55`,
+                backgroundColor: `${account.color}14`
+              }}
+            >
+              {TIER_LABEL[account.tier]}
+            </div>
+            <PipelineSnapshotCard account={account} />
           </div>
         </div>
       </div>
