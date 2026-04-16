@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo } from "react";
-import { ACCOUNTS, ACCOUNTS_BY_ID, DEFAULT_ACCOUNT_ID } from "@/data/accounts";
+import { ACCOUNTS, ACCOUNTS_BY_ID } from "@/data/accounts";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { buildEmail } from "@/lib/email";
 import type { AccountUseCase, MotionKey, Persona, TabKey } from "@/types";
@@ -16,6 +16,7 @@ import { DemoPanel } from "@/components/DemoPanel";
 import { OutreachPanel } from "@/components/OutreachPanel";
 import { ExecTriggersPanel } from "@/components/ExecTriggersPanel";
 import { DealViewPanel } from "@/components/DealViewPanel";
+import { LandingView } from "@/components/LandingView";
 import { ToastProvider, useToast } from "@/components/ToastProvider";
 
 const DEFAULT_MOTION: MotionKey = "Mix of all three";
@@ -59,12 +60,12 @@ function AppInner() {
     if (!VALID_TABS.includes(activeTab)) setActiveTab(DEFAULT_TAB);
   }, [activeTab, setActiveTab]);
 
-  const accountId = resolveAccountId(selectedAccountId) ?? DEFAULT_ACCOUNT_ID;
-  const account = ACCOUNTS_BY_ID[accountId] ?? null;
+  const resolvedAccountId = resolveAccountId(selectedAccountId);
+  const account = resolvedAccountId ? ACCOUNTS_BY_ID[resolvedAccountId] ?? null : null;
 
   useEffect(() => {
-    if (selectedAccountId && !ACCOUNTS_BY_ID[selectedAccountId] && DEFAULT_ACCOUNT_ID) {
-      setSelectedAccountId(DEFAULT_ACCOUNT_ID);
+    if (selectedAccountId && !ACCOUNTS_BY_ID[selectedAccountId]) {
+      setSelectedAccountId(null);
     }
   }, [selectedAccountId, setSelectedAccountId]);
 
@@ -169,47 +170,58 @@ function AppInner() {
     [setActiveTab, setSelectedPersonaId, setSelectedUseCaseId]
   );
 
+  const showLanding = ACCOUNTS.length > 0 && !account;
+
   return (
     <div className="min-h-screen bg-sf-surface-muted">
       <header className="border-b border-sf-border bg-white">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-4">
           <ProductMark className="h-10 w-10 shrink-0" />
-          <div className="min-w-0">
-            <div className="truncate text-base font-semibold tracking-tight text-sf-foreground">
-              Territory Operating Console
+          {showLanding ? (
+            <span className="sr-only">Expansion Territory Operating Plan</span>
+          ) : (
+            <div className="min-w-0">
+              <div className="truncate text-base font-semibold tracking-tight text-sf-foreground">
+                Territory Operating Console
+              </div>
+              <div className="truncate text-xs text-sf-foreground-muted">
+                Named accounts · tiered coverage · stakeholder → wedge → demo → touch
+              </div>
             </div>
-            <div className="truncate text-xs text-sf-foreground-muted">
-              Named accounts · tiered coverage · stakeholder → wedge → demo → touch
-            </div>
-          </div>
+          )}
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 bg-white md:grid-cols-[280px_1fr] md:border-x md:border-sf-border">
-        <Sidebar
-          accounts={ACCOUNTS}
-          selectedAccount={account}
-          onAccountSelect={handleAccountSelect}
-          motion={motion}
-          onMotionSelect={setMotion}
-          selectedPersona={selectedPersona}
-          selectedUseCaseId={selectedUseCaseId}
-        />
+      {showLanding ? (
+        <main className="mx-auto max-w-6xl bg-white md:border-x md:border-sf-border">
+          <LandingView accounts={ACCOUNTS} onSelectAccount={handleAccountSelect} />
+        </main>
+      ) : (
+        <div className="mx-auto grid max-w-6xl grid-cols-1 bg-white md:grid-cols-[280px_1fr] md:border-x md:border-sf-border">
+          <Sidebar
+            accounts={ACCOUNTS}
+            selectedAccount={account}
+            onAccountSelect={handleAccountSelect}
+            motion={motion}
+            onMotionSelect={setMotion}
+            selectedPersona={selectedPersona}
+            selectedUseCaseId={selectedUseCaseId}
+          />
 
-        <main className="min-h-[calc(100vh-73px)] bg-sf-surface-muted">
-          {!account ? (
-            <div className="grid h-full place-items-center px-6 py-16">
-              <div className="max-w-xl text-center">
-                <div className="mx-auto mb-6 flex justify-center">
-                  <ProductMark className="h-16 w-16" />
-                </div>
-                <div className="text-xl font-semibold text-sf-foreground">No account data</div>
-                <div className="mt-2 text-sm text-sf-foreground-muted">
-                  No accounts in the data layer yet — add them and refresh.
+          <main className="min-h-[calc(100vh-73px)] bg-sf-surface-muted">
+            {!account ? (
+              <div className="grid h-full place-items-center px-6 py-16">
+                <div className="max-w-xl text-center">
+                  <div className="mx-auto mb-6 flex justify-center">
+                    <ProductMark className="h-16 w-16" />
+                  </div>
+                  <div className="text-xl font-semibold text-sf-foreground">No account data</div>
+                  <div className="mt-2 text-sm text-sf-foreground-muted">
+                    No accounts in the data layer yet — add them and refresh.
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : (
+            ) : (
             <>
               <div className="px-6 pt-6">
                 <AccountOverview account={account} />
@@ -315,9 +327,10 @@ function AppInner() {
                 </div>
               </div>
             </>
-          )}
-        </main>
-      </div>
+            )}
+          </main>
+        </div>
+      )}
     </div>
   );
 }
