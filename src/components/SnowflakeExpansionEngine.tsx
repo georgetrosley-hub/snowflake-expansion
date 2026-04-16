@@ -14,23 +14,13 @@ import { PersonaGrid } from "@/components/PersonaGrid";
 import { UseCaseSelector } from "@/components/UseCaseSelector";
 import { DemoPanel } from "@/components/DemoPanel";
 import { OutreachPanel } from "@/components/OutreachPanel";
-import { ExecTriggersPanel } from "@/components/ExecTriggersPanel";
-import { DealViewPanel } from "@/components/DealViewPanel";
 import { LandingView } from "@/components/LandingView";
 import { ToastProvider, useToast } from "@/components/ToastProvider";
 
 const DEFAULT_MOTION: MotionKey = "Mix of all three";
 const DEFAULT_TAB: TabKey = "territory";
 
-const VALID_TABS: TabKey[] = [
-  "territory",
-  "deal-view",
-  "personas",
-  "usecases",
-  "demo",
-  "outreach",
-  "exec-triggers"
-];
+const VALID_TABS: TabKey[] = ["territory", "personas", "usecases", "demo", "outreach"];
 
 function resolveAccountId(stored: string | null): string | null {
   if (!stored) return null;
@@ -57,8 +47,23 @@ function AppInner() {
   const [personaSearch, setPersonaSearch] = useLocalStorage<string>("see:personaSearch", "");
 
   useEffect(() => {
+    const raw = activeTab as string;
+    if (raw === "deal-view" || raw === "exec-triggers") {
+      setActiveTab("territory");
+      return;
+    }
     if (!VALID_TABS.includes(activeTab)) setActiveTab(DEFAULT_TAB);
   }, [activeTab, setActiveTab]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const acc = params.get("account");
+    const tab = params.get("tab");
+    if (acc && ACCOUNTS_BY_ID[acc]) setSelectedAccountId(acc);
+    if (tab && VALID_TABS.includes(tab as TabKey)) setActiveTab(tab as TabKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- URL wins over localStorage once on mount
+  }, []);
 
   const resolvedAccountId = resolveAccountId(selectedAccountId);
   const account = resolvedAccountId ? ACCOUNTS_BY_ID[resolvedAccountId] ?? null : null;
@@ -68,6 +73,18 @@ function AppInner() {
       setSelectedAccountId(null);
     }
   }, [selectedAccountId, setSelectedAccountId]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!resolvedAccountId) {
+      window.history.replaceState(null, "", window.location.pathname);
+      return;
+    }
+    const params = new URLSearchParams();
+    params.set("account", resolvedAccountId);
+    params.set("tab", activeTab);
+    window.history.replaceState(null, "", `?${params.toString()}`);
+  }, [resolvedAccountId, activeTab]);
 
   const selectedPersona = useMemo(() => {
     if (!account || !selectedPersonaId) return null;
@@ -103,6 +120,16 @@ function AppInner() {
     if (parts.length === 0) return "Territory brief → stakeholders → wedges";
     return parts.join(" · ");
   }, [selectedPersona, selectedUseCase]);
+
+  const nextStep = useMemo(() => {
+    if (!selectedPersona) return { label: "Next: Stakeholders", tab: "personas" as TabKey };
+    if (!selectedUseCase) return { label: "Next: Wedges", tab: "usecases" as TabKey };
+    return { label: "Next: Touch", tab: "outreach" as TabKey };
+  }, [selectedPersona, selectedUseCase]);
+
+  const handleNextStep = useCallback(() => {
+    setActiveTab(nextStep.tab);
+  }, [nextStep.tab, setActiveTab]);
 
   const handleCopy = useCallback(
     async (text: string, label: string) => {
@@ -159,7 +186,6 @@ function AppInner() {
     [setActiveTab, setPersonaSearch, setSelectedAccountId, setSelectedPersonaId, setSelectedUseCaseId]
   );
 
-  /** Ensure a valid primary path when the account has no selection or stale ids in localStorage. */
   useEffect(() => {
     if (!account?.primaryMotion) return;
     const personaValid =
@@ -230,6 +256,8 @@ function AppInner() {
             onMotionSelect={setMotion}
             selectedPersona={selectedPersona}
             selectedUseCaseId={selectedUseCaseId}
+            onNextStep={handleNextStep}
+            nextStepLabel={nextStep.label}
           />
 
           <main className="min-h-[calc(100vh-73px)] bg-sf-surface-muted">
@@ -246,115 +274,70 @@ function AppInner() {
                 </div>
               </div>
             ) : (
-            <>
-              <div className="px-6 pt-6">
-                <div
-                  className="rounded-xl border border-sf-border bg-sf-surface shadow-panel"
-                  style={{ borderLeftWidth: 4, borderLeftColor: account.color }}
-                >
-                  <AccountOverview account={account} />
-                  <AccountHeader
-                    account={account}
-                    activeTab={activeTab}
-                    onTabChange={setActiveTab}
-                    breadcrumb={breadcrumb}
-                  />
-                </div>
-              </div>
-
-              <div className="px-6 py-6">
-                {activeTab === "territory" && <TerritoryPanel account={account} />}
-
-                {activeTab === "deal-view" && <DealViewPanel account={account} />}
-
-                {activeTab === "personas" && (
-                  <PersonaGrid
-                    account={account}
-                    personas={account.personas}
-                    selectedPersonaId={selectedPersona?.id ?? null}
-                    search={personaSearch}
-                    onSearchChange={setPersonaSearch}
-                    onPersonaSelect={(p) => handlePersonaSelect(p)}
-                  />
-                )}
-
-                {activeTab === "usecases" && (
-                  <UseCaseSelector
-                    account={account}
-                    selectedPersona={selectedPersona}
-                    selectedUseCaseId={selectedUseCaseId}
-                    onSelectUseCase={handleUseCaseSelect}
-                  />
-                )}
-
-                {activeTab === "demo" && (
-                  <DemoPanel
-                    account={account}
-                    selectedPersona={selectedPersona}
-                    selectedUseCase={selectedUseCase}
-                    onPickPersona={() => setActiveTab("personas")}
-                    onCopy={handleCopy}
-                  />
-                )}
-
-                {activeTab === "outreach" && (
-                  <OutreachPanel
-                    account={account}
-                    selectedPersona={selectedPersona}
-                    selectedUseCase={selectedUseCase}
-                    motion={motion}
-                    email={email}
-                    onPickPersona={() => setActiveTab("personas")}
-                    onPickUseCase={() => setActiveTab("usecases")}
-                    onCopy={handleCopy}
-                    onExportTxt={handleExportTxt}
-                  />
-                )}
-
-                {activeTab === "exec-triggers" && <ExecTriggersPanel account={account} />}
-
-                <div className="mt-10 flex flex-col gap-3 rounded-xl border border-sf-border bg-white p-5 shadow-panel sm:flex-row sm:items-center sm:justify-between">
-                  <div className="text-sm text-sf-foreground-muted">
-                    <span className="font-semibold text-sf-foreground">Move next:</span>{" "}
-                    {!selectedPersona
-                      ? "Target a stakeholder (or lead with a wedge to load one)."
-                      : !selectedUseCase
-                        ? "Lead with a wedge to draft the touch."
-                        : "Copy the lines, then send this."}
-                  </div>
-                  <div className="flex flex-col gap-2 sm:flex-row">
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("territory")}
-                      className="rounded-xl border border-sf-border bg-sf-surface px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition duration-150 hover:bg-sf-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                    >
-                      Territory
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("personas")}
-                      className="rounded-xl border border-sf-border bg-sf-surface px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition duration-150 hover:bg-sf-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                    >
-                      Stakeholders
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("usecases")}
-                      className="rounded-xl border border-sf-border bg-sf-surface px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition duration-150 hover:bg-sf-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                    >
-                      Wedges
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("outreach")}
-                      className="rounded-xl border border-sf-primary bg-sf-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition duration-150 hover:bg-sf-primary-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                    >
-                      Touch
-                    </button>
+              <>
+                <div className="px-6 pt-6">
+                  <div
+                    className="rounded-xl border border-sf-border bg-sf-surface shadow-panel"
+                    style={{ borderLeftWidth: 4, borderLeftColor: account.color }}
+                  >
+                    <AccountOverview account={account} />
+                    <AccountHeader
+                      account={account}
+                      activeTab={activeTab}
+                      onTabChange={setActiveTab}
+                      breadcrumb={breadcrumb}
+                    />
                   </div>
                 </div>
-              </div>
-            </>
+
+                <div className="px-6 py-6">
+                  {activeTab === "territory" && <TerritoryPanel account={account} />}
+
+                  {activeTab === "personas" && (
+                    <PersonaGrid
+                      account={account}
+                      personas={account.personas}
+                      selectedPersonaId={selectedPersona?.id ?? null}
+                      search={personaSearch}
+                      onSearchChange={setPersonaSearch}
+                      onPersonaSelect={(p) => handlePersonaSelect(p)}
+                    />
+                  )}
+
+                  {activeTab === "usecases" && (
+                    <UseCaseSelector
+                      account={account}
+                      selectedPersona={selectedPersona}
+                      selectedUseCaseId={selectedUseCaseId}
+                      onSelectUseCase={handleUseCaseSelect}
+                    />
+                  )}
+
+                  {activeTab === "demo" && (
+                    <DemoPanel
+                      account={account}
+                      selectedPersona={selectedPersona}
+                      selectedUseCase={selectedUseCase}
+                      onPickPersona={() => setActiveTab("personas")}
+                      onCopy={handleCopy}
+                    />
+                  )}
+
+                  {activeTab === "outreach" && (
+                    <OutreachPanel
+                      account={account}
+                      selectedPersona={selectedPersona}
+                      selectedUseCase={selectedUseCase}
+                      motion={motion}
+                      email={email}
+                      onPickPersona={() => setActiveTab("personas")}
+                      onPickUseCase={() => setActiveTab("usecases")}
+                      onCopy={handleCopy}
+                      onExportTxt={handleExportTxt}
+                    />
+                  )}
+                </div>
+              </>
             )}
           </main>
         </div>

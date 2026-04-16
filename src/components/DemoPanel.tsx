@@ -1,8 +1,8 @@
 "use client";
 
-import type { LucideIcon } from "lucide-react";
 import { Anchor, Database, Flag, MessageSquareQuote, Target, TrendingUp, Video, Wrench, Zap } from "lucide-react";
 import type { AccountConfig, AccountUseCase, Persona } from "@/types";
+import { PanelField } from "@/components/ui/panelPrimitives";
 
 function LoomLeadBadge({ lead }: { lead: Persona["loomLead"] }) {
   const isSe = lead === "SE";
@@ -17,20 +17,6 @@ function LoomLeadBadge({ lead }: { lead: Persona["loomLead"] }) {
     >
       <Video className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
       Loom lead: {lead}
-    </div>
-  );
-}
-
-function Section({ label, value, Icon }: { label: string; value: string; Icon: LucideIcon }) {
-  return (
-    <div>
-      <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-sf-foreground-muted">
-        <Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={2} aria-hidden />
-        {label}
-      </div>
-      <div className="mt-2 rounded-lg border border-sf-border bg-sf-surface-muted px-4 py-3 text-sm leading-relaxed text-sf-foreground">
-        {value}
-      </div>
     </div>
   );
 }
@@ -171,10 +157,10 @@ export function DemoPanel({
         </div>
 
         <div className="mt-5 grid gap-5">
-          <Section label="Anchor capability" value={selectedPersona.anchorDemo} Icon={Anchor} />
-          <Section label="Data to use" value={selectedPersona.demoRecipe.data} Icon={Database} />
-          <Section label="What to build" value={selectedPersona.demoRecipe.build} Icon={Wrench} />
-          <Section label="The show moment" value={selectedPersona.demoRecipe.showMoment} Icon={Zap} />
+          <PanelField label="Anchor capability" value={selectedPersona.anchorDemo} Icon={Anchor} />
+          <PanelField label="Data to use" value={selectedPersona.demoRecipe.data} Icon={Database} />
+          <PanelField label="What to build" value={selectedPersona.demoRecipe.build} Icon={Wrench} />
+          <PanelField label="The show moment" value={selectedPersona.demoRecipe.showMoment} Icon={Zap} />
         </div>
       </div>
 

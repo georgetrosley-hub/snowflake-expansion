@@ -125,14 +125,7 @@ export type MotionKey =
   | "Exec escalation"
   | "Use case mapping";
 
-export type TabKey =
-  | "territory"
-  | "deal-view"
-  | "personas"
-  | "usecases"
-  | "demo"
-  | "outreach"
-  | "exec-triggers";
+export type TabKey = "territory" | "personas" | "usecases" | "demo" | "outreach";
 
 export interface EmailDraft {
   subject: string;

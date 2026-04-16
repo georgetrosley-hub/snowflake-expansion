@@ -1,8 +1,8 @@
 "use client";
 
 import type { AccountConfig, MotionKey, Persona } from "@/types";
-import { AccountGlyph } from "@/components/icons/AccountGlyph";
 import { MOTION_DISPLAY } from "@/lib/motionLabels";
+import { AccountListByTier } from "@/components/AccountListByTier";
 
 const MOTIONS: MotionKey[] = [
   "Mix of all three",
@@ -10,15 +10,6 @@ const MOTIONS: MotionKey[] = [
   "Exec escalation",
   "Use case mapping"
 ];
-
-const TIER_HEADINGS: Record<AccountConfig["tier"], string> = {
-  1: "Tier 1 · Primary focus",
-  2: "Tier 2 · Active expansion",
-  "2B": "Tier 2B · Expansion (sequence)",
-  3: "Tier 3 · Monitor / opportunistic"
-};
-
-const TIER_ORDER: AccountConfig["tier"][] = [1, 2, "2B", 3];
 
 function stepState(hasPersona: boolean, hasUseCase: boolean) {
   if (!hasPersona) return 1;
@@ -33,7 +24,9 @@ export function Sidebar({
   motion,
   onMotionSelect,
   selectedPersona,
-  selectedUseCaseId
+  selectedUseCaseId,
+  onNextStep,
+  nextStepLabel
 }: {
   accounts: AccountConfig[];
   selectedAccount: AccountConfig | null;
@@ -42,13 +35,10 @@ export function Sidebar({
   onMotionSelect: (motion: MotionKey) => void;
   selectedPersona: Persona | null;
   selectedUseCaseId: string | null;
+  onNextStep: () => void;
+  nextStepLabel: string;
 }) {
   const currentStep = stepState(Boolean(selectedPersona), Boolean(selectedUseCaseId));
-
-  const byTier = TIER_ORDER.map((tier) => ({
-    tier,
-    items: accounts.filter((a) => a.tier === tier).sort((a, b) => a.name.localeCompare(b.name))
-  }));
 
   return (
     <aside className="flex h-full flex-col border-r border-sf-border bg-sf-surface-muted p-4">
@@ -56,53 +46,13 @@ export function Sidebar({
         Accounts
       </div>
 
-      <div className="mt-3 flex flex-col gap-5">
-        {byTier.map(({ tier, items }) =>
-          items.length === 0 ? null : (
-            <div key={tier}>
-              <div className="text-[10px] font-semibold uppercase tracking-[0.12em] text-sf-foreground-muted/90">
-                {TIER_HEADINGS[tier]}
-              </div>
-              <div className="mt-2 flex flex-col gap-1">
-                {items.map((a) => {
-                  const selected = selectedAccount?.id === a.id;
-                  return (
-                    <button
-                      key={a.id}
-                      type="button"
-                      onClick={() => onAccountSelect(a.id)}
-                      className={[
-                        "group relative flex w-full items-center gap-2 rounded-xl py-2 pl-3 pr-2 text-left text-sm transition duration-150 outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-sf-surface-muted",
-                        selected
-                          ? "bg-white text-sf-foreground shadow-panel ring-1 ring-sf-border"
-                          : "text-sf-foreground-muted hover:bg-white/80 hover:text-sf-foreground"
-                      ].join(" ")}
-                    >
-                      <span
-                        className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full transition-opacity"
-                        style={{
-                          backgroundColor: a.color,
-                          opacity: selected ? 1 : 0
-                        }}
-                        aria-hidden="true"
-                      />
-                      <AccountGlyph className="shrink-0 opacity-90" size={18} />
-                      <span className="flex-1 pl-1">{a.name}</span>
-                      <span
-                        className={[
-                          "h-2 w-2 shrink-0 rounded-full transition",
-                          selected ? "" : "opacity-0 group-hover:opacity-50"
-                        ].join(" ")}
-                        style={{ backgroundColor: a.color }}
-                        aria-hidden="true"
-                      />
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )
-        )}
+      <div className="mt-3">
+        <AccountListByTier
+          accounts={accounts}
+          selectedAccountId={selectedAccount?.id ?? null}
+          onSelectAccount={onAccountSelect}
+          variant="sidebar"
+        />
       </div>
 
       <div className="mt-6 rounded-xl border border-sf-border bg-sf-surface p-3 shadow-panel">
@@ -132,6 +82,14 @@ export function Sidebar({
             </div>
           ))}
         </div>
+
+        <button
+          type="button"
+          onClick={onNextStep}
+          className="mt-3 w-full rounded-lg border border-sf-primary bg-sf-primary px-3 py-2.5 text-center text-sm font-semibold text-white shadow-sm transition duration-150 hover:bg-sf-primary-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sf-ring focus-visible:ring-offset-2 focus-visible:ring-offset-sf-surface"
+        >
+          {nextStepLabel}
+        </button>
       </div>
 
       {selectedAccount ? (

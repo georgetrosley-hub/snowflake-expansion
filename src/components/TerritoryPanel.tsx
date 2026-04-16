@@ -1,82 +1,112 @@
 "use client";
 
-import type { LucideIcon } from "lucide-react";
 import {
+  AlertTriangle,
   ArrowRight,
+  BadgeDollarSign,
   CircleDollarSign,
+  Cpu,
   FlaskConical,
   GitBranch,
+  Landmark,
   Lightbulb,
+  ShieldQuestion,
   Target,
+  UserCircle2,
   Users,
   Wrench
 } from "lucide-react";
 import type { AccountConfig } from "@/types";
+import { PanelField, PanelListSection } from "@/components/ui/panelPrimitives";
 
-function Field({
-  label,
-  value,
-  Icon,
-  accent
-}: {
-  label: string;
-  value: string;
-  Icon: LucideIcon;
-  accent?: string;
-}) {
-  return (
-    <div className="rounded-xl border border-sf-border bg-white p-4 shadow-panel">
-      <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-sf-foreground-muted">
-        <Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={2} aria-hidden />
-        {label}
-      </div>
-      <p className={`mt-2 text-sm leading-relaxed text-sf-foreground ${accent ?? ""}`}>{value}</p>
-    </div>
-  );
-}
+const detailsSummary =
+  "flex cursor-pointer list-none items-center justify-between gap-2 rounded-lg border border-sf-border bg-sf-surface-muted/80 px-4 py-3 text-sm font-semibold text-sf-foreground [&::-webkit-details-marker]:hidden";
 
 export function TerritoryPanel({ account }: { account: AccountConfig }) {
+  const d = account.dealIntelligence;
+
   return (
     <div className="animate-fade-in space-y-6">
       <div>
-        <div className="text-sm font-semibold text-sf-foreground">Territory operating picture</div>
+        <div className="text-sm font-semibold text-sf-foreground">Territory &amp; deal</div>
         <div className="mt-1 text-xs text-sf-foreground-muted">
-          Why this account, what to fix first, and how expansion runs. Stakeholders and wedges sit in the tabs below.
+          Operating picture, stakeholder path, and how the deal closes — buyers, risk, land and expand.
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Field label="Why now (compelling event)" value={account.why_now} Icon={Target} accent="font-medium" />
-        <Field label="What's broken" value={account.whats_broken} Icon={Wrench} />
-        <Field label="Hypothesis" value={account.hypothesis} Icon={Lightbulb} />
-        <Field label="First workload" value={account.first_workload} Icon={FlaskConical} accent="font-medium" />
-        <Field label="Proof point" value={account.proof_point} Icon={GitBranch} />
-        <Field label="Economic impact" value={account.economic_impact} Icon={CircleDollarSign} />
-      </div>
+      <details open className="group rounded-xl border border-sf-border bg-white shadow-panel">
+        <summary className={detailsSummary}>
+          <span>Operating picture</span>
+          <span className="text-xs font-normal text-sf-foreground-muted group-open:hidden">Show</span>
+          <span className="hidden text-xs font-normal text-sf-foreground-muted group-open:inline">Hide</span>
+        </summary>
+        <div className="space-y-6 border-t border-sf-border p-5">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <PanelField label="Why now (compelling event)" value={account.why_now} Icon={Target} accent="font-medium" />
+            <PanelField label="What's broken" value={account.whats_broken} Icon={Wrench} />
+            <PanelField label="Hypothesis" value={account.hypothesis} Icon={Lightbulb} />
+            <PanelField label="First workload" value={account.first_workload} Icon={FlaskConical} accent="font-medium" />
+            <PanelField label="Proof point" value={account.proof_point} Icon={GitBranch} />
+            <PanelField label="Economic impact" value={account.economic_impact} Icon={CircleDollarSign} />
+          </div>
 
-      <div className="rounded-xl border border-sf-border bg-white p-5 shadow-panel">
-        <div className="flex items-center gap-2 text-sm font-semibold text-sf-foreground">
-          <Users className="h-4 w-4 text-sf-foreground-muted" aria-hidden />
-          Deal path — stakeholders
-        </div>
-        <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-sf-foreground">
-          {account.deal_path.stakeholders.map((s, i) => (
-            <li key={i}>{s}</li>
-          ))}
-        </ol>
-      </div>
+          <PanelListSection
+            title="Deal path — stakeholders"
+            titleIcon={Users}
+            ordered
+            items={account.deal_path.stakeholders}
+          />
 
-      <div className="rounded-xl border border-sf-border bg-white p-5 shadow-panel">
-        <div className="flex items-center gap-2 text-sm font-semibold text-sf-foreground">
-          <ArrowRight className="h-4 w-4 text-sf-foreground-muted" aria-hidden />
-          Expansion flow
+          <PanelListSection
+            title="Expansion flow"
+            titleIcon={ArrowRight}
+            ordered
+            items={account.deal_path.expansionFlow}
+          />
         </div>
-        <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-sf-foreground">
-          {account.deal_path.expansionFlow.map((s, i) => (
-            <li key={i}>{s}</li>
-          ))}
-        </ol>
-      </div>
+      </details>
+
+      <details className="group rounded-xl border border-sf-border bg-white shadow-panel">
+        <summary className={detailsSummary}>
+          <span>Buyers, risk &amp; strategy</span>
+          <span className="text-xs font-normal text-sf-foreground-muted group-open:hidden">Show</span>
+          <span className="hidden text-xs font-normal text-sf-foreground-muted group-open:inline">Hide</span>
+        </summary>
+        <div className="space-y-6 border-t border-sf-border p-5">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <PanelField label="Entry point (first stakeholder)" value={d.entryPoint} Icon={UserCircle2} accent="font-medium" />
+            <PanelField label="Economic buyer" value={d.economicBuyer} Icon={BadgeDollarSign} />
+            <PanelField label="Technical buyer" value={d.technicalBuyer} Icon={Cpu} />
+            <PanelField label="Key risk" value={d.keyRisk} Icon={AlertTriangle} />
+            <PanelField label="Competitor / status quo" value={d.competitorStatusQuo} Icon={ShieldQuestion} />
+          </div>
+
+          <PanelListSection
+            title="Expansion path"
+            titleIcon={GitBranch}
+            subtitle="— after the initial win"
+            ordered
+            items={d.expansionPath}
+          />
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-xl border border-sf-border bg-white p-5 shadow-panel">
+              <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-sf-foreground-muted">
+                <Landmark className="h-3.5 w-3.5 shrink-0" strokeWidth={2} aria-hidden />
+                Land strategy
+              </div>
+              <div className="mt-2 text-sm leading-relaxed text-sf-foreground">{d.landStrategy}</div>
+            </div>
+            <div className="rounded-xl border border-sf-border bg-white p-5 shadow-panel">
+              <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-sf-foreground-muted">
+                <ArrowRight className="h-3.5 w-3.5 shrink-0" strokeWidth={2} aria-hidden />
+                Expand strategy
+              </div>
+              <div className="mt-2 text-sm leading-relaxed text-sf-foreground">{d.expandStrategy}</div>
+            </div>
+          </div>
+        </div>
+      </details>
     </div>
   );
 }

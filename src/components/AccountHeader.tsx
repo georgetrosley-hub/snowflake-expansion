@@ -3,16 +3,14 @@
 import type { AccountConfig, TabKey } from "@/types";
 import { AccountGlyph } from "@/components/icons/AccountGlyph";
 
-const TABS: TabKey[] = ["territory", "deal-view", "personas", "usecases", "demo", "outreach", "exec-triggers"];
+const TABS: TabKey[] = ["territory", "personas", "usecases", "demo", "outreach"];
 
 const TAB_LABELS: Record<TabKey, string> = {
   territory: "Territory",
-  "deal-view": "Deal View",
   personas: "Stakeholders",
   usecases: "Wedges",
   demo: "Demo",
-  outreach: "Touch",
-  "exec-triggers": "Exec Triggers"
+  outreach: "Touch"
 };
 
 const tabBtn =
