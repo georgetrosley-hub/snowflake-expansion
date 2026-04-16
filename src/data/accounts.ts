@@ -64,849 +64,1114 @@ function assembleAccount(
 }
 
 export const ACCOUNTS: AccountConfig[] = [
-  assembleAccount("pharma", {
-    id: "acc-vertex",
-    name: "Vertex Pharmaceuticals",
+  assembleAccount("healthcare", {
+    id: "acc-health-union",
+    name: "Health Union",
     tier: 1,
-    industry: "Pharma / Life Sciences",
+    industry: "Healthcare / Digital health & media",
     briefDescriptor:
-      "Global biotech; Snowflake live for enterprise workloads, while R&D and commercial still default to SAS and exports.",
+      "Patient and HCP engagement plus media monetization; post–Adfire acquisition, audiences and outcomes must unify without breaking revenue or compliance.",
     why_now:
-      "Major trial readouts this year; commercial analytics is being asked to move at drug-development speed.",
+      "Adfire closes the data-integration clock — the next sponsorship and formulary cycles need one governed story for who you reach, what clinicians do, and what you earn.",
     whats_broken:
-      "Snowflake consumption is concentrated in IT-led pipelines while R&D and commercial teams still export to SAS and spreadsheets.",
+      "Patient engagement, HCP targeting, and media performance sit in separate stacks — no joinable truth for attribution, audience quality, or regulatory defense.",
     hypothesis:
-      "The risk is not Snowflake capacity; it’s that R&D and commercial still treat SAS and exports as the only “real” modeling surface.",
+      "Monetization risk is not ‘more Snowflake’ — it’s that GTM and clinical analytics cannot prove the same cohort in one place when buyers and regulators ask.",
     first_workload:
-      "Clinical trial cohort scoring in Snowpark ML with OMOP-aligned synthetic data — prove sub-minute iteration vs overnight SAS.",
+      "Unified patient + HCP identity and consent graph in Snowflake — first scope: one therapeutic area with overlap, eligibility, and campaign attribution.",
     proof_point:
-      "In 48 hours: working cohort score in Snowflake + timed run vs the SAS job — numbers on the wall, not a slide.",
+      "Within 48 hours: one joint attributed cohort (patients + eligible HCPs) with lineage from source systems — no manual spreadsheet reconciliation.",
     economic_impact:
-      "Faster trial analytics cycles → earlier portfolio decisions; commercial targeting apps reduce agency and BI ticket load.",
+      "Higher sponsor renewal and CPM when audience quality is provable; fewer wasted placements; lower compliance exposure from inconsistent audience claims.",
     deal_path: {
       stakeholders: [
-        "VP Data Science (R&D)",
-        "Chief Data Officer",
-        "Head of Commercial Analytics",
-        "Enterprise procurement / cloud COE"
+        "Chief Analytics Officer",
+        "Chief Revenue Officer",
+        "Chief Privacy / Compliance Officer",
+        "VP Data Engineering / IT"
       ],
       expansionFlow: [
-        "Technical win on cohort ML in Snowflake",
-        "Add governance + Cortex for regulatory lineage",
-        "Expand Streamlit apps to commercial ops",
-        "Multi-year expansion aligned to launches"
+        "Identity + consent graph in Snowflake for one TA",
+        "Attribution and sponsor reporting on governed joins",
+        "Cross-brand audience products and Marketplace enrichment",
+        "Enterprise standard for monetization and compliance reviews"
       ]
     },
     dealIntelligence: {
-      entryPoint: "VP Data Science (R&D) — land on Snowpark ML cohort scoring vs overnight SAS before readout season peaks.",
+      entryPoint:
+        "Chief Analytics Officer — own the post-Adfire narrative: one audience layer that Finance and Privacy can defend in the same room.",
       expansionPath: [
-        "Prove governed cohort + timing win in R&D with a named trial metric.",
-        "Pull CDO + regulatory into Horizon / Cortex lineage for FDA posture.",
-        "Expand Streamlit apps into commercial with Marketplace joins.",
-        "Tie renewal to launch calendar and pipeline milestones."
+        "Prove one TA cohort + attribution with named lineage.",
+        "Pull CRO + Privacy into governed reporting for sponsor QBRs.",
+        "Expand Streamlit / Cortex surfaces for GTM self-service.",
+        "Tie renewal to measurable lift in sponsor NPS and compliance audit pass rate."
       ],
-      economicBuyer: "Chief Data Officer (platform + governance ROI) with CFO on trial-cycle velocity and commercial launch efficiency.",
-      technicalBuyer: "VP Data Science (R&D) owns the Snowpark model; Head of Commercial Analytics validates downstream apps.",
+      economicBuyer:
+        "CRO + CFO — sponsorship yield and risk-adjusted revenue; CPO on consent and HIPAA posture.",
+      technicalBuyer: "VP Data Engineering — pipelines, identity resolution, and Snowflake security model.",
       keyRisk:
-        "R&D treats SAS as ‘real’ modeling; if the first win doesn’t hit a readout decision timeline, the wedge stalls before commercial pulls budget.",
+        "Identity resolution stalls in legal — if the first workload doesn’t ship with a signed consent model, monetization stays on spreadsheets.",
       competitorStatusQuo:
-        "SAS batch jobs + spreadsheet exports for R&D; legacy BI for commercial; ‘good enough’ warehouse for IT-led pipelines.",
+        "Separate CDPs, media ad stacks, and clinical analytics; exports to spreadsheets for ‘real’ audience numbers.",
       landStrategy:
-        "Anchor a single trial cohort score in Snowflake with a wall-clock comparison to the SAS job, then lock a 30-day success path with R&D leadership.",
+        "Scope one therapeutic area and one sponsor-facing metric; wall-clock proof vs. current consolidation process.",
       expandStrategy:
-        "Sequence governance and Cortex to the regulatory narrative, then fund Streamlit commercial plays off the same governed data products."
+        "Sequence Privacy and GTM into the same Snowflake semantic layer, then fund additional TAs off the same patterns."
     },
     pipelineSnapshot: {
-      estimatedAcvRange: "$1.5M – $2.8M",
+      estimatedAcvRange: "$1.2M – $2.4M",
       dealLikelihood: "High",
-      timeline: "Q2 FY26 · initial land",
-      firstMeetingTarget: "VP Data Science (R&D)"
+      timeline: "FY26 · post-integration window",
+      firstMeetingTarget: "Chief Analytics Officer"
     },
     whySnowflakeWins: [
-      "Snowpark runs cohort scoring on OMOP-aligned enrollment + trial data already in Snowflake for IT-led workloads — R&D proves speed without standing up a parallel science stack.",
-      "Side-by-side vs overnight SAS lands in days, not a multi-quarter modeling platform bake-off — readout and enrollment decisions don’t wait on infra.",
-      "Governance, Cortex, and ML share one platform — regulatory lineage and commercial Streamlit aren’t separate compliance or BI projects."
+      "One platform for PHI-adjacent engagement data, HCP attributes, and media outcomes — governance and Cortex share the same objects as monetization.",
+      "Native sharing and Marketplace reduce copy/paste between ‘clinical’ and ‘media’ teams when regulators ask who saw what.",
+      "Streamlit and Cortex land on governed identity — not a separate visualization tool that drifts from the warehouse."
     ],
-    personaIndices: [0, 1, 2, 3, 4],
+    personaIndices: [0, 1, 2, 3],
     useCases: [
       {
-        id: "vertex-wedge-rnd-cohort",
-        title: "Win R&D: replace overnight SAS cohort scoring for trial readout prep",
+        id: "hu-wedge-unified-audience",
+        title: "Unified audience: patient + HCP overlap for one therapeutic area",
         summary:
-          "Vertex trial teams still wait on SAS batch jobs before key readout decisions; Snowpark ML is the wedge to prove same-day iteration.",
+          "Post-Adfire, prove one attributed cohort that both GTM and medical affairs trust for the same launch narrative.",
         first_workload:
-          "Snowpark ML cohort eligibility score on OMOP-aligned enrollment + trial criteria — side-by-side timing vs the SAS job.",
-        demoPersonaTemplateId: "pharma-vp-data-science"
+          "Identity graph + consent flags in Snowflake; Streamlit slice for eligible HCPs tied to engaged patients.",
+        demoPersonaTemplateId: "hc-cao"
       },
       {
-        id: "vertex-wedge-regulatory-lineage",
-        title: "Defend FDA posture: regulatory lineage + plain-English audit queries",
+        id: "hu-wedge-sponsor-lineage",
+        title: "Sponsor defense: lineage from raw engagement to reported reach",
         summary:
-          "Submission and quality leaders need defensible lineage without another ticket to data engineering for every audit question.",
+          "When a sponsor audits reach, the answer must be one query — not four exports.",
         first_workload:
-          "Horizon lineage to Cortex Analyst: one compliance question answered with full path in a single Snowflake session.",
-        demoPersonaTemplateId: "pharma-cdo"
+          "Horizon lineage + Cortex Analyst question on campaign reach with full path.",
+        demoPersonaTemplateId: "hc-cio-ciso"
       },
       {
-        id: "vertex-wedge-hcp-targeting",
-        title: "Commercial: HCP targeting without BI exports before the next launch wave",
+        id: "hu-wedge-hcp-app",
+        title: "HCP targeting without BI tickets between brand and analytics",
         summary:
-          "Vertex commercial ops still consolidates HCP lists offline; launch velocity is capped by spreadsheet cycle time.",
+          "Commercial needs same-day lists when creative or formulary shifts — not weekly batches.",
         first_workload:
-          "Streamlit in Snowflake: reps filter HCPs by specialty and engagement with Marketplace joins — no export.",
-        demoPersonaTemplateId: "pharma-head-commercial-analytics"
+          "Streamlit HCP filter on governed Snowflake tables with Marketplace enrichment.",
+        demoPersonaTemplateId: "hc-head-pop-health"
       },
       {
-        id: "vertex-wedge-batch-release",
-        title: "Manufacturing: multi-site batch visibility before QA holds pile up",
+        id: "hu-wedge-fhir-bridge",
+        title: "Clinical informatics: governed Epic/FHIR access for trial and quality cohorts",
         summary:
-          "Batch release data is fragmented by plant; leadership lacks one real-time view across Vertex manufacturing footprint.",
+          "Analysts still ticket IT for cohorts; unify Bulk FHIR landing with media-side identity.",
         first_workload:
-          "Streamlit batch release dashboard across plants with held-batch drill-down in Snowflake.",
-        demoPersonaTemplateId: "pharma-vp-manufacturing-ops"
-      },
-      {
-        id: "vertex-wedge-rwe-clean-room",
-        title: "RWE: claims + EHR linkage without vendor raw-data exposure",
-        summary:
-          "RWE is blocked by legal on sharing raw vendor feeds; Vertex needs a governed join that passes vendor and IRB review.",
-        first_workload:
-          "Data Clean Room join on synthetic claims + EHR with provable non-exposure per side.",
-        demoPersonaTemplateId: "pharma-dir-rwe"
+          "Bulk FHIR pipeline + analyst app for one quality measure cohort.",
+        demoPersonaTemplateId: "hc-dir-clinical-informatics"
       }
     ],
     execTriggers: [
-      "Vertex pipeline readout or PDUFA milestone (public calendar)",
-      "FDA data integrity or clinical site letter tied to Vertex trials",
-      "Vertex manufacturing expansion or plant consolidation news",
-      ...INDUSTRY_PLAYBOOKS.pharma.execTriggers.slice(1)
+      "Adfire integration milestone or executive town hall on unified data",
+      "CMS / FDA communication on DTC or HCP promotion",
+      "Major pharma sponsor renewal or RFP for condition-specific audience",
+      "Health Union leadership change in analytics or revenue"
     ]
   }),
 
   assembleAccount("financial", {
-    id: "acc-jpm",
-    name: "JPMorgan Chase",
+    id: "acc-everstage",
+    name: "Everstage",
     tier: 1,
-    industry: "Financial Services",
+    industry: "Revenue operations & incentive compensation (SaaS)",
     briefDescriptor:
-      "Global bank; Snowflake in production for analytics, while desk and risk workflows still split across tools and exports.",
+      "CPQ, commissions, and sales planning — intelligence fragmented across systems while the category expects a single operating picture.",
     why_now:
-      "Basel timelines and exam prep are forcing faster risk aggregation without new data movement projects.",
+      "Board and GTM leadership want one forecast and one payout story at quarter boundary — Finance, RevOps, and Sales still reconcile three spreadsheets.",
     whats_broken:
-      "Snowflake exists for analytics, but front-office and risk still treat it as a warehouse — not a compute layer for models and narratives.",
+      "CPQ, commissions, and territory planning do not share a governed semantic model — every planning cycle is a dispute, not a decision.",
     hypothesis:
-      "The risk is not missing a warehouse; it’s that risk and compliance can’t ask and defend a regulatory answer in one governed hop.",
+      "Category risk is not missing a warehouse — it’s that leadership cannot trust one number when quota, attainment, and planning disagree in public.",
     first_workload:
-      "Risk aggregation + plain-English regulatory query on synthetic counterparty exposure with full lineage in one environment.",
+      "Single Snowflake semantic layer for quota, attainment, draws, and payout — one drill path from CRM to commission engine.",
     proof_point:
-      "In 24–48 hours: Cortex Analyst on aggregated risk tables — one live question answered with lineage in the session.",
+      "Within one week: region → rep → deal → calculated payout with lineage from source systems — repeatable in a live QBR.",
     economic_impact:
-      "Fewer parallel platforms (Spark/SAS), faster exams, reduced operational risk from manual reporting.",
+      "Shorter planning cycles; fewer commission corrections and disputes; reduced revenue leakage from timing errors.",
     deal_path: {
-      stakeholders: ["CRO", "CCO", "Head of Quant Research", "VP Data Engineering", "IT security / data governance"],
+      stakeholders: [
+        "VP Revenue Operations",
+        "VP Data Engineering",
+        "CFO / FP&A lead",
+        "Chief Revenue Officer"
+      ],
       expansionFlow: [
-        "Prove governed risk Q&A in Snowflake",
-        "Snowpark quant path on tick data (no export)",
-        "AML narrative generation for ops scale",
-        "Enterprise standard for new analytics workloads"
+        "Semantic layer for QBR truth in Snowflake",
+        "Cortex / Streamlit for self-serve planning what-if",
+        "Expand to product usage and consumption metrics for SaaS expansion selling",
+        "Enterprise standard for RevOps + Finance reporting"
       ]
     },
     dealIntelligence: {
-      entryPoint: "Chief Risk Officer — start with governed risk Q&A + lineage in a Basel / exam prep window.",
+      entryPoint:
+        "VP Revenue Operations — anchor on one quarter-close metric everyone fights over (attainment vs. payout vs. plan).",
       expansionPath: [
-        "Prove one regulatory question answered in-session with full lineage.",
-        "Snowpark quant path on tick data without export.",
-        "AML narrative at ops scale for FinCEN timelines.",
-        "Standardize new analytics workloads on Snowflake."
+        "Land governed slice: region → rep → deal → payout.",
+        "Add FP&A and CRO to the same semantic layer for board prep.",
+        "Snowpark for predictive attainment and territory planning.",
+        "Package customer-facing proof for Everstage’s own GTM (meta motion)."
       ],
-      economicBuyer: "CRO + CFO (capital / op risk) with CCO on compliance and audit defensibility.",
-      technicalBuyer: "VP Data Engineering (platform) + Head of Quant Research (workloads) — security and model governance gates.",
+      economicBuyer: "CFO + CRO — forecast accuracy and sales efficiency as board-level metrics.",
+      technicalBuyer: "VP Data Engineering — CRM, commission engine, and ERP connectors into Snowflake.",
       keyRisk:
-        "Exam or initiative timing slips; without a single named regulatory deliverable, the deal stays a platform discussion.",
+        "RevOps owns the process but not IT priority — without a named exec sponsor, the semantic layer becomes a side project.",
       competitorStatusQuo:
-        "Spark/SAS for risk aggregates; separate BI and narrative tools; export to local Python for front office.",
+        "Everstage UI + exports; Finance models in spreadsheets; planning in a separate planning tool.",
       landStrategy:
-        "Attach to Basel or exam prep with a 48-hour Cortex Analyst proof on aggregated exposure — one live question, one lineage trail.",
+        "Pick one region and one payout dispute pattern; eliminate it with lineage in 10 days.",
       expandStrategy:
-        "Use the risk win to unlock Snowpark for quants, then push AML narrative and Dynamic Tables to retire parallel Spark chains."
+        "Use QBR credibility to pull FP&A and product analytics into the same warehouse for expansion and NRR storytelling."
     },
     pipelineSnapshot: {
-      estimatedAcvRange: "$2.0M – $4.2M",
+      estimatedAcvRange: "$900K – $1.8M",
       dealLikelihood: "High",
-      timeline: "Q2–Q3 FY26 · exam-aligned",
-      firstMeetingTarget: "Chief Risk Officer"
+      timeline: "FY26 · planning season",
+      firstMeetingTarget: "VP Revenue Operations"
     },
     whySnowflakeWins: [
-      "Risk aggregates and exposure tables already consolidate in Snowflake — Cortex + Horizon add plain-English answers and lineage without a fifth reporting system for exams.",
-      "A defensible regulatory answer with a named lineage path in days — not a 6-month data movement program before the next MRA.",
-      "Snowpark keeps tick and quant work inside policy — no new export pipeline that security will block under front-office pressure."
+      "Snowflake is the neutral system of record between CRM, CPQ, and commission engines — Everstage benefits when customers trust one drill path.",
+      "Dynamic Tables and tasks keep attainment current through month-end without another ETL product.",
+      "Cortex and Streamlit turn the same semantic layer into exec answers — not a separate BI stack that diverges."
     ],
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
       {
-        id: "jpm-wedge-risk-cortex",
-        title: "Basel / exam defense: CRO asks a risk question and gets lineage in one hop",
+        id: "ev-wedge-qbr-truth",
+        title: "QBR truth: one drill from region to payout",
         summary:
-          "JPM risk leadership needs sub-hour answers for regulatory stress — not a deck assembled from five systems.",
+          "Stop the quarterly argument — prove one path Sales and Finance sign.",
         first_workload:
-          "Cortex Analyst on aggregated exposure with Horizon lineage — live query in the risk forum.",
-        demoPersonaTemplateId: "fs-cro"
+          "Semantic views joining CRM stages, CPQ quotes, and commission results in Snowflake.",
+        demoPersonaTemplateId: "fs-head-client-analytics"
       },
       {
-        id: "jpm-wedge-quant-snowpark",
-        title: "Front office: quant backtests without tick data leaving Snowflake",
+        id: "ev-wedge-data-eng",
+        title: "Pipeline freshness: Dynamic Tables from CRM and commission engine",
         summary:
-          "JPM quants still export to local Python; IT blocks exports under policy — models stall.",
+          "Attainment that lags 24 hours loses trust — show always-current numbers.",
         first_workload:
-          "Snowpark parallel backtest on tick history entirely inside Snowflake — show wall-clock vs export path.",
-        demoPersonaTemplateId: "fs-head-quant-research"
-      },
-      {
-        id: "jpm-wedge-aml-narrative",
-        title: "Compliance: SAR narrative draft speed for AML ops backlog",
-        summary:
-          "FinCEN timelines compress; JPM ops still drafts SAR text manually from fragmented alert context.",
-        first_workload:
-          "Cortex LLM SAR narrative from flagged transactions in Snowflake — draft in minutes, human review before file.",
-        demoPersonaTemplateId: "fs-cco"
-      },
-      {
-        id: "jpm-wedge-dynamic-tables",
-        title: "Data engineering: Spark pipeline cost and failure rate on risk feeds",
-        summary:
-          "JPM DE owns four Spark jobs for the same risk aggregates Snowflake Dynamic Tables could replace.",
-        first_workload:
-          "Dynamic Tables DAG replacing one Spark chain — latency and cost in the same week.",
+          "Dynamic Tables + task graph for daily attainment vs. payout accrual.",
         demoPersonaTemplateId: "fs-vp-data-engineering"
       },
       {
-        id: "jpm-wedge-wealth-nba",
-        title: "Wealth: advisor next-best-action without another BI tool",
+        id: "ev-wedge-cro-forecast",
+        title: "Risk-adjusted forecast: CRO asks one question before the board",
         summary:
-          "Models exist; JPM wealth can’t get propensity into advisor workflow without exports.",
+          "Cortex Analyst on aggregated pipeline + commission exposure for downside cases.",
         first_workload:
-          "Streamlit advisor book with propensity + talk track — in-Snowflake only.",
-        demoPersonaTemplateId: "fs-head-client-analytics"
+          "Cortex Analyst on Snowflake marts — ‘top deals at risk of slip this quarter.’",
+        demoPersonaTemplateId: "fs-cro"
+      },
+      {
+        id: "ev-wedge-cco-policy",
+        title: "Policy compliance: trace plan rules to paid outcomes",
+        summary:
+          "When plans change mid-quarter, prove who was paid under which rule version.",
+        first_workload:
+          "Versioned plan tables + lineage to payout with Horizon.",
+        demoPersonaTemplateId: "fs-cco"
       }
     ],
     execTriggers: [
-      "JPM regulatory exam, MRA, or consent order in the news",
-      "JPM digital or cloud transformation milestone",
-      ...INDUSTRY_PLAYBOOKS.financial.execTriggers.slice(1)
+      "Everstage product launch affecting commissions or planning modules",
+      "Customer logo win in enterprise RevOps press",
+      "Quarter restatement or commission correction in public customer story",
+      "Competitive displacement announcement (Spiff, CaptivateIQ)"
     ]
   }),
 
   assembleAccount("healthcare", {
-    id: "acc-kaiser",
-    name: "Kaiser Permanente",
+    id: "acc-chalice-ai",
+    name: "Chalice AI",
     tier: 2,
-    industry: "Healthcare",
+    industry: "Healthcare AI / clinical intelligence",
     briefDescriptor:
-      "Integrated delivery network; Epic is the system of record, Snowflake underused for member intelligence at the edge.",
+      "Custom AI models per healthcare client — onboarding and data access become the bottleneck to ARR and margin.",
     why_now:
-      "VBC contract expansion requires daily attribution — weekly batch risk scores are now a quality and revenue problem.",
+      "Pipeline is growing faster than delivery — every new logo adds bespoke data work that strains professional services and margin.",
     whats_broken:
-      "Epic remains the system of record; analysts wait on extracts while Snowflake is underused for member-level intelligence.",
+      "Each client brings its own EHR, claims, and consent posture — model onboarding is a snowflake of pipelines, not a repeatable product layer.",
     hypothesis:
-      "The risk is not Epic data; it’s that care and analytics teams can’t act on governed member intelligence without ticket queues.",
+      "Scaling risk is not model quality alone — it’s that Chalice cannot prove time-to-first-insight per client on a standard data plane.",
     first_workload:
-      "Population health plain-language query (Cortex Analyst) on attributed member data — care managers self-serve without tickets.",
+      "Templated Snowflake project per client: Bulk FHIR + Snowpark feature store with one deployment playbook — first client in 30-day window.",
     proof_point:
-      "In 48 hours: one governed Cortex Analyst question on live attributed data — list in hand, no BI ticket.",
+      "Two clients side by side: same notebook pattern, different tenant databases — provision-to-first inference in a named SLA.",
     economic_impact:
-      "Fewer readmissions and admin cost; faster revenue cycle resolution from denial prediction.",
+      "Higher gross margin per implementation; faster logo-to-production; fewer services dollars per dollar of ARR.",
     deal_path: {
-      stakeholders: ["Chief Analytics Officer", "VP Revenue Cycle", "Director Clinical Informatics", "CIO / CISO"],
+      stakeholders: [
+        "VP Engineering / ML Platform",
+        "Chief Technology Officer",
+        "Head of Customer Success (enterprise)",
+        "VP Professional Services"
+      ],
       expansionFlow: [
-        "Win on pop health query + governance story",
-        "Add denial ML + Dynamic Tables feeds",
-        "FHIR pipeline for analyst self-service",
-        "Enterprise agreement across regions"
+        "Standard Snowflake tenant pattern + FHIR landing",
+        "Snowpark model registry and monitoring per client",
+        "Self-serve deployment metrics for Customer Success",
+        "Multi-tenant expansion and Marketplace data reuse"
       ]
     },
     dealIntelligence: {
-      entryPoint: "Chief Analytics Officer — population health plain-language query with governance for VBC.",
+      entryPoint:
+        "VP Engineering — reduce bespoke onboarding CPU; tie to margin and delivery SLAs the board already watches.",
       expansionPath: [
-        "Win on Cortex Analyst for care managers without BI tickets.",
-        "Add denial ML and Dynamic Tables feeds from Epic-adjacent data.",
-        "FHIR pipeline for analyst self-service.",
-        "Expand enterprise agreement across regions."
+        "One reference architecture: tenant DB + FHIR + Snowpark.",
+        "Operational dashboards for time-to-first model in production.",
+        "PS scope reduction sold with every new enterprise deal.",
+        "Snowflake credits bundled into Chalice pricing with governance story."
       ],
-      economicBuyer: "CAO + VP Revenue Cycle (margin / denial dollars) with payer leadership on VBC incentives.",
-      technicalBuyer: "Director Clinical Informatics + CIO/CISO for Epic boundaries and PHI posture.",
+      economicBuyer: "CTO + CFO — COGS and delivery capacity per new logo.",
+      technicalBuyer: "VP Engineering — ML platform, data isolation, and HIPAA posture.",
       keyRisk:
-        "Epic extract queues and IT change freezes; if the first win doesn’t hit a contract metric, expansion waits for the next budget cycle.",
+        "Services revenue masks the problem — if KPI isn’t margin per deployment, Snowflake looks like extra cost.",
       competitorStatusQuo:
-        "Weekly batch reports + BI tickets; Epic as the only ‘trusted’ surface; spreadsheets for gap closure.",
+        "Per-client VPC sprawl, bespoke Python environments, and manual handoffs to customer IT.",
       landStrategy:
-        "Pick one attributed population and one plain-English question; deliver the intervention list in a live session with care managers.",
+        "Pick one enterprise client stuck in onboarding — migrate the critical path to the template in 4 weeks.",
       expandStrategy:
-        "Tie denial ML and daily refresh to revenue integrity, then sell FHIR landing as the unlock for analyst self-service."
+        "Productize monitoring and retraining in Snowflake; sell faster expansion inside existing accounts."
     },
     pipelineSnapshot: {
-      estimatedAcvRange: "$850K – $1.5M",
+      estimatedAcvRange: "$650K – $1.3M",
       dealLikelihood: "Medium",
-      timeline: "Q3 FY26",
-      firstMeetingTarget: "Chief Analytics Officer"
+      timeline: "FY26 · delivery backlog",
+      firstMeetingTarget: "VP Engineering / ML Platform"
     },
     whySnowflakeWins: [
-      "Attributed member and claims paths already land for analytics — Cortex and Snowpark extend what’s governed today instead of copying PHI into another warehouse.",
-      "Care-manager intervention lists in days — not another BI ticket queue while VBC contracts demand daily gap closure.",
-      "Bulk FHIR + masking reuse Snowflake roles and Epic-adjacent feeds — fewer one-off regulated pipes every time analysts need a cohort."
+      "Secure data isolation per client with one platform pattern — fewer one-off clouds to secure and audit.",
+      "Snowpark keeps training and inference where PHI already landed — no export to external GPU farms for core paths.",
+      "Horizon and masking policies scale with each new tenant instead of reinventing compliance per stack."
     ],
-    personaIndices: [0, 1, 2, 3, 4],
+    personaIndices: [2, 0, 4, 1],
     useCases: [
       {
-        id: "kaiser-wedge-pop-query",
-        title: "VBC: care managers ask population questions without BI tickets",
+        id: "ch-wedge-fhir-template",
+        title: "Client onboarding: Bulk FHIR + feature store template",
         summary:
-          "Kaiser gap closure is capped by weekly reports; contracts need daily intervention lists.",
+          "Cut weeks off first model in production by standardizing ingestion and features.",
         first_workload:
-          "Cortex Analyst on attributed members — one plain-English cohort question answered live.",
-        demoPersonaTemplateId: "hc-cao"
-      },
-      {
-        id: "kaiser-wedge-denial-ml",
-        title: "Revenue cycle: denial prediction before claims leave Epic",
-        summary:
-          "Kaiser still sees denials 30 days later; billers need score at submission time.",
-        first_workload:
-          "Snowpark ML denial probability at claim submission — feature importance on payer + CPT.",
-        demoPersonaTemplateId: "hc-vp-revenue-cycle"
-      },
-      {
-        id: "kaiser-wedge-fhir-analyst",
-        title: "Clinical informatics: Bulk FHIR to governed analyst access",
-        summary:
-          "Analysts queue for Epic extracts; Kaiser needs cohort queries without touching Epic directly.",
-        first_workload:
-          "Bulk FHIR landing + Streamlit cohort app for diagnosis-based lists in Snowflake.",
+          "Snowflake tenant + Bulk FHIR + Snowpark features for one pilot hospital system.",
         demoPersonaTemplateId: "hc-dir-clinical-informatics"
       },
       {
-        id: "kaiser-wedge-daily-risk",
-        title: "Population health: daily risk refresh vs weekly batch scoring",
+        id: "ch-wedge-cao-outcomes",
+        title: "Prove outcomes: CAO-facing cohort app on governed data",
         summary:
-          "Weekly risk scores miss same-week utilization; care management can’t prioritize in time.",
+          "Buyers need to see population outcomes, not notebooks — Streamlit on Snowflake.",
         first_workload:
-          "Dynamic Tables + Snowpark ML daily risk refresh with care manager view.",
-        demoPersonaTemplateId: "hc-head-pop-health"
+          "Cortex + Streamlit for one clinical outcome metric tied to model predictions.",
+        demoPersonaTemplateId: "hc-cao"
       },
       {
-        id: "kaiser-wedge-phi-research",
-        title: "Security: PHI masking + clean room for research cohorts",
+        id: "ch-wedge-phi-governance",
+        title: "Tenant expansion: PHI masking and audit for each new client",
         summary:
-          "Kaiser research needs aggregate outcomes without exposing PHI to analysts who shouldn’t see it.",
+          "Legal blocks reuse when masking isn’t policy-driven — Dynamic Masking + Horizon.",
         first_workload:
-          "Masked role views + clean room aggregate query — IRB-ready walkthrough.",
+          "Role-based masking demo on shared schema pattern for multi-tenant.",
         demoPersonaTemplateId: "hc-cio-ciso"
+      },
+      {
+        id: "ch-wedge-denials",
+        title: "Payer-connected: denial and revenue-cycle signal for model features",
+        summary:
+          "Claims features without building a separate claims stack per client.",
+        first_workload:
+          "Snowpark ML on claims extracts co-located with clinical features.",
+        demoPersonaTemplateId: "hc-vp-revenue-cycle"
       }
     ],
     execTriggers: [
-      "Kaiser VBC contract expansion or Medicare Advantage pressure",
-      "Kaiser Epic migration or major IT initiative",
-      ...INDUSTRY_PLAYBOOKS.healthcare.execTriggers.slice(1)
+      "Chalice AI Series B or staffing announcement",
+      "Large health system logo with public case study",
+      "ONC / HIPAA enforcement headline in AI documentation",
+      "Competitor delay or outage in clinical AI delivery"
     ]
   }),
 
   assembleAccount("manufacturing", {
-    id: "acc-siemens",
-    name: "Siemens Digital Industries",
+    id: "acc-ciena",
+    name: "Ciena",
     tier: 2,
-    industry: "Manufacturing / Industrial",
+    industry: "Telecommunications equipment & network systems",
     briefDescriptor:
-      "Industrial automation leader; OT historians and MES hold truth, Snowflake not yet the operational nervous system.",
+      "AI and automation backlog growing while operations and finance lack one real-time view of execution and margin.",
     why_now:
-      "Plant consolidation and Industry 4.0 mandates require OT data in one place — board is watching downtime minutes.",
+      "Product and services leadership are under margin pressure — AI initiatives multiply while plant and supply metrics still close on weekly batches.",
     whats_broken:
-      "Historians and MES hold the truth; Snowflake is a sidecar instead of the real-time operational layer.",
+      "Engineering and ops AI workstreams are not tied to the same operational and financial truth — backlog, WIP, and margin signals diverge.",
     hypothesis:
-      "The risk is not more sensors; it’s that OT truth never reaches the layer where maintenance and finance actually decide.",
+      "The gap is not more models — it’s that leadership cannot see execution risk and margin impact in one hop when priorities compete.",
     first_workload:
-      "Multi-line sensor dashboard with anomaly flags from streaming historian feeds into Snowflake.",
+      "Unified Snowflake layer for order backlog, shipment, and cost actuals — Dynamic Tables from ERP + MES with daily margin bridge.",
     proof_point:
-      "In 48 hours: streaming historian slice → Snowflake dashboard with one anomaly drill — time-to-flag in the room.",
+      "Within two weeks: one executive view — backlog aging + projected margin by program with drill to line and supplier — vs. current consolidation time.",
     economic_impact:
-      "Downtime avoidance + supplier risk visibility; FP&A variance reporting at close without Excel marathons.",
+      "Faster reallocation of engineering capacity; lower expedite and scrap; better pricing decisions when margin is current.",
     deal_path: {
       stakeholders: [
         "VP Operations Technology",
+        "VP FP&A / Manufacturing finance",
         "Chief Supply Chain Officer",
-        "Head of Quality Engineering",
-        "Plant IT / OT security"
+        "Director Digital Manufacturing"
       ],
       expansionFlow: [
-        "Land OT streaming + dashboard",
-        "Supplier risk intel with Marketplace feeds",
-        "Quality traceability ML across sites",
-        "Digital twin data foundation for enterprise rollout"
+        "OT + ERP signals into Snowflake for one product line",
+        "Cortex Analyst for exec questions on backlog and margin",
+        "AI workstream prioritization tied to margin and ship date",
+        "Enterprise standard for program and services P&L"
       ]
     },
     dealIntelligence: {
-      entryPoint: "VP Operations Technology — OT historian streaming into Snowflake for line health before downtime.",
+      entryPoint:
+        "VP Operations Technology — align AI backlog to what the line and finance already agree is true.",
       expansionPath: [
-        "Land OT streaming + real-time dashboard.",
-        "Supplier risk intel with Marketplace signals.",
-        "Quality traceability ML across plants.",
-        "Digital twin foundation for enterprise rollout."
+        "Prove one program with live backlog + margin drill-down.",
+        "Add supplier and services cost into the same semantic layer.",
+        "Prioritize AI initiatives where margin impact is measurable.",
+        "Expand to global plants with Secure Data Sharing between regions."
       ],
-      economicBuyer: "Chief Supply Chain Officer + plant FP&A (downtime and supplier disruption dollars).",
-      technicalBuyer: "VP Ops Technology + OT security — connectivity, segmentation, and MES/historian truth.",
+      economicBuyer: "COO + CFO — margin and on-time delivery as board metrics.",
+      technicalBuyer: "VP Ops Technology + IT — historian, ERP, and MES integration.",
       keyRisk:
-        "OT security and change control slow connectivity; pilots stall if anomaly signal doesn’t tie to a maintenance action.",
+        "Manufacturing IT timeline — if OT integration slips, the deal stays a finance dashboard.",
       competitorStatusQuo:
-        "Historians and MES per plant; Excel for FP&A close; point BI tools for operations.",
+        "Separate MES, ERP, and planning tools; Excel bridges for margin; AI in isolated sandboxes.",
       landStrategy:
-        "Anchor on one line or one plant with streaming historian → anomaly drill-down in one executive readout.",
+        "Anchor on one high-visibility program with a missed quarter story — show live margin bridge.",
       expandStrategy:
-        "Layer supplier risk and quality ML as follow-on modules, then position the twin as the enterprise data foundation."
+        "Use exec Cortex wins to fund OT pipeline standardization on Snowflake."
     },
     pipelineSnapshot: {
-      estimatedAcvRange: "$1.1M – $1.9M",
+      estimatedAcvRange: "$1.8M – $3.2M",
       dealLikelihood: "Medium",
-      timeline: "Q3 FY26 · OT pilot window",
+      timeline: "FY26 · margin programs",
       firstMeetingTarget: "VP Operations Technology"
     },
     whySnowflakeWins: [
-      "Historian and MES truth stream in without replacing plants — Dynamic Tables + Streamlit sit on OT data the team already owns.",
-      "Line health and anomaly signal in weeks — not a new cross-plant data lake program before the board sees downtime minutes move.",
-      "Supplier risk and plant KPIs join in one environment — no separate “ops hub” science project when disruption is already on the exec agenda."
+      "Dynamic Tables and streaming unify fast-changing OT and ERP signals without another proprietary historian cloud.",
+      "One place for AI features and financial actuals — Snowpark models consume the same grain Finance trusts.",
+      "Cortex closes the gap between the plant floor and the exec question — not a separate BI layer that lags."
     ],
-    personaIndices: [0, 1, 2, 3, 4],
+    personaIndices: [0, 3, 4, 1],
     useCases: [
       {
-        id: "siemens-wedge-ot-dashboard",
-        title: "OT: historian → Snowflake real-time line health before unplanned downtime",
+        id: "ci-wedge-ot-dashboard",
+        title: "Historian to margin: OT + ERP in one executive layer",
         summary:
-          "Siemens plants still discover failures after the line stops; maintenance needs hours-early signal.",
+          "Backlog and downtime visible next to margin — where AI should focus first.",
         first_workload:
-          "Dynamic Tables from historian + Streamlit multi-line anomaly dashboard.",
+          "Dynamic Tables from historian + ERP into Snowflake; Streamlit exec dashboard.",
         demoPersonaTemplateId: "mfg-vp-ops-technology"
       },
       {
-        id: "siemens-wedge-supplier-risk",
-        title: "Supply chain: tier-1 supplier risk with external signals",
+        id: "ci-wedge-fpa-variance",
+        title: "FP&A: plant variance in plain English after close",
         summary:
-          "Post-disruption, Siemens procurement rebuilt spreadsheets; exec wants live supplier concentration.",
+          "When margin moves, leadership asks why — answer in seconds, not three days.",
         first_workload:
-          "Cortex Analyst on supplier master + Marketplace risk feeds — one question, one list.",
-        demoPersonaTemplateId: "mfg-csco"
+          "Cortex Analyst on plant cost and revenue marts.",
+        demoPersonaTemplateId: "mfg-vp-fpa"
       },
       {
-        id: "siemens-wedge-quality-trace",
-        title: "Quality: lot-level trace + ML root cause across Siemens plants",
+        id: "ci-wedge-digital-twin",
+        title: "Digital manufacturing: current-state twin data for AI prioritization",
         summary:
-          "Defect investigations still span four systems; quality needs one lot search.",
+          "AI backlog tied to line state — Dynamic Tables feeding digital twin metrics.",
         first_workload:
-          "Cortex Search + Snowpark ML root cause on serialized lot + machine variables.",
-        demoPersonaTemplateId: "mfg-head-quality-engineering"
-      },
-      {
-        id: "siemens-wedge-digital-twin",
-        title: "Digital manufacturing: twin data foundation from live feeds",
-        summary:
-          "Digital twin program stalled because process parameters weren’t current in one place.",
-        first_workload:
-          "Dynamic Tables state + Streamlit what-if on CNC parameters.",
+          "Sensor + process parameters to Snowflake for one line with what-if in Streamlit.",
         demoPersonaTemplateId: "mfg-dir-digital-manufacturing"
       },
       {
-        id: "siemens-wedge-fpa-close",
-        title: "Plant FP&A: close variance in hours, not Excel marathons",
+        id: "ci-wedge-supplier",
+        title: "Supply risk: tier-1 concentration with external signals",
         summary:
-          "Siemens finance still consolidates plant P&L in Excel for days after month-end.",
+          "When suppliers slip, backlog and margin move together — join Marketplace risk to internal master.",
         first_workload:
-          "Cortex Analyst on plant COGS variance — plain English question, drill-down table.",
-        demoPersonaTemplateId: "mfg-vp-fpa"
+          "Cortex Analyst on supplier master + Marketplace feeds.",
+        demoPersonaTemplateId: "mfg-csco"
       }
     ],
     execTriggers: [
-      "Siemens plant consolidation or Industry 4.0 board mandate",
-      "Major supply disruption affecting Siemens tier-1 suppliers",
-      ...INDUSTRY_PLAYBOOKS.manufacturing.execTriggers.slice(1)
-    ]
-  }),
-
-  assembleAccount("healthcare", {
-    id: "acc-unitedhealth",
-    name: "UnitedHealth Group",
-    tier: 2,
-    industry: "Healthcare",
-    briefDescriptor:
-      "National payer; heavy Snowflake spend, uneven activation across payer and clinical analytics teams.",
-    why_now:
-      "Stars and HEDIS pressure is visible in executive OKRs; analytics teams are being asked for daily intervention lists.",
-    whats_broken:
-      "Snowflake spend is growing but persona coverage is uneven — payer analytics and clinical still siloed.",
-    hypothesis:
-      "The risk is not weekly batch scoring; it’s that Stars and HEDIS incentives require daily intervention lists nobody can produce on demand.",
-    first_workload:
-      "Daily risk stratification refresh (Dynamic Tables + Snowpark ML) replacing weekly batch scoring.",
-    proof_point:
-      "In 48 hours: daily refresh DAG + before/after score freshness on one market — gap closure list in the meeting.",
-    economic_impact:
-      "Quality bonus preservation + revenue integrity; lower cost of care through earlier interventions.",
-    deal_path: {
-      stakeholders: ["Chief Analytics Officer", "Head of Population Health", "VP Medicare Advantage", "Enterprise data office"],
-      expansionFlow: [
-        "Daily scoring pilot on one market",
-        "Expand to additional lines of business",
-        "PHI masking + clean rooms for research use cases",
-        "Corporate standard for new analytics products"
-      ]
-    },
-    dealIntelligence: {
-      entryPoint: "Chief Analytics Officer — daily Stars/HEDIS intervention lists vs weekly batch scoring.",
-      expansionPath: [
-        "Daily scoring pilot on one MA market.",
-        "Expand to additional lines of business.",
-        "PHI masking + clean rooms for research use cases.",
-        "Corporate standard for new analytics products."
-      ],
-      economicBuyer: "VP Medicare Advantage + CAO — Stars bonus and quality dollars at stake.",
-      technicalBuyer: "Enterprise data office + population health leadership — pipeline SLAs and PHI policy.",
-      keyRisk:
-        "Internal platform fatigue; if daily refresh doesn’t change gap closure actions in-market, the pilot dies as a reporting exercise.",
-      competitorStatusQuo:
-        "Weekly batch risk scores + legacy BI; fragmented analytics between payer and clinical teams.",
-      landStrategy:
-        "Pick one region and one daily list tied to a named Stars measure; show before/after freshness in the same forum.",
-      expandStrategy:
-        "Roll geography by geography with LOB expansion, then sell governance + clean rooms as the enterprise cross-LOB story."
-    },
-    pipelineSnapshot: {
-      estimatedAcvRange: "$1.2M – $2.6M",
-      dealLikelihood: "Medium",
-      timeline: "Q2–Q3 FY26",
-      firstMeetingTarget: "Chief Analytics Officer (Medicare Advantage)"
-    },
-    whySnowflakeWins: [
-      "Payer and Optum analytics already run at scale in Snowflake — daily Stars/HEDIS scoring adds DAGs and apps on the same governed member plane, not a second warehouse for ‘real time.’",
-      "Intervention lists tied to named measures in days — not another annual BI roadmap while CMS moves mid-year.",
-      "PHI masking and clean rooms attach to the same roles and datasets research and MA already fight over — one policy story instead of duplicate consent architectures."
-    ],
-    personaIndices: [0, 1, 2, 3, 4],
-    useCases: [
-      {
-        id: "uhg-wedge-stars-daily",
-        title: "Medicare Advantage: daily Stars/HEDIS intervention lists",
-        summary:
-          "UnitedHealth MA plans need same-day gap lists; weekly batch misses mid-year CMS shifts.",
-        first_workload:
-          "Daily Dynamic Tables refresh into pop health Cortex Analyst app for one region.",
-        demoPersonaTemplateId: "hc-cao"
-      },
-      {
-        id: "uhg-wedge-denial",
-        title: "OptumInsight: denial prediction tied to Optum payment workflows",
-        summary:
-          "UnitedHealth still loses margin to denials discovered after submission at scale.",
-        first_workload:
-          "Snowpark ML at submission on Optum-coded claims — score before leave workflow.",
-        demoPersonaTemplateId: "hc-vp-revenue-cycle"
-      },
-      {
-        id: "uhg-wedge-fhir",
-        title: "Clinical integration: FHIR access for UM without Epic tickets",
-        summary:
-          "Utilization management waits on extracts; UnitedHealth needs governed cohorts faster.",
-        first_workload:
-          "Bulk FHIR + Streamlit UM cohort filters in Snowflake.",
-        demoPersonaTemplateId: "hc-dir-clinical-informatics"
-      },
-      {
-        id: "uhg-wedge-risk-daily",
-        title: "Population health: replace weekly UM risk batch with daily scoring",
-        summary:
-          "UnitedHealth care management targets weekly lists; ED visits happen between batches.",
-        first_workload:
-          "Daily Snowpark risk + Dynamic Tables to care manager app.",
-        demoPersonaTemplateId: "hc-head-pop-health"
-      },
-      {
-        id: "uhg-wedge-phi",
-        title: "Enterprise: PHI governance for research and payer analytics together",
-        summary:
-          "UnitedHealth needs one PHI policy for research sandboxes and payer models.",
-        first_workload:
-          "Masking policies + clean room aggregate for research query.",
-        demoPersonaTemplateId: "hc-cio-ciso"
-      }
-    ],
-    execTriggers: [
-      "UnitedHealth Stars or MA margin pressure in earnings narrative",
-      "CMS rule change affecting UnitedHealth reporting timelines",
-      ...INDUSTRY_PLAYBOOKS.healthcare.execTriggers.slice(2)
-    ]
-  }),
-
-  assembleAccount("pharma", {
-    id: "acc-novartis",
-    name: "Novartis",
-    tier: 3,
-    industry: "Pharma / Life Sciences",
-    briefDescriptor:
-      "Top-tier pharma; platform present, expansion opportunistic until a regulatory or trial trigger creates urgency.",
-    why_now:
-      "Pipeline and launch calendar is active but expansion is opportunistic — monitor for regulatory or M&A signals.",
-    whats_broken:
-      "Same pattern as peers: platform present, personas under-mapped, Snowpark and governance under-activated.",
-    hypothesis:
-      "The risk is not Snowflake capacity; it’s that activation waits for a trigger instead of a named wedge and owner.",
-    first_workload:
-      "RWE clean room join demo (claims + EHR) when data-sharing pain resurfaces in vendor discussions.",
-    proof_point:
-      "In 48 hours: working clean room join + “what neither party sees” walkthrough — legal posture in one session.",
-    economic_impact:
-      "Faster RWE studies; reduced vendor duplicative spend.",
-    deal_path: {
-      stakeholders: ["Director RWE", "VP Data Science", "Procurement", "IT alliance"],
-      expansionFlow: [
-        "Monitor exec triggers",
-        "Re-engage with specific demo tied to event",
-        "Pilot workload",
-        "Expand on success"
-      ]
-    },
-    dealIntelligence: {
-      entryPoint: "Director RWE — clean room when vendor data-sharing blocks a study (or VP Data Science if trial stress hits).",
-      expansionPath: [
-        "Attach to a named RWE or trial trigger event.",
-        "Re-engage with a scoped demo tied to legal and procurement.",
-        "Pilot workload with success metrics.",
-        "Expand on proof; avoid broad platform pitches."
-      ],
-      economicBuyer: "Procurement + RWE leadership — vendor spend and study throughput.",
-      technicalBuyer: "IT alliance + data science — integration and governance acceptance.",
-      keyRisk:
-        "Opportunistic motion without a calendar trigger; deal stays in ‘monitor’ until a compelling event forces a named owner.",
-      competitorStatusQuo:
-        "SAS and vendor duplicative feeds; ‘wait for the next initiative’ as default.",
-      landStrategy:
-        "Lead with a clean room join that proves non-exposure to both sides — legal in the room, not a slide.",
-      expandStrategy:
-        "After the first proof, attach Snowpark cohort and commercial Streamlit to specific launch or enrollment pressure."
-    },
-    pipelineSnapshot: {
-      estimatedAcvRange: "$450K – $950K",
-      dealLikelihood: "Low",
-      timeline: "Q3–Q4 FY26 · trigger-led",
-      firstMeetingTarget: "Director, RWE"
-    },
-    whySnowflakeWins: [
-      "Snowflake is already the contract for enterprise analytics — clean room + Snowpark activate vendor-blocked RWE without a net-new platform evaluation when the trigger hits.",
-      "Legal sees non-exposure in a working join in one session — not a 9-month ‘data collaboration’ program before the study moves.",
-      "RWE, commercial, and R&D cohort work reuse the same governance and Marketplace paths — not three duplicate spend lines on parallel stacks."
-    ],
-    personaIndices: [0, 3, 4],
-    useCases: [
-      {
-        id: "novartis-wedge-rwe-trigger",
-        title: "RWE: vendor data-sharing wall — clean room as the unlock",
-        summary:
-          "Novartis RWE studies stall when second vendor won’t share raw; legal needs provable non-exposure.",
-        first_workload:
-          "Clean room join demo with claims + EHR synthetic — query output both sides can approve.",
-        demoPersonaTemplateId: "pharma-dir-rwe"
-      },
-      {
-        id: "novartis-wedge-commercial",
-        title: "Launch: HCP targeting velocity for upcoming brand push",
-        summary:
-          "Novartis commercial needs faster targeting iterations than BI cycle allows pre-launch.",
-        first_workload:
-          "Streamlit HCP filter with Marketplace joins — one session build.",
-        demoPersonaTemplateId: "pharma-head-commercial-analytics"
-      },
-      {
-        id: "novartis-wedge-rnd-cohort",
-        title: "R&D: Snowpark cohort when trial program hits enrollment stress",
-        summary:
-          "When Novartis trial hits recruitment issues, SAS latency blocks scenario modeling.",
-        first_workload:
-          "Snowpark cohort scoring notebook in Snowflake vs overnight SAS — timed comparison.",
-        demoPersonaTemplateId: "pharma-vp-data-science"
-      }
+      "Ciena earnings call citing margin or supply chain pressure",
+      "Large carrier or cloud network build announcement",
+      "Plant or regional restructuring news",
+      "AI partnership or acquisition in telecom infra"
     ]
   }),
 
   assembleAccount("financial", {
-    id: "acc-wells",
-    name: "Wells Fargo",
-    tier: 3,
-    industry: "Financial Services",
+    id: "acc-sagent",
+    name: "Sagent",
+    tier: 2,
+    industry: "Mortgage servicing technology (SaaS)",
     briefDescriptor:
-      "National bank; Snowflake in place, front-office and compliance adoption still initiative-by-initiative.",
+      "Dara and platform rollout — servicers need proof of deployment success and outcomes across customers, not slide-level milestones.",
     why_now:
-      "Transformation milestones are episodic — best entry is aligned to exam, integration, or digital initiative news.",
+      "Dara is in market — every servicer asks whether implementation actually improved operations and compliance, not just whether go-live happened.",
     whats_broken:
-      "Snowflake footprint without full front-office and compliance adoption — expansion is motion-dependent.",
+      "Deployment telemetry and borrower outcomes are not unified per customer — Customer Success cannot prove value at renewal with one dataset.",
     hypothesis:
-      "The risk is not footprint; it’s that expansion only lands when tied to a named initiative with a single owner.",
+      "The risk is not feature parity — it’s that Sagent cannot show cross-customer deployment health and ROI on a governed plane.",
     first_workload:
-      "Advisor next-best-action Streamlit when wealth leadership prioritizes advisor tooling.",
+      "Snowflake customer schemas for implementation events, loan metrics, and support signals — standard package per servicer tenant.",
     proof_point:
-      "In 48 hours: Streamlit slice of advisor book + propensity — one rep workflow, no BI export.",
+      "Within 30 days: one renewal QBR with before/after on delinquency, call volume, or SLA metrics straight from Snowflake — no manual extract.",
     economic_impact:
-      "AUM and cross-sell lift; reduced time spent on manual client prioritization.",
+      "Higher net retention; shorter professional services; fewer at-risk renewals when value is visible early.",
     deal_path: {
-      stakeholders: ["Head of Client Analytics", "Wealth platform owner", "AE coverage", "SE specialist"],
+      stakeholders: [
+        "VP Customer Success (enterprise)",
+        "VP Data / Analytics",
+        "Chief Product Officer",
+        "CTO"
+      ],
       expansionFlow: [
-        "Signal on initiative",
-        "Align demo to initiative owner",
-        "Pilot",
-        "Scale to regions"
+        "Tenant telemetry + loan KPIs in Snowflake per customer",
+        "Success dashboards and renewal scorecards",
+        "Product analytics on feature adoption across tenants",
+        "Embedded Snowflake offerings for servicer self-service analytics"
       ]
     },
     dealIntelligence: {
-      entryPoint: "Head of Client Analytics — advisor next-best-action when a wealth transformation initiative is active.",
+      entryPoint:
+        "VP Customer Success — renewal risk tied to unprovable outcomes after Dara go-live.",
       expansionPath: [
-        "Align to a named initiative owner with a single success metric.",
-        "Pilot Streamlit advisor workflow in a branch or region.",
-        "Scale Dynamic Tables to retire parallel Spark on risk aggregates.",
-        "Expand compliance narratives under exam pressure."
+        "Land one flagship servicer with full telemetry in Snowflake.",
+        "Package QBR template with Snowflake-backed metrics.",
+        "Product uses same data for roadmap and adoption.",
+        "Sell analytics upsell to servicer buyers."
       ],
-      economicBuyer: "Wealth platform owner + CFO — AUM lift and advisor productivity.",
-      technicalBuyer: "VP Data Engineering — pipeline and policy compliance for exports.",
+      economicBuyer: "CRO + CFO — NRR and services efficiency.",
+      technicalBuyer: "CTO + VP Data — multi-tenant isolation and SOC2 evidence.",
       keyRisk:
-        "Initiative timing; without a single named program, Wells expands initiative-by-initiative and the deal fragments.",
+        "Customers own their data contracts — if legal blocks tenant telemetry, proof stays anecdotal.",
       competitorStatusQuo:
-        "Spreadsheet prioritization for advisors; parallel Spark for aggregates; manual SAR narrative under pressure.",
+        "Per-customer reporting in their tools; Sagent exports for quarterly business reviews.",
       landStrategy:
-        "Anchor a Streamlit slice of advisor book + propensity to one pilot with a 30-day usage metric.",
+        "Co-build with one servicer facing renewal — metrics they already track, automated from Snowflake.",
       expandStrategy:
-        "Use the pilot to win Dynamic Tables for risk feeds, then attach AML/Cortex when exam pressure resurfaces."
+        "Productize scorecards; reduce PS hours per go-live; upsell Snowflake consumption to end servicers."
     },
     pipelineSnapshot: {
-      estimatedAcvRange: "$350K – $750K",
-      dealLikelihood: "Low",
-      timeline: "Q3–Q4 FY26 · initiative gate",
-      firstMeetingTarget: "Head of Client Analytics (Wealth)"
+      estimatedAcvRange: "$500K – $1.1M",
+      dealLikelihood: "Medium",
+      timeline: "FY26 · Dara rollouts",
+      firstMeetingTarget: "VP Customer Success"
     },
     whySnowflakeWins: [
-      "Advisor and risk feeds already land in governed Snowflake environments — Streamlit propensity sits on existing data, not a rip-and-replace wealth platform.",
-      "A working advisor slice in two sprints — not a year-long initiative queue for ‘digital experience.’",
-      "Dynamic Tables retires Spark on risk aggregates already in Snowflake — fewer regulated pipes and fewer jobs that break when the initiative clock is ticking."
+      "Clean multi-tenant pattern with row access policies — each servicer’s data stays isolated with one ops model.",
+      "Snowflake Marketplace can enrich with macro and credit data without copying sensitive files out.",
+      "Same warehouse for product analytics and customer-facing proof — one pipeline story."
     ],
-    personaIndices: [4, 3, 2],
+    personaIndices: [3, 4, 0, 2],
     useCases: [
       {
-        id: "wells-wedge-wealth-nba",
-        title: "Wealth: advisor next-best-action tied to Wells transformation initiative",
+        id: "sa-wedge-renewal-scorecard",
+        title: "Renewal scorecard: implementation + loan KPIs in one place",
         summary:
-          "Wells advisors still prioritize in spreadsheets; leadership wants in-workflow propensity when the initiative lands.",
+          "CS leads QBR with Snowflake-backed before/after — not slides from five systems.",
         first_workload:
-          "Streamlit advisor book with propensity + talk track — pilot branch.",
+          "Implementation milestones + loan performance marts per tenant.",
         demoPersonaTemplateId: "fs-head-client-analytics"
       },
       {
-        id: "wells-wedge-de-spark",
-        title: "Data engineering: retire one Spark chain on risk aggregates",
+        id: "sa-wedge-data-eng",
+        title: "Telemetry pipeline: Dynamic Tables from product and support systems",
         summary:
-          "Wells DE maintains parallel Spark for aggregates Snowflake could refresh natively.",
+          "Deployment health when events stream reliably into Snowflake.",
         first_workload:
-          "Dynamic Tables proof on one risk aggregate — cost and latency vs Spark.",
+          "Event streams + tasks into tenant marts for health scoring.",
         demoPersonaTemplateId: "fs-vp-data-engineering"
       },
       {
-        id: "wells-wedge-aml",
-        title: "Compliance: SAR draft acceleration under consent-order scrutiny",
+        id: "sa-wedge-cro-risk",
+        title: "Portfolio risk: CRO view of at-risk servicer deployments",
         summary:
-          "When exam pressure returns, AML narrative backlog becomes executive-visible.",
+          "Which customers are red before renewal — Cortex on aggregated signals.",
         first_workload:
-          "Cortex LLM SAR draft from flagged transactions — human-in-loop.",
+          "Cortex Analyst on cross-tenant aggregates (aggregated only).",
+        demoPersonaTemplateId: "fs-cro"
+      },
+      {
+        id: "sa-wedge-cco-audit",
+        title: "Compliance: audit trail for servicing rule changes",
+        summary:
+          "Regulators and buyers ask what changed — Horizon lineage from rule to outcome.",
+        first_workload:
+          "Governed audit tables + lineage for policy versions.",
         demoPersonaTemplateId: "fs-cco"
       }
+    ],
+    execTriggers: [
+      "Dara rollout milestone or servicer press release",
+      "CFPB or servicing enforcement headline",
+      "Mortgage rate move affecting portfolio stress",
+      "Sagent user conference or major customer logo"
+    ]
+  }),
+
+  assembleAccount("financial", {
+    id: "acc-us-financial-technology",
+    name: "U.S. Financial Technology",
+    tier: "2B",
+    industry: "Asset servicing & portfolio analytics",
+    briefDescriptor:
+      "Massive assets under administration — portfolio anomalies surface too late for risk and client reporting.",
+    why_now:
+      "$6.5T on platform — regulators and institutional clients expect intraday awareness when concentration or settlement risk shifts.",
+    whats_broken:
+      "Anomaly detection and client reporting run on batch windows — issues that could have been caught pre-close are found in reconciliation.",
+    hypothesis:
+      "Risk exposure is not ‘more reports’ — it’s that anomalies must meet decision speed for the portfolio’s scale.",
+    first_workload:
+      "Snowflake near–real-time positions and cash + Snowpark anomaly scoring on concentration, settlement fails, and limit breaches.",
+    proof_point:
+      "In 48 hours: one named anomaly class (e.g., settlement concentration) scored continuously vs. prior batch detection lag — with audit trail.",
+    economic_impact:
+      "Lower operational loss and regulatory findings; better client retention on reporting timeliness; reduced overnight batch cost.",
+    deal_path: {
+      stakeholders: [
+        "Chief Risk Officer",
+        "Head of Portfolio Analytics",
+        "Chief Data Officer",
+        "COO (operations)"
+      ],
+      expansionFlow: [
+        "Streaming positions + cash into Snowflake",
+        "Snowpark anomaly detection with Horizon lineage",
+        "Client-facing reporting on same marts",
+        "Enterprise risk and regulatory narrative standard"
+      ]
+    },
+    dealIntelligence: {
+      entryPoint:
+        "Chief Risk Officer — $6.5T scale makes batch lag a board-level operational risk topic.",
+      expansionPath: [
+        "Prove one anomaly type with wall-clock improvement.",
+        "Expand to client reporting SLAs on the same data.",
+        "Regulatory exam defense with lineage in-session.",
+        "Cross-product expansion to lending and custody data."
+      ],
+      economicBuyer: "CRO + CFO — operational risk capital and client penalties.",
+      technicalBuyer: "CDO + Head of Portfolio Analytics — model governance and data latency.",
+      keyRisk:
+        "Legacy mainframe and custody feeds block streaming — scope must be incremental or stalls.",
+      competitorStatusQuo:
+        "Risk on warehouse overnight batches; separate tools for client reporting; spreadsheets for ad hoc concentration.",
+      landStrategy:
+        "Attach to a near-miss or audit finding — name the anomaly class and the detection SLA.",
+      expandStrategy:
+        "Layer Cortex for plain-English risk questions after Snowpark scores are trusted."
+    },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$2.0M – $4.0M",
+      dealLikelihood: "Medium",
+      timeline: "FY26 · risk programs",
+      firstMeetingTarget: "Chief Risk Officer"
+    },
+    whySnowflakeWins: [
+      "Dynamic Tables and streaming ingest close the gap between custody truth and analytics without another proprietary risk engine.",
+      "Snowpark keeps scoring next to positions — no export of sensitive balances to external ML.",
+      "Horizon + Cortex for defensible answers under exam pressure — same objects risk and client reporting use."
+    ],
+    personaIndices: [0, 1, 2, 3],
+    useCases: [
+      {
+        id: "usft-wedge-anomaly",
+        title: "Intraday anomaly: concentration and settlement stress",
+        summary:
+          "Score positions continuously against policy — catch what batch missed.",
+        first_workload:
+          "Snowpark classification on streaming position snapshots in Snowflake.",
+        demoPersonaTemplateId: "fs-cro"
+      },
+      {
+        id: "usft-wedge-quant",
+        title: "Quant path: factor risk without leaving Snowflake",
+        summary:
+          "Research and risk use the same intraday book — Snowpark for scenarios.",
+        first_workload:
+          "Snowpark notebooks on aggregated risk factors with governance.",
+        demoPersonaTemplateId: "fs-head-quant-research"
+      },
+      {
+        id: "usft-wedge-cortex",
+        title: "Exam prep: CRO question with lineage in one session",
+        summary:
+          "When regulators ask, the answer is live — Cortex Analyst on risk marts.",
+        first_workload:
+          "Cortex Analyst on aggregated exposure tables with Horizon lineage.",
+        demoPersonaTemplateId: "fs-cro"
+      },
+      {
+        id: "usft-wedge-data-eng",
+        title: "Pipeline: custody and cash feeds into Dynamic Tables",
+        summary:
+          "Foundation for anomalies — always-current book of record.",
+        first_workload:
+          "Dynamic Tables + tasks from core banking and custody feeds.",
+        demoPersonaTemplateId: "fs-vp-data-engineering"
+      }
+    ],
+    execTriggers: [
+      "Fed or OCC stress testing commentary",
+      "Institutional client RFP for reporting latency or transparency",
+      "Settlement or market stress event in public news",
+      "Executive change in risk or operations"
+    ]
+  }),
+
+  assembleAccount("financial", {
+    id: "acc-billtrust",
+    name: "Billtrust",
+    tier: "2B",
+    industry: "Accounts receivable & B2B payments",
+    briefDescriptor:
+      "AR and payments data span buyers and sellers — no real-time intelligence layer for cash, DSO, and exceptions.",
+    why_now:
+      "Treasury and AR leadership are measured on cash conversion — batch AR aging and payment status leave money on the table every cycle.",
+    whats_broken:
+      "Invoices, remittance, and cash application sit in disconnected flows — intelligence arrives after decisions are already made.",
+    hypothesis:
+      "Cash flow inefficiency is not only DSO dashboards — it’s that exceptions and payer behavior aren’t operationalized at decision speed.",
+    first_workload:
+      "Snowflake real-time AR subledger + payment events — Dynamic Tables for application status and open AR by buyer.",
+    proof_point:
+      "Within two weeks: exception queue ranked by predicted delay + recommended action — measured vs. manual triage throughput.",
+    economic_impact:
+      "Lower DSO; fewer write-offs; reduced manual cash application FTE; better treasury forecasting.",
+    deal_path: {
+      stakeholders: [
+        "VP Product / AR Platform",
+        "VP Data",
+        "Head of Treasury (buyer-side joint wins)",
+        "CFO (mid-market customers)"
+      ],
+      expansionFlow: [
+        "Unified AR + payment events in Snowflake",
+        "Snowpark models for exception prediction",
+        "Buyer-seller analytics products on shared patterns",
+        "Embedded analytics for Billtrust customers"
+      ]
+    },
+    dealIntelligence: {
+      entryPoint:
+        "VP Product — differentiate with intelligence, not just workflow — tie to customer NRR.",
+      expansionPath: [
+        "Land internal AR intelligence on Snowflake for Billtrust ops.",
+        "Productize payer analytics for shared customers.",
+        "Marketplace data for credit and payment behavior enrichment.",
+        "Customer-facing Snowflake consumption model."
+      ],
+      economicBuyer: "CFO + CRO — ARR and margin on value-added analytics.",
+      technicalBuyer: "VP Data — multi-tenant AR data and PCI-adjacent boundaries.",
+      keyRisk:
+        "Buyer data sensitivity — clean contracts for payer-level analytics or scope stays internal-only.",
+      competitorStatusQuo:
+        "Workflow-first AR; reporting in BI tools; spreadsheets for cash forecasting.",
+      landStrategy:
+        "One joint customer story — DSO reduction with named before/after.",
+      expandStrategy:
+        "Sell Snowflake-powered SKUs to Billtrust’s customer base as premium analytics."
+    },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$700K – $1.4M",
+      dealLikelihood: "Medium",
+      timeline: "FY26 · product differentiation",
+      firstMeetingTarget: "VP Product or VP Data"
+    },
+    whySnowflakeWins: [
+      "Events and balances in one place — Dynamic Tables match the speed AR exceptions need.",
+      "Snowpark for prediction on payment behavior without exporting remittance data externally.",
+      "Secure Data Sharing for buyer–seller joint analytics when contracts allow."
+    ],
+    personaIndices: [3, 4, 2, 0],
+    useCases: [
+      {
+        id: "bt-wedge-dso",
+        title: "DSO intelligence: live AR aging + payer behavior",
+        summary:
+          "Treasury sees risk before close — not Monday’s report.",
+        first_workload:
+          "AR events + cash application in Snowflake with daily Dynamic Tables refresh.",
+        demoPersonaTemplateId: "fs-vp-data-engineering"
+      },
+      {
+        id: "bt-wedge-client-analytics",
+        title: "Customer analytics: which merchants bleed cash application time",
+        summary:
+          "Customer Success uses Snowflake-backed health scores.",
+        first_workload:
+          "Streamlit health dashboard on tenant metrics.",
+        demoPersonaTemplateId: "fs-head-client-analytics"
+      },
+      {
+        id: "bt-wedge-cco-controls",
+        title: "Controls: lineage from invoice to cash for audits",
+        summary:
+          "SOC and customer audits ask for proof — Horizon on AR path.",
+        first_workload:
+          "Lineage from ingestion to reported AR position.",
+        demoPersonaTemplateId: "fs-cco"
+      },
+      {
+        id: "bt-wedge-cro-concentration",
+        title: "Concentration: payer and credit risk in one view",
+        summary:
+          "Which customers concentrate failure risk — Cortex on enriched marts.",
+        first_workload:
+          "Cortex Analyst on payer concentration questions.",
+        demoPersonaTemplateId: "fs-cro"
+      }
+    ],
+    execTriggers: [
+      "Interest rate or liquidity stress affecting B2B payment timing",
+      "Billtrust product launch in AR intelligence or payments",
+      "Large customer bankruptcy or DSO blowout in sector news",
+      "Competitive win vs. legacy AR automation"
+    ]
+  }),
+
+  assembleAccount("financial", {
+    id: "acc-the-bancorp",
+    name: "The Bancorp",
+    tier: "2B",
+    industry: "Branchless banking & embedded finance",
+    briefDescriptor:
+      "Embedded finance and partner programs — partner and program data fragmented across systems drives risk and compliance exposure.",
+    why_now:
+      "Partner and fintech volumes are growing — regulators and partners expect real-time visibility into program health and BSA/AML signals.",
+    whats_broken:
+      "Each partner program brings its own data feeds — risk and compliance cannot answer ‘what’s wrong across programs’ in one hop.",
+    hypothesis:
+      "Exposure is not only point-in-time reports — it’s that partner and transaction truth must be unified for compliance and capital decisions.",
+    first_workload:
+      "Snowflake program-centric model: partner, account, and transaction with row access policies — BSA/AML features co-located with product analytics.",
+    proof_point:
+      "Within 45 days: one exam-style question answered across programs with lineage (e.g., high-risk flow by partner) — vs. manual assembly.",
+    economic_impact:
+      "Lower compliance remediation cost; faster partner onboarding; reduced fraud and regulatory penalty risk.",
+    deal_path: {
+      stakeholders: [
+        "Chief Compliance Officer",
+        "Chief Risk Officer",
+        "Chief Data Officer",
+        "Head of Partner / Fintech programs"
+      ],
+      expansionFlow: [
+        "Unified program and transaction hub in Snowflake",
+        "AML and fraud models on shared features",
+        "Partner-facing analytics and reporting products",
+        "Enterprise governance for embedded finance growth"
+      ]
+    },
+    dealIntelligence: {
+      entryPoint:
+        "Chief Compliance Officer — embedded finance scale makes manual program reporting untenable.",
+      expansionPath: [
+        "Prove cross-program query for one regulatory theme.",
+        "Add fraud and credit models on same features.",
+        "Partner co-branded analytics where permitted.",
+        "Board reporting from single marts."
+      ],
+      economicBuyer: "CCO + CRO + CFO — regulatory, operational risk, and partner revenue.",
+      technicalBuyer: "CDO — data mesh across partner feeds with policy enforcement.",
+      keyRisk:
+        "Partner contracts block consolidation — legal must bless combined analytics.",
+      competitorStatusQuo:
+        "Siloed databases per program; case management for AML; Excel for partner KPIs.",
+      landStrategy:
+        "Attach to exam prep or partner incident — named deliverable with timeline.",
+      expandStrategy:
+        "Use compliance win to unlock revenue analytics for partner managers."
+    },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$900K – $1.8M",
+      dealLikelihood: "Medium",
+      timeline: "FY26 · partner growth",
+      firstMeetingTarget: "Chief Compliance Officer"
+    },
+    whySnowflakeWins: [
+      "Row access policies and masking by program — one platform for many partners without blended PII.",
+      "Snowflake as system of insight without moving raw partner data to external tools.",
+      "Horizon for BSA/AML lineage when auditors trace alerts to source."
+    ],
+    personaIndices: [2, 3, 0, 4],
+    useCases: [
+      {
+        id: "tb-wedge-aml-features",
+        title: "BSA/AML: unified features across partner programs",
+        summary:
+          "Models see the same truth compliance reviews — Snowpark on unified marts.",
+        first_workload:
+          "Transaction + party graph in Snowflake; Snowpark risk scoring.",
+        demoPersonaTemplateId: "fs-cco"
+      },
+      {
+        id: "tb-wedge-data-platform",
+        title: "Partner hub: governed ingestion for every new program",
+        summary:
+          "Reduce onboarding time with templated Snowflake schemas and tasks.",
+        first_workload:
+          "Dynamic Tables per program feed into shared dimensions.",
+        demoPersonaTemplateId: "fs-vp-data-engineering"
+      },
+      {
+        id: "tb-wedge-cro-program",
+        title: "Program risk: CRO view of concentration by partner",
+        summary:
+          "Which embedded programs drive tail risk — Cortex on aggregated marts.",
+        first_workload:
+          "Cortex Analyst for concentration and limit questions.",
+        demoPersonaTemplateId: "fs-cro"
+      },
+      {
+        id: "tb-wedge-client-insights",
+        title: "Partner success: analytics on program health for fintech partners",
+        summary:
+          "Revenue and risk together for relationship managers.",
+        first_workload:
+          "Streamlit program scorecard on Snowflake.",
+        demoPersonaTemplateId: "fs-head-client-analytics"
+      }
+    ],
+    execTriggers: [
+      "FDIC or partner bank enforcement in embedded finance",
+      "New fintech partner program launch (public)",
+      "BSA/AML lookback or consent order in sector",
+      "The Bancorp earnings call on partner or deposit growth"
+    ]
+  }),
+
+  assembleAccount("financial", {
+    id: "acc-sprinklr",
+    name: "Sprinklr",
+    tier: 3,
+    industry: "Enterprise customer experience (CX) software",
+    briefDescriptor:
+      "CX data across channels and regions — no unified real-time intelligence for execs, CS, or product.",
+    why_now:
+      "Enterprise buyers ask for outcome-based contracts — Sprinklr needs the same intelligence layer to prove value and steer product.",
+    whats_broken:
+      "Social, care, ads, and survey data live in channel silos — unified ‘customer moment’ intelligence is batch and brittle.",
+    hypothesis:
+      "The gap is not another dashboard — it’s that real-time cross-channel context must sit on one governed plane for GTM and R&D.",
+    first_workload:
+      "Snowflake customer 360 from Sprinklr exports + usage telemetry — Dynamic Tables for freshness; Cortex for exec questions.",
+    proof_point:
+      "Within 30 days: one enterprise customer health score — sentiment + SLA + revenue risk — with drill to channel — vs. current weekly deck.",
+    economic_impact:
+      "Higher renewal and expansion; faster product prioritization; lower services cost per enterprise logo.",
+    deal_path: {
+      stakeholders: [
+        "Chief Customer Officer / CS leadership",
+        "VP Data & AI",
+        "Chief Product Officer",
+        "Enterprise sales leadership"
+      ],
+      expansionFlow: [
+        "360 + telemetry in Snowflake for priority accounts",
+        "Real-time health scoring and churn signals",
+        "Product analytics on feature usage across tenants",
+        "Customer-facing advanced analytics SKUs"
+      ]
+    },
+    dealIntelligence: {
+      entryPoint:
+        "VP Data & AI — unify Sprinklr’s own operational intelligence before selling ‘unified CX’ externally.",
+      expansionPath: [
+        "Internal customer 360 for top logos.",
+        "Snowpark models for expansion and churn.",
+        "Package insights for enterprise buyers.",
+        "Marketplace enrichment (sales, news) on Snowflake."
+      ],
+      economicBuyer: "CRO + CPO — NRR and product differentiation.",
+      technicalBuyer: "VP Data & AI — multi-region and tenant scale.",
+      keyRisk:
+        "Sprinklr product roadmap competes for engineering — internal BI must show quick ROI.",
+      competitorStatusQuo:
+        "Per-channel reporting; warehouse for finance only; spreadsheets for QBRs.",
+      landStrategy:
+        "Pick one vertical (e.g., retail enterprise) and one churn save.",
+      expandStrategy:
+        "Turn internal pattern into customer-facing premium analytics."
+    },
+    pipelineSnapshot: {
+      estimatedAcvRange: "$600K – $1.2M",
+      dealLikelihood: "Low",
+      timeline: "FY26 · opportunistic",
+      firstMeetingTarget: "VP Data & AI"
+    },
+    whySnowflakeWins: [
+      "Elastic scale for high-volume CX events with separation of hot storage and governance.",
+      "Cortex for ‘why is this account red’ without another BI team in the middle.",
+      "Snowpark for churn and expansion models on the same grain CS uses."
+    ],
+    personaIndices: [4, 3, 2, 1],
+    useCases: [
+      {
+        id: "sp-wedge-360",
+        title: "Enterprise 360: channels + usage + revenue in Snowflake",
+        summary:
+          "One health score CS and sales trust — Streamlit + Cortex.",
+        first_workload:
+          "Consolidated events + CRM tie-in with Dynamic Tables.",
+        demoPersonaTemplateId: "fs-head-client-analytics"
+      },
+      {
+        id: "sp-wedge-data-eng",
+        title: "Telemetry: product usage streams into Snowflake",
+        summary:
+          "Feature adoption for roadmap — real-time, not monthly export.",
+        first_workload:
+          "Event pipeline + tasks into feature usage marts.",
+        demoPersonaTemplateId: "fs-vp-data-engineering"
+      },
+      {
+        id: "sp-wedge-cco",
+        title: "Trust & safety: lineage for moderation and policy reporting",
+        summary:
+          "When buyers ask how decisions are made — Horizon on content policy data.",
+        first_workload:
+          "Governed tables for moderation outcomes + lineage.",
+        demoPersonaTemplateId: "fs-cco"
+      },
+      {
+        id: "sp-wedge-cro-churn",
+        title: "Churn: Snowpark on signals CS already has",
+        summary:
+          "Prioritize saves with model transparency — same data as dashboards.",
+        first_workload:
+          "Snowpark classification on health features.",
+        demoPersonaTemplateId: "fs-cro"
+      }
+    ],
+    execTriggers: [
+      "Sprinklr earnings or restructuring headline",
+      "Major enterprise CX platform consolidation in news",
+      "AI feature launch in social or care",
+      "Large customer logo churn or win in press"
     ]
   }),
 
   assembleAccount("healthcare", {
-    id: "acc-mayo",
-    name: "Mayo Clinic",
+    id: "acc-lyric",
+    name: "Lyric",
     tier: 3,
-    industry: "Healthcare",
+    industry: "Healthcare payments & payer technology",
     briefDescriptor:
-      "Academic medical center; strong governance; Snowflake wins require PHI posture and research alignment.",
+      "Pre-pay and post-pay claims intelligence — no closed loop from payment to clinical and financial outcomes.",
     why_now:
-      "Research and clinical operations compete for attention — opportunistic entry on IRB or Epic-adjacent projects.",
+      "Payers and providers are squeezed on margin — optimization requires linking payment timing, claims outcome, and utilization in one loop.",
     whats_broken:
-      "Strong IT governance can slow activation; Snowflake wins require clear PHI posture and research alignment.",
+      "Pre-pay authorization and post-pay claims run on different timelines and systems — no feedback loop to improve authorization accuracy or payment policy.",
     hypothesis:
-      "The risk is not governance; it’s that research and ops can’t share a PHI story without a provable clean room path.",
+      "Missed optimization is not only claims volume — it’s that pre and post data never meet to tune policies and avoid denials.",
     first_workload:
-      "De-identification + clean room for research cohorts when IRB pushes on data access boundaries.",
+      "Snowflake unified claims journey: authorization → service → payment → adjustment — Snowpark for leakage and policy lift analysis.",
     proof_point:
-      "In 48 hours: masked PHI view + clean room aggregate query — IRB-ready story in one walkthrough.",
+      "Within 60 days: one policy change recommendation with measured dollar impact (e.g., prior auth criteria) backed by Snowflake analysis — vs. static rules review.",
     economic_impact:
-      "Research throughput; reduced compliance review cycles per study.",
+      "Lower denial and rework; faster payment; better MLR and provider satisfaction; fewer manual appeals.",
     deal_path: {
-      stakeholders: ["CIO / CISO", "Research IT", "IRB office", "Clinical informatics"],
+      stakeholders: [
+        "VP Revenue Cycle / Payments",
+        "Chief Analytics Officer",
+        "Chief Medical Officer (utilization)",
+        "CFO"
+      ],
       expansionFlow: [
-        "Monitor triggers",
-        "Security-first briefing",
-        "Pilot with narrow cohort",
-        "Expand research footprint"
+        "Unified claims journey in Snowflake",
+        "Snowpark models for authorization and denial prediction",
+        "Closed-loop tuning of payment policies",
+        "Partner analytics for providers and employers"
       ]
     },
     dealIntelligence: {
-      entryPoint: "CIO / CISO — PHI masking + clean room when IRB or research pushes on data boundaries.",
+      entryPoint:
+        "VP Revenue Cycle — denial and delay dollars are visible; link pre-pay to post-pay to fix root cause.",
       expansionPath: [
-        "Security-first briefing with IRB and research IT.",
-        "Pilot with a narrow cohort and audit trail.",
-        "Bulk FHIR for trial self-service.",
-        "Expand governed research footprint."
+        "Prove one loop metric with dollar tag.",
+        "Add clinical features for utilization alignment.",
+        "CMO and CFO join value story.",
+        "Sell network analytics back to partners."
       ],
-      economicBuyer: "Research leadership + finance — study throughput and compliance review cost.",
-      technicalBuyer: "CIO/CISO + clinical informatics — Epic boundaries and PHI policy.",
+      economicBuyer: "CFO + CMO — MLR, cash, and member experience.",
+      technicalBuyer: "CAO + VP Rev Cycle — claims data and model ops.",
       keyRisk:
-        "Governance cycles; if the first session doesn’t satisfy IRB and security jointly, the project stalls in review.",
+        "Payer contracts limit data use — scope legal early for combined analytics.",
       competitorStatusQuo:
-        "Epic extracts and ticket queues; siloed research sandboxes without a shared PHI story.",
+        "Pre-pay in one system, post-pay in another; appeals in case tools; Excel for ‘what if.’",
       landStrategy:
-        "Deliver masked views + clean room aggregate in one walkthrough — IRB and security in the same room.",
+        "Anchor on one denial category with highest rework cost — show loop closure.",
       expandStrategy:
-        "After trust, land FHIR + Streamlit for trial cohorts; then widen to population health queries with the same governance spine."
+        "Use savings proof to fund enterprise Snowflake and partner data products."
     },
     pipelineSnapshot: {
       estimatedAcvRange: "$400K – $900K",
       dealLikelihood: "Low",
-      timeline: "Q4 FY26 · IRB / security path",
-      firstMeetingTarget: "CIO / CISO (research governance)"
+      timeline: "FY26 · opportunistic",
+      firstMeetingTarget: "VP Revenue Cycle"
     },
     whySnowflakeWins: [
-      "Masking and clean room attach to the research datasets Mayo already routes through Snowflake — IRB and security audit one policy surface, not a new PHI copy per study.",
-      "IRB-ready walkthrough in days — not a new research infrastructure program every time access boundaries shift.",
-      "FHIR, trial cohorts, and pop health queries share the same governance spine — so research doesn’t fork into another siloed sandbox."
+      "One place for claims, auth, and payment events — Snowpark closes the loop without exporting PHI.",
+      "Dynamic Tables keep post-pay adjustments current for model retraining.",
+      "Cortex for business questions on complex journeys without SQL for every stakeholder."
     ],
-    personaIndices: [4, 2, 3],
+    personaIndices: [1, 0, 3, 2],
     useCases: [
       {
-        id: "mayo-wedge-phi-research",
-        title: "Research: IRB-ready PHI masking + clean room for cohort outcomes",
+        id: "ly-wedge-loop",
+        title: "Closed loop: pre-auth to payment outcome in one graph",
         summary:
-          "Mayo research needs outcomes queries without exposing identifiers to the wrong teams.",
+          "See where policy leaks money — unified journey in Snowflake.",
         first_workload:
-          "Role-based masking + clean room aggregate — same dataset, two proofs.",
-        demoPersonaTemplateId: "hc-cio-ciso"
+          "Claims + auth tables linked with Snowpark leakage analysis.",
+        demoPersonaTemplateId: "hc-vp-revenue-cycle"
       },
       {
-        id: "mayo-wedge-fhir",
-        title: "Clinical informatics: Epic FHIR to analyst self-service for trials",
+        id: "ly-wedge-denial-ml",
+        title: "Denial prediction before submit — same data as post-pay",
         summary:
-          "Mayo trial coordinators wait on IT for cohort pulls; IRB wants auditability.",
+          "Train on outcomes that include post-pay — not siloed pre-pay only.",
         first_workload:
-          "Bulk FHIR landing + Streamlit trial cohort app in Snowflake.",
-        demoPersonaTemplateId: "hc-dir-clinical-informatics"
+          "Snowpark ML on unified features from journey model.",
+        demoPersonaTemplateId: "hc-vp-revenue-cycle"
       },
       {
-        id: "mayo-wedge-pop",
-        title: "Population health: plain-language queries for care teams on Mayo attributed panels",
+        id: "ly-wedge-cao",
+        title: "Population view: utilization tied to payment policy",
         summary:
-          "Mayo care teams need lists without SQL; governance requires Cortex path.",
+          "CAO asks which members are harmed by policy friction.",
         first_workload:
-          "Cortex Analyst on attributed members — one question, one list.",
+          "Cortex Analyst on attributed member + claims journey.",
+        demoPersonaTemplateId: "hc-cao"
+      },
+      {
+        id: "ly-wedge-pop",
+        title: "Care gap: when payment delay drives medical risk",
+        summary:
+          "Pop health sees financial and clinical together — Streamlit cohorts.",
+        first_workload:
+          "Risk stratification + payment delay flags in Snowflake.",
         demoPersonaTemplateId: "hc-head-pop-health"
       }
+    ],
+    execTriggers: [
+      "CMS or state policy change on prior authorization",
+      "Lyric customer or payer partnership announcement",
+      "Healthcare payment reform headline (No Surprises, etc.)",
+      "Denial rate spike in sector news"
     ]
   })
 ];

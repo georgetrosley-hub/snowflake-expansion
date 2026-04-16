@@ -6,8 +6,11 @@ import { TerritoryGlyph } from "@/components/icons/TerritoryGlyph";
 const TIER_HEADINGS: Record<AccountConfig["tier"], string> = {
   1: "Tier 1 · Primary focus",
   2: "Tier 2 · Active expansion",
+  "2B": "Tier 2B · Expansion (sequence)",
   3: "Tier 3 · Monitor / opportunistic"
 };
+
+const TIER_ORDER: AccountConfig["tier"][] = [1, 2, "2B", 3];
 
 export function LandingView({
   accounts,
@@ -16,8 +19,8 @@ export function LandingView({
   accounts: AccountConfig[];
   onSelectAccount: (id: string) => void;
 }) {
-  const byTier = [1, 2, 3].map((tier) => ({
-    tier: tier as AccountConfig["tier"],
+  const byTier = TIER_ORDER.map((tier) => ({
+    tier,
     items: accounts.filter((a) => a.tier === tier).sort((a, b) => a.name.localeCompare(b.name))
   }));
 

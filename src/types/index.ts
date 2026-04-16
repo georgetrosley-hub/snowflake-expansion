@@ -56,7 +56,8 @@ export interface AccountUseCase {
   demoPersonaId: string;
 }
 
-export type AccountTier = 1 | 2 | 3;
+/** Tier 2B sits between 2 and 3 for sub-prioritized expansion accounts. */
+export type AccountTier = 1 | 2 | "2B" | 3;
 
 export interface DealPath {
   stakeholders: string[];
