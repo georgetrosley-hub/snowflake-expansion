@@ -30,6 +30,7 @@ function assembleAccount(
     deal_path: DealPath;
     dealIntelligence: DealIntelligence;
     pipelineSnapshot: PipelineSnapshot;
+    whySnowflakeWins: readonly [string, string, string];
     personaIndices: number[];
     useCases: AccountUseCaseInput[];
     execTriggers?: string[];
@@ -55,6 +56,7 @@ function assembleAccount(
     deal_path: spec.deal_path,
     dealIntelligence: spec.dealIntelligence,
     pipelineSnapshot: spec.pipelineSnapshot,
+    whySnowflakeWins: spec.whySnowflakeWins,
     personas,
     useCases,
     execTriggers: spec.execTriggers ?? lib.execTriggers
@@ -120,6 +122,11 @@ export const ACCOUNTS: AccountConfig[] = [
       timeline: "Q2 FY26 · initial land",
       firstMeetingTarget: "VP Data Science (R&D)"
     },
+    whySnowflakeWins: [
+      "Snowpark runs cohort scoring on OMOP-aligned enrollment + trial data already in Snowflake for IT-led workloads — R&D proves speed without standing up a parallel science stack.",
+      "Side-by-side vs overnight SAS lands in days, not a multi-quarter modeling platform bake-off — readout and enrollment decisions don’t wait on infra.",
+      "Governance, Cortex, and ML share one platform — regulatory lineage and commercial Streamlit aren’t separate compliance or BI projects."
+    ],
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
       {
@@ -229,6 +236,11 @@ export const ACCOUNTS: AccountConfig[] = [
       timeline: "Q2–Q3 FY26 · exam-aligned",
       firstMeetingTarget: "Chief Risk Officer"
     },
+    whySnowflakeWins: [
+      "Risk aggregates and exposure tables already consolidate in Snowflake — Cortex + Horizon add plain-English answers and lineage without a fifth reporting system for exams.",
+      "A defensible regulatory answer with a named lineage path in days — not a 6-month data movement program before the next MRA.",
+      "Snowpark keeps tick and quant work inside policy — no new export pipeline that security will block under front-office pressure."
+    ],
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
       {
@@ -337,6 +349,11 @@ export const ACCOUNTS: AccountConfig[] = [
       timeline: "Q3 FY26",
       firstMeetingTarget: "Chief Analytics Officer"
     },
+    whySnowflakeWins: [
+      "Attributed member and claims paths already land for analytics — Cortex and Snowpark extend what’s governed today instead of copying PHI into another warehouse.",
+      "Care-manager intervention lists in days — not another BI ticket queue while VBC contracts demand daily gap closure.",
+      "Bulk FHIR + masking reuse Snowflake roles and Epic-adjacent feeds — fewer one-off regulated pipes every time analysts need a cohort."
+    ],
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
       {
@@ -450,6 +467,11 @@ export const ACCOUNTS: AccountConfig[] = [
       timeline: "Q3 FY26 · OT pilot window",
       firstMeetingTarget: "VP Operations Technology"
     },
+    whySnowflakeWins: [
+      "Historian and MES truth stream in without replacing plants — Dynamic Tables + Streamlit sit on OT data the team already owns.",
+      "Line health and anomaly signal in weeks — not a new cross-plant data lake program before the board sees downtime minutes move.",
+      "Supplier risk and plant KPIs join in one environment — no separate “ops hub” science project when disruption is already on the exec agenda."
+    ],
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
       {
@@ -558,6 +580,11 @@ export const ACCOUNTS: AccountConfig[] = [
       timeline: "Q2–Q3 FY26",
       firstMeetingTarget: "Chief Analytics Officer (Medicare Advantage)"
     },
+    whySnowflakeWins: [
+      "Payer and Optum analytics already run at scale in Snowflake — daily Stars/HEDIS scoring adds DAGs and apps on the same governed member plane, not a second warehouse for ‘real time.’",
+      "Intervention lists tied to named measures in days — not another annual BI roadmap while CMS moves mid-year.",
+      "PHI masking and clean rooms attach to the same roles and datasets research and MA already fight over — one policy story instead of duplicate consent architectures."
+    ],
     personaIndices: [0, 1, 2, 3, 4],
     useCases: [
       {
@@ -666,6 +693,11 @@ export const ACCOUNTS: AccountConfig[] = [
       timeline: "Q3–Q4 FY26 · trigger-led",
       firstMeetingTarget: "Director, RWE"
     },
+    whySnowflakeWins: [
+      "Snowflake is already the contract for enterprise analytics — clean room + Snowpark activate vendor-blocked RWE without a net-new platform evaluation when the trigger hits.",
+      "Legal sees non-exposure in a working join in one session — not a 9-month ‘data collaboration’ program before the study moves.",
+      "RWE, commercial, and R&D cohort work reuse the same governance and Marketplace paths — not three duplicate spend lines on parallel stacks."
+    ],
     personaIndices: [0, 3, 4],
     useCases: [
       {
@@ -751,6 +783,11 @@ export const ACCOUNTS: AccountConfig[] = [
       timeline: "Q3–Q4 FY26 · initiative gate",
       firstMeetingTarget: "Head of Client Analytics (Wealth)"
     },
+    whySnowflakeWins: [
+      "Advisor and risk feeds already land in governed Snowflake environments — Streamlit propensity sits on existing data, not a rip-and-replace wealth platform.",
+      "A working advisor slice in two sprints — not a year-long initiative queue for ‘digital experience.’",
+      "Dynamic Tables retires Spark on risk aggregates already in Snowflake — fewer regulated pipes and fewer jobs that break when the initiative clock is ticking."
+    ],
     personaIndices: [4, 3, 2],
     useCases: [
       {
@@ -836,6 +873,11 @@ export const ACCOUNTS: AccountConfig[] = [
       timeline: "Q4 FY26 · IRB / security path",
       firstMeetingTarget: "CIO / CISO (research governance)"
     },
+    whySnowflakeWins: [
+      "Masking and clean room attach to the research datasets Mayo already routes through Snowflake — IRB and security audit one policy surface, not a new PHI copy per study.",
+      "IRB-ready walkthrough in days — not a new research infrastructure program every time access boundaries shift.",
+      "FHIR, trial cohorts, and pop health queries share the same governance spine — so research doesn’t fork into another siloed sandbox."
+    ],
     personaIndices: [4, 2, 3],
     useCases: [
       {

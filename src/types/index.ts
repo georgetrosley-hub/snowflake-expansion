@@ -112,6 +112,8 @@ export interface AccountConfig {
   deal_path: DealPath;
   dealIntelligence: DealIntelligence;
   pipelineSnapshot: PipelineSnapshot;
+  /** At most 3 bullets — why Snowflake wins this account vs alternatives; tied to their problem, not generic features. */
+  whySnowflakeWins: readonly [string, string, string];
   personas: Persona[];
   useCases: AccountUseCase[];
   execTriggers: string[];

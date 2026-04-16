@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, type ReactNode } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { Check, ChevronDown, ChevronRight } from "lucide-react";
 import type { AccountConfig } from "@/types";
 import { PipelineSnapshotCard } from "@/components/PipelineSnapshotCard";
 
@@ -81,6 +81,33 @@ export function AccountOverview({ account }: { account: AccountConfig }) {
             </div>
             <PipelineSnapshotCard account={account} />
           </div>
+        </div>
+      </div>
+
+      <div
+        className="border-b border-stone-200/90 px-6 py-5 md:px-8"
+        style={{ background: `linear-gradient(90deg, ${account.color}12 0%, transparent 55%)` }}
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
+          <div className="min-w-0">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-600">Why Snowflake wins</p>
+            <p className="mt-1 text-xs text-slate-600">
+              Here — not another warehouse project, not another point tool.
+            </p>
+          </div>
+          <ul className="mt-1 max-w-2xl shrink-0 space-y-2 sm:mt-0">
+            {account.whySnowflakeWins.map((line, i) => (
+              <li key={i} className="flex gap-2.5 text-sm leading-snug text-slate-800">
+                <Check
+                  className="mt-0.5 h-4 w-4 shrink-0"
+                  style={{ color: account.color }}
+                  strokeWidth={2.5}
+                  aria-hidden
+                />
+                <span>{line}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
