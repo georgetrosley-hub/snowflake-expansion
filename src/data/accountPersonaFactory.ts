@@ -26,6 +26,20 @@ export function buildAccount(
       );
     }
   }
+  const pm = spec.primaryMotion;
+  const primaryPersona = spec.personas.find((p) => p.id === pm.personaId);
+  if (!primaryPersona) {
+    throw new Error(`primaryMotion.personaId "${pm.personaId}" not found on account "${spec.id}"`);
+  }
+  const primaryUseCase = spec.useCases.find((u) => u.id === pm.useCaseId);
+  if (!primaryUseCase) {
+    throw new Error(`primaryMotion.useCaseId "${pm.useCaseId}" not found on account "${spec.id}"`);
+  }
+  if (primaryUseCase.demoPersonaId !== pm.personaId) {
+    throw new Error(
+      `Account "${spec.id}" primaryMotion: use case "${primaryUseCase.id}" must use personaId as demoPersonaId`
+    );
+  }
   return {
     ...spec,
     execTriggers: spec.execTriggers ?? []

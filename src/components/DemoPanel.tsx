@@ -72,6 +72,11 @@ export function DemoPanel({
       ? account.personas.find((p) => p.id === selectedUseCase.demoPersonaId)
       : null;
 
+  const onPrimaryPath =
+    selectedUseCase &&
+    selectedPersona.id === account.primaryMotion.personaId &&
+    selectedUseCase.id === account.primaryMotion.useCaseId;
+
   return (
     <div className="animate-fade-in space-y-6">
       {selectedUseCase ? (
@@ -150,6 +155,12 @@ export function DemoPanel({
             <div className="mt-1 truncate text-lg font-semibold text-sf-foreground">
               {selectedPersona.demoRecipe.title}
             </div>
+            {onPrimaryPath ? (
+              <p className="mt-1 text-sm text-sf-foreground-muted">
+                Primary focus:{" "}
+                <span className="font-medium text-sf-foreground">{account.primaryMotion.demoLabel}</span>
+              </p>
+            ) : null}
           </div>
           <div
             className="hidden shrink-0 rounded-lg border px-3 py-2 text-xs font-semibold md:block"

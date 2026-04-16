@@ -80,12 +80,25 @@ export interface DealIntelligence {
   expandStrategy: string;
 }
 
+/**
+ * Default stakeholder → wedge → demo focus when this account is opened.
+ * All ids must exist on the account; use case must use this persona as demoPersonaId.
+ */
+export interface AccountPrimaryMotion {
+  personaId: string;
+  useCaseId: string;
+  /** Short label for the recommended demo (shown next to the full recipe). */
+  demoLabel: string;
+}
+
 /** Named enterprise account: its own personas, use cases, and exec triggers. */
 export interface AccountConfig {
   id: string;
   name: string;
   tier: AccountTier;
   color: string;
+  /** Default path when the account loads — pre-selects stakeholder, wedge, and demo recipe. */
+  primaryMotion: AccountPrimaryMotion;
   /** Industry label shown with the account (account-scoped context, not a navigation axis). */
   industry: string;
   /** One-line context under industry (executive briefing). */

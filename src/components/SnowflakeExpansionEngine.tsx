@@ -145,13 +145,37 @@ function AppInner() {
   const handleAccountSelect = useCallback(
     (id: string) => {
       setSelectedAccountId(id);
-      setSelectedPersonaId(null);
-      setSelectedUseCaseId(null);
+      const acct = ACCOUNTS_BY_ID[id];
+      if (acct?.primaryMotion) {
+        setSelectedPersonaId(acct.primaryMotion.personaId);
+        setSelectedUseCaseId(acct.primaryMotion.useCaseId);
+      } else {
+        setSelectedPersonaId(null);
+        setSelectedUseCaseId(null);
+      }
       setPersonaSearch("");
       setActiveTab("territory");
     },
     [setActiveTab, setPersonaSearch, setSelectedAccountId, setSelectedPersonaId, setSelectedUseCaseId]
   );
+
+  /** Ensure a valid primary path when the account has no selection or stale ids in localStorage. */
+  useEffect(() => {
+    if (!account?.primaryMotion) return;
+    const personaValid =
+      selectedPersonaId != null && account.personas.some((p) => p.id === selectedPersonaId);
+    const useCaseValid =
+      selectedUseCaseId != null && account.useCases.some((u) => u.id === selectedUseCaseId);
+    if (personaValid && useCaseValid) return;
+    setSelectedPersonaId(account.primaryMotion.personaId);
+    setSelectedUseCaseId(account.primaryMotion.useCaseId);
+  }, [
+    account,
+    selectedPersonaId,
+    selectedUseCaseId,
+    setSelectedPersonaId,
+    setSelectedUseCaseId
+  ]);
 
   const handlePersonaSelect = useCallback(
     (persona: Persona) => {

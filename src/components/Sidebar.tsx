@@ -136,6 +136,26 @@ export function Sidebar({
 
       {selectedAccount ? (
         <>
+          <div
+            className="mt-4 rounded-xl border p-3 shadow-panel"
+            style={{
+              borderColor: `${selectedAccount.color}44`,
+              backgroundColor: `${selectedAccount.color}0a`
+            }}
+          >
+            <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-sf-foreground-muted">
+              This deal&apos;s start
+            </div>
+            <div className="mt-2 text-sm font-medium leading-snug text-sf-foreground">
+              {selectedAccount.personas.find((p) => p.id === selectedAccount.primaryMotion.personaId)?.title ?? "—"}
+              <span className="font-normal text-sf-foreground-muted"> · </span>
+              {selectedAccount.useCases.find((u) => u.id === selectedAccount.primaryMotion.useCaseId)?.title ?? "—"}
+            </div>
+            <div className="mt-1.5 text-xs text-sf-foreground-muted">
+              Demo focus: <span className="font-medium text-sf-foreground">{selectedAccount.primaryMotion.demoLabel}</span>
+            </div>
+          </div>
+
           <div className="mt-6 text-[11px] font-semibold uppercase tracking-[0.14em] text-sf-foreground-muted">
             Run this motion
           </div>

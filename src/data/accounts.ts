@@ -17,6 +17,11 @@ export const ACCOUNTS: AccountConfig[] = [
   buildAccount({
     color: "#10B981",
     id: "acc-health-union",
+    primaryMotion: {
+      personaId: "acc-health-union__head-data-platform",
+      useCaseId: "hu-patient-hcp-activation",
+      demoLabel: "Data sharing + segmentation"
+    },
     name: "Health Union",
     tier: 1,
     industry: "Healthcare / Digital health & media",
@@ -92,6 +97,11 @@ export const ACCOUNTS: AccountConfig[] = [
   buildAccount({
     color: "#8B5CF6",
     id: "acc-everstage",
+    primaryMotion: {
+      personaId: "acc-everstage__vp-engineering",
+      useCaseId: "ev-commission-cpq-intelligence",
+      demoLabel: "Cross-product analytics"
+    },
     name: "Everstage",
     tier: 1,
     industry: "Revenue operations & incentive compensation (SaaS)",
@@ -166,6 +176,11 @@ export const ACCOUNTS: AccountConfig[] = [
   buildAccount({
     color: "#10B981",
     id: "acc-chalice-ai",
+    primaryMotion: {
+      personaId: "acc-chalice-ai__vp-platform",
+      useCaseId: "ch-tenant-onboarding",
+      demoLabel: "FHIR + Snowpark tenant template"
+    },
     name: "Chalice AI",
     tier: 2,
     industry: "Healthcare AI / clinical intelligence",
@@ -240,6 +255,11 @@ export const ACCOUNTS: AccountConfig[] = [
   buildAccount({
     color: "#F59E0B",
     id: "acc-ciena",
+    primaryMotion: {
+      personaId: "acc-ciena__vp-fpa",
+      useCaseId: "ci-backlog-margin",
+      demoLabel: "Real-time pipeline visibility"
+    },
     name: "Ciena",
     tier: 2,
     industry: "Telecommunications equipment & network systems",
@@ -314,6 +334,11 @@ export const ACCOUNTS: AccountConfig[] = [
   buildAccount({
     color: "#8B5CF6",
     id: "acc-sagent",
+    primaryMotion: {
+      personaId: "acc-sagent__vp-customer-success",
+      useCaseId: "sa-dara-proof",
+      demoLabel: "Dara deployment proof in QBRs"
+    },
     name: "Sagent",
     tier: 2,
     industry: "Mortgage servicing technology (SaaS)",
@@ -388,6 +413,11 @@ export const ACCOUNTS: AccountConfig[] = [
   buildAccount({
     color: "#8B5CF6",
     id: "acc-us-financial-technology",
+    primaryMotion: {
+      personaId: "acc-us-financial-technology__cro",
+      useCaseId: "usft-anomaly-intraday",
+      demoLabel: "Intraday anomaly scoring"
+    },
     name: "U.S. Financial Technology",
     tier: "2B",
     industry: "Asset servicing & portfolio analytics",
@@ -462,6 +492,11 @@ export const ACCOUNTS: AccountConfig[] = [
   buildAccount({
     color: "#8B5CF6",
     id: "acc-billtrust",
+    primaryMotion: {
+      personaId: "acc-billtrust__vp-product",
+      useCaseId: "bt-ar-cash-intelligence",
+      demoLabel: "AR + cash intelligence"
+    },
     name: "Billtrust",
     tier: "2B",
     industry: "Accounts receivable & B2B payments",
@@ -536,6 +571,11 @@ export const ACCOUNTS: AccountConfig[] = [
   buildAccount({
     color: "#8B5CF6",
     id: "acc-the-bancorp",
+    primaryMotion: {
+      personaId: "acc-the-bancorp__cco",
+      useCaseId: "tb-embedded-partner-risk",
+      demoLabel: "Cross-program AML lineage"
+    },
     name: "The Bancorp",
     tier: "2B",
     industry: "Branchless banking & embedded finance",
@@ -610,6 +650,11 @@ export const ACCOUNTS: AccountConfig[] = [
   buildAccount({
     color: "#8B5CF6",
     id: "acc-sprinklr",
+    primaryMotion: {
+      personaId: "acc-sprinklr__chief-customer-officer",
+      useCaseId: "sp-unified-cx-intelligence",
+      demoLabel: "Unified CX 360"
+    },
     name: "Sprinklr",
     tier: 3,
     industry: "Enterprise customer experience (CX) software",
@@ -684,6 +729,11 @@ export const ACCOUNTS: AccountConfig[] = [
   buildAccount({
     color: "#10B981",
     id: "acc-lyric",
+    primaryMotion: {
+      personaId: "acc-lyric__vp-revenue-cycle",
+      useCaseId: "ly-pre-post-loop",
+      demoLabel: "Pre/post pay closed loop"
+    },
     name: "Lyric",
     tier: 3,
     industry: "Healthcare payments & payer technology",
