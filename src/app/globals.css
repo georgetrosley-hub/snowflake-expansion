@@ -2,12 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Dark UI defaults tuned for SaaS dashboards */
 html {
-  color-scheme: dark;
+  color-scheme: light;
+}
+
+body {
+  @apply bg-sf-surface-muted text-sf-foreground;
 }
 
 ::selection {
-  background: rgba(14, 165, 233, 0.25);
+  background: rgba(41, 181, 232, 0.22);
 }
 

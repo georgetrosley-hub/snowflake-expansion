@@ -19,11 +19,11 @@ const ToastContext = createContext<ToastApi | null>(null);
 function toneClasses(tone: ToastTone) {
   switch (tone) {
     case "success":
-      return "border-emerald-500/30 bg-emerald-500/10 text-emerald-200";
+      return "border-emerald-200 bg-emerald-50 text-emerald-900";
     case "error":
-      return "border-rose-500/30 bg-rose-500/10 text-rose-200";
+      return "border-rose-200 bg-rose-50 text-rose-900";
     default:
-      return "border-sky-500/30 bg-sky-500/10 text-sky-200";
+      return "border-sky-200 bg-sky-50 text-sky-900";
   }
 }
 
@@ -49,7 +49,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           <div
             key={t.id}
             className={[
-              "animate-fade-in pointer-events-auto rounded-lg border px-3 py-2 text-sm shadow-lg shadow-black/30 backdrop-blur",
+              "animate-fade-in pointer-events-auto rounded-lg border px-3 py-2 text-sm shadow-panel",
               toneClasses(t.tone)
             ].join(" ")}
             role="status"
@@ -68,4 +68,3 @@ export function useToast() {
   if (!ctx) throw new Error("useToast must be used within ToastProvider");
   return ctx;
 }
-

@@ -5,6 +5,7 @@ import { VERTICALS } from "@/data/verticals";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { buildEmail } from "@/lib/email";
 import type { MotionKey, TabKey, VerticalKey } from "@/types";
+import { ProductMark } from "@/components/ProductMark";
 import { Sidebar } from "@/components/Sidebar";
 import { VerticalHeader } from "@/components/VerticalHeader";
 import { PersonaGrid } from "@/components/PersonaGrid";
@@ -129,24 +130,22 @@ function AppInner() {
   );
 
   return (
-    <div className="min-h-screen bg-zinc-950">
-      <header className="border-b border-slate-800/80 bg-gradient-to-br from-indigo-950/40 via-zinc-950 to-zinc-950">
-        <div className="mx-auto flex max-w-6xl items-center gap-3 px-6 py-5">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-sky-400 to-sky-600 text-lg font-semibold text-zinc-950">
-            ❄
-          </div>
+    <div className="min-h-screen bg-sf-surface-muted">
+      <header className="border-b border-sf-border bg-white">
+        <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-4">
+          <ProductMark className="h-10 w-10 shrink-0" />
           <div className="min-w-0">
-            <div className="truncate text-base font-semibold text-slate-100 tracking-tight">
+            <div className="truncate text-base font-semibold tracking-tight text-sf-foreground">
               Snowflake Expansion Engine
             </div>
-            <div className="truncate text-xs text-slate-500">
-              Persona · Demo Recipe · Loom Script · Outreach
+            <div className="truncate text-xs text-sf-foreground-muted">
+              Persona · Demo recipe · Loom script · Outreach
             </div>
           </div>
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 md:grid-cols-[280px_1fr]">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 bg-white md:grid-cols-[280px_1fr] md:border-x md:border-sf-border">
         <Sidebar
           verticals={VERTICALS}
           selectedVertical={selectedVertical}
@@ -158,25 +157,23 @@ function AppInner() {
           selectedUseCase={selectedUseCase}
         />
 
-        <main className="min-h-[calc(100vh-76px)]">
+        <main className="min-h-[calc(100vh-73px)] bg-sf-surface-muted">
           {!selectedVertical || !vd ? (
             <div className="grid h-full place-items-center px-6 py-16">
               <div className="max-w-xl text-center">
-                <div className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-2xl border border-slate-800/70 bg-white/2 text-3xl text-slate-300">
-                  ❄
+                <div className="mx-auto mb-6 flex justify-center">
+                  <ProductMark className="h-16 w-16" />
                 </div>
-                <div className="text-xl font-semibold text-slate-100">
-                  Select a vertical to begin
+                <div className="text-xl font-semibold text-sf-foreground">Select a vertical to begin</div>
+                <div className="mt-2 text-sm text-sf-foreground-muted">
+                  Pick a persona, choose a use case, then generate a demo recipe and outreach draft.
                 </div>
-                <div className="mt-2 text-sm text-slate-500">
-                  You’ll pick a persona, choose a use case, then generate a demo recipe + outreach draft.
-                </div>
-                <div className="mt-6 rounded-2xl border border-slate-800/60 bg-white/2 p-5 text-left text-sm text-slate-400">
-                  <div className="font-semibold text-slate-200">Suggested flow</div>
+                <div className="mt-6 rounded-xl border border-sf-border bg-white p-5 text-left text-sm text-sf-foreground-muted shadow-panel">
+                  <div className="font-semibold text-sf-foreground">Suggested flow</div>
                   <ol className="mt-3 list-decimal space-y-1 pl-5">
                     <li>Choose a vertical in the sidebar</li>
                     <li>Select a persona (searchable)</li>
-                    <li>Select a use case → outreach draft</li>
+                    <li>Select a use case, then review outreach</li>
                   </ol>
                 </div>
               </div>
@@ -237,9 +234,9 @@ function AppInner() {
 
                 {activeTab === "exec-triggers" && <ExecTriggersPanel vd={vd} />}
 
-                <div className="mt-10 flex flex-col gap-3 rounded-2xl border border-slate-800/60 bg-white/2 p-5 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="text-sm text-slate-400">
-                    <span className="font-semibold text-slate-200">Next step:</span>{" "}
+                <div className="mt-10 flex flex-col gap-3 rounded-xl border border-sf-border bg-white p-5 shadow-panel sm:flex-row sm:items-center sm:justify-between">
+                  <div className="text-sm text-sf-foreground-muted">
+                    <span className="font-semibold text-sf-foreground">Next step:</span>{" "}
                     {!selectedPersona
                       ? "Pick a persona."
                       : !selectedUseCase
@@ -248,20 +245,23 @@ function AppInner() {
                   </div>
                   <div className="flex flex-col gap-2 sm:flex-row">
                     <button
+                      type="button"
                       onClick={() => setActiveTab("personas")}
-                      className="rounded-xl border border-slate-800/70 bg-white/3 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-white/5"
+                      className="rounded-lg border border-sf-border bg-white px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition hover:bg-sf-surface-muted"
                     >
                       Personas
                     </button>
                     <button
+                      type="button"
                       onClick={() => setActiveTab("usecases")}
-                      className="rounded-xl border border-slate-800/70 bg-white/3 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-white/5"
+                      className="rounded-lg border border-sf-border bg-white px-4 py-2 text-sm font-semibold text-sf-foreground shadow-sm transition hover:bg-sf-surface-muted"
                     >
                       Use cases
                     </button>
                     <button
+                      type="button"
                       onClick={() => setActiveTab("outreach")}
-                      className="rounded-xl border border-slate-800/70 bg-white/3 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-white/5"
+                      className="rounded-lg border border-sf-border bg-sf-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sf-primary-deep"
                     >
                       Outreach
                     </button>
@@ -283,4 +283,3 @@ export default function SnowflakeExpansionEngine() {
     </ToastProvider>
   );
 }
-

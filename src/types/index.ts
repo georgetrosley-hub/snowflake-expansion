@@ -21,9 +21,11 @@ export interface Persona {
   loomScript: string;
 }
 
+export type VerticalIconKey = "pharma" | "financial" | "healthcare" | "manufacturing";
+
 export interface VerticalConfig {
   color: string;
-  icon: string;
+  iconKey: VerticalIconKey;
   personas: Persona[];
   useCases: string[];
   execTriggers: string[];

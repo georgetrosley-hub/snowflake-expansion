@@ -1,6 +1,7 @@
 "use client";
 
 import type { MotionKey, Persona, VerticalConfig, VerticalKey } from "@/types";
+import { VerticalGlyph } from "@/components/icons/VerticalGlyph";
 
 const MOTIONS: MotionKey[] = [
   "Mix of all three",
@@ -38,8 +39,8 @@ export function Sidebar({
   const currentStep = stepState(Boolean(selectedPersona), Boolean(selectedUseCase));
 
   return (
-    <aside className="flex h-full flex-col border-r border-slate-800/80 bg-zinc-950/40 p-4">
-      <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+    <aside className="flex h-full flex-col border-r border-sf-border bg-sf-surface-muted p-4">
+      <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-sf-foreground-muted">
         Vertical
       </div>
 
@@ -49,20 +50,29 @@ export function Sidebar({
           return (
             <button
               key={name}
+              type="button"
               onClick={() => onVerticalSelect(name)}
               className={[
-                "group flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition",
+                "group relative flex w-full items-center gap-2 rounded-lg py-2 pl-3 pr-2 text-left text-sm transition",
                 selected
-                  ? "bg-white/5 text-slate-100 ring-1 ring-inset ring-white/10"
-                  : "text-slate-400 hover:bg-white/3 hover:text-slate-200"
+                  ? "bg-white text-sf-foreground shadow-panel ring-1 ring-sf-border"
+                  : "text-sf-foreground-muted hover:bg-white/80 hover:text-sf-foreground"
               ].join(" ")}
             >
-              <span className="text-base">{data.icon}</span>
-              <span className="flex-1">{name}</span>
+              <span
+                className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full transition-opacity"
+                style={{
+                  backgroundColor: data.color,
+                  opacity: selected ? 1 : 0
+                }}
+                aria-hidden="true"
+              />
+              <VerticalGlyph iconKey={data.iconKey} className="shrink-0 text-sf-foreground-muted" size={18} />
+              <span className="flex-1 pl-1">{name}</span>
               <span
                 className={[
-                  "h-2 w-2 rounded-full transition",
-                  selected ? "" : "opacity-0 group-hover:opacity-60"
+                  "h-2 w-2 shrink-0 rounded-full transition",
+                  selected ? "" : "opacity-0 group-hover:opacity-50"
                 ].join(" ")}
                 style={{ backgroundColor: data.color }}
                 aria-hidden="true"
@@ -72,12 +82,10 @@ export function Sidebar({
         })}
       </div>
 
-      <div className="mt-6 rounded-xl border border-slate-800/60 bg-zinc-950/50 p-3">
+      <div className="mt-6 rounded-xl border border-sf-border bg-white p-3 shadow-panel">
         <div className="flex items-center justify-between">
-          <div className="text-xs font-semibold text-slate-200">Progress</div>
-          <div className="text-[11px] text-slate-500">
-            Step {currentStep} of 3
-          </div>
+          <div className="text-xs font-semibold text-sf-foreground">Progress</div>
+          <div className="text-[11px] text-sf-foreground-muted">Step {currentStep} of 3</div>
         </div>
 
         <div className="mt-3 grid grid-cols-3 gap-2 text-[11px]">
@@ -89,12 +97,12 @@ export function Sidebar({
             <div
               key={s.label}
               className={[
-                "rounded-lg border px-2 py-2 text-center",
+                "rounded-lg border px-2 py-2 text-center font-medium",
                 s.done
-                  ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-200"
+                  ? "border-emerald-200 bg-emerald-50 text-emerald-900"
                   : idx + 1 === currentStep
-                    ? "border-sky-500/25 bg-sky-500/10 text-sky-200"
-                    : "border-slate-800/60 bg-white/2 text-slate-500"
+                    ? "border-sky-200 bg-sky-50 text-sky-900"
+                    : "border-sf-border bg-sf-surface-muted text-sf-foreground-muted"
               ].join(" ")}
             >
               {s.label}
@@ -105,7 +113,7 @@ export function Sidebar({
 
       {selectedVertical && vd ? (
         <>
-          <div className="mt-6 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+          <div className="mt-6 text-[11px] font-semibold uppercase tracking-[0.14em] text-sf-foreground-muted">
             Motion
           </div>
 
@@ -115,12 +123,13 @@ export function Sidebar({
               return (
                 <button
                   key={m}
+                  type="button"
                   onClick={() => onMotionSelect(m)}
                   className={[
                     "w-full rounded-lg px-3 py-2 text-left text-sm transition",
                     selected
-                      ? "bg-white/5 text-sky-200 ring-1 ring-inset ring-white/10"
-                      : "text-slate-500 hover:bg-white/3 hover:text-slate-300"
+                      ? "bg-white font-medium text-sf-foreground shadow-panel ring-1 ring-sf-border"
+                      : "text-sf-foreground-muted hover:bg-white/80 hover:text-sf-foreground"
                   ].join(" ")}
                 >
                   {m}
@@ -133,34 +142,33 @@ export function Sidebar({
             <div
               className="mt-6 rounded-xl border p-3"
               style={{
-                borderColor: `${vd.color}33`,
-                backgroundColor: `${vd.color}14`
+                borderColor: `${vd.color}44`,
+                backgroundColor: `${vd.color}0d`
               }}
             >
               <div className="text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: vd.color }}>
                 Selected persona
               </div>
-              <div className="mt-1 text-sm font-semibold text-slate-100">{selectedPersona.title}</div>
-              <div className="mt-0.5 text-xs text-slate-400">
+              <div className="mt-1 text-sm font-semibold text-sf-foreground">{selectedPersona.title}</div>
+              <div className="mt-0.5 text-xs text-sf-foreground-muted">
                 {selectedPersona.dept} · {selectedPersona.level}
               </div>
             </div>
           ) : (
-            <div className="mt-6 rounded-xl border border-slate-800/60 bg-white/2 p-3 text-sm text-slate-500">
+            <div className="mt-6 rounded-xl border border-sf-border bg-white p-3 text-sm text-sf-foreground-muted shadow-panel">
               Pick a persona to unlock the demo recipe and outreach flow.
             </div>
           )}
         </>
       ) : (
-        <div className="mt-6 rounded-xl border border-slate-800/60 bg-white/2 p-3 text-sm text-slate-500">
+        <div className="mt-6 rounded-xl border border-sf-border bg-white p-3 text-sm text-sf-foreground-muted shadow-panel">
           Choose a vertical to begin.
         </div>
       )}
 
-      <div className="mt-auto pt-6 text-xs text-slate-600">
+      <div className="mt-auto pt-6 text-xs text-sf-foreground-muted">
         Built for fast persona → demo → outreach iteration.
       </div>
     </aside>
   );
 }
-

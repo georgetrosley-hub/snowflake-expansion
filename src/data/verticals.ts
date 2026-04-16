@@ -3,7 +3,7 @@ import type { VerticalConfig, VerticalKey } from "@/types";
 export const VERTICALS: Record<VerticalKey, VerticalConfig> = {
   "Pharma / Life Sciences": {
     color: "#0EA5E9",
-    icon: "🧬",
+    iconKey: "pharma",
     personas: [
       {
         id: "pharma-vp-data-science",
@@ -140,7 +140,7 @@ export const VERTICALS: Record<VerticalKey, VerticalConfig> = {
 
   "Financial Services": {
     color: "#8B5CF6",
-    icon: "📊",
+    iconKey: "financial",
     personas: [
       {
         id: "fs-cro",
@@ -277,7 +277,7 @@ export const VERTICALS: Record<VerticalKey, VerticalConfig> = {
 
   Healthcare: {
     color: "#10B981",
-    icon: "🏥",
+    iconKey: "healthcare",
     personas: [
       {
         id: "hc-cao",
@@ -416,7 +416,7 @@ export const VERTICALS: Record<VerticalKey, VerticalConfig> = {
 
   "Manufacturing / Industrial": {
     color: "#F59E0B",
-    icon: "⚙️",
+    iconKey: "manufacturing",
     personas: [
       {
         id: "mfg-vp-ops-technology",
