@@ -9,26 +9,28 @@ import {
   Handshake,
   Microscope
 } from "lucide-react";
-import type { AccountConfig, Persona } from "@/types";
+import type { AccountConfig, AccountUseCase, Persona } from "@/types";
 
 const USE_CASE_ICONS = [Microscope, CircleDollarSign, Building2, Handshake, ClipboardList, Brain] as const;
 
 export const UseCaseSelector = memo(function UseCaseSelector({
   account,
   selectedPersona,
-  selectedUseCase,
+  selectedUseCaseId,
   onSelectUseCase
 }: {
   account: AccountConfig;
   selectedPersona: Persona | null;
-  selectedUseCase: string | null;
-  onSelectUseCase: (useCase: string) => void;
+  selectedUseCaseId: string | null;
+  onSelectUseCase: (useCase: AccountUseCase) => void;
 }) {
   return (
     <div className="animate-fade-in">
       <div className="mb-4">
-        <div className="text-sm font-semibold text-sf-foreground">Choose a use case</div>
-        <div className="text-xs text-sf-foreground-muted">This selection drives the outreach email draft.</div>
+        <div className="text-sm font-semibold text-sf-foreground">Account use cases</div>
+        <div className="text-xs text-sf-foreground-muted">
+          Each wedge is specific to {account.name}. Selecting one sets the matching demo persona and drives outreach.
+        </div>
       </div>
 
       {selectedPersona ? (
@@ -37,27 +39,28 @@ export const UseCaseSelector = memo(function UseCaseSelector({
           style={{ borderColor: `${account.color}44`, backgroundColor: `${account.color}0d` }}
         >
           <div className="text-xs text-sf-foreground-muted">
-            Persona:{" "}
+            Current persona:{" "}
             <span className="font-semibold" style={{ color: account.color }}>
               {selectedPersona.title}
             </span>{" "}
-            <span className="text-slate-400">·</span> Recommended anchor demo:{" "}
+            <span className="text-slate-400">·</span> Anchor demo:{" "}
             <span className="font-semibold text-sf-foreground">{selectedPersona.anchorDemo}</span>
           </div>
         </div>
       ) : (
         <div className="mb-4 rounded-xl border border-sf-border bg-white p-3 text-sm text-sf-foreground-muted shadow-panel">
-          Tip: pick a persona first to get an anchor demo recommendation.
+          Pick a use case to auto-select the persona whose demo proves that wedge — or choose a persona first.
         </div>
       )}
 
       <div className="grid gap-3">
         {account.useCases.map((uc, i) => {
-          const selected = selectedUseCase === uc;
+          const selected = selectedUseCaseId === uc.id;
           const Icon = USE_CASE_ICONS[i % USE_CASE_ICONS.length];
+          const demoPersona = account.personas.find((p) => p.id === uc.demoPersonaId);
           return (
             <button
-              key={uc}
+              key={uc.id}
               type="button"
               onClick={() => onSelectUseCase(uc)}
               className={[
@@ -80,10 +83,17 @@ export const UseCaseSelector = memo(function UseCaseSelector({
                 <Icon className="h-4 w-4" strokeWidth={2} />
               </div>
               <div className="min-w-0 flex-1">
-                <div className="text-sm font-semibold text-sf-foreground">{uc}</div>
-                <div className="mt-1 text-xs text-sf-foreground-muted">
-                  Next: generate outreach, then copy or export.
+                <div className="text-sm font-semibold text-sf-foreground">{uc.title}</div>
+                <div className="mt-1 text-xs leading-relaxed text-sf-foreground-muted">{uc.summary}</div>
+                <div className="mt-2 rounded-md border border-sf-border/80 bg-sf-surface-muted/80 px-2.5 py-1.5 text-[11px] leading-snug text-sf-foreground">
+                  <span className="font-semibold text-sf-foreground">First workload:</span> {uc.first_workload}
                 </div>
+                {demoPersona ? (
+                  <div className="mt-1.5 text-[11px] text-sf-foreground-muted">
+                    Demo: <span className="font-medium text-sf-foreground">{demoPersona.title}</span> ·{" "}
+                    {demoPersona.anchorDemo}
+                  </div>
+                ) : null}
               </div>
               <div className="mt-1 text-xs font-medium text-sf-primary opacity-0 transition group-hover:opacity-100">
                 Select

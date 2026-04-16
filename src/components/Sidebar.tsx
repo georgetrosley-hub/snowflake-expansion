@@ -29,7 +29,7 @@ export function Sidebar({
   motion,
   onMotionSelect,
   selectedPersona,
-  selectedUseCase
+  selectedUseCaseId
 }: {
   accounts: AccountConfig[];
   selectedAccount: AccountConfig | null;
@@ -37,9 +37,9 @@ export function Sidebar({
   motion: MotionKey;
   onMotionSelect: (motion: MotionKey) => void;
   selectedPersona: Persona | null;
-  selectedUseCase: string | null;
+  selectedUseCaseId: string | null;
 }) {
-  const currentStep = stepState(Boolean(selectedPersona), Boolean(selectedUseCase));
+  const currentStep = stepState(Boolean(selectedPersona), Boolean(selectedUseCaseId));
 
   const byTier = [1, 2, 3].map((tier) => ({
     tier: tier as AccountConfig["tier"],
@@ -110,8 +110,8 @@ export function Sidebar({
         <div className="mt-3 grid grid-cols-3 gap-2 text-[11px]">
           {[
             { label: "Persona", done: Boolean(selectedPersona) },
-            { label: "Use case", done: Boolean(selectedUseCase) },
-            { label: "Outreach", done: Boolean(selectedPersona && selectedUseCase) }
+            { label: "Use case", done: Boolean(selectedUseCaseId) },
+            { label: "Outreach", done: Boolean(selectedPersona && selectedUseCaseId) }
           ].map((s, idx) => (
             <div
               key={s.label}

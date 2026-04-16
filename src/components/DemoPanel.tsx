@@ -2,7 +2,7 @@
 
 import type { LucideIcon } from "lucide-react";
 import { Anchor, Database, Video, Wrench, Zap } from "lucide-react";
-import type { AccountConfig, Persona } from "@/types";
+import type { AccountConfig, AccountUseCase, Persona } from "@/types";
 
 function LoomLeadBadge({ lead }: { lead: Persona["loomLead"] }) {
   const isSe = lead === "SE";
@@ -38,11 +38,13 @@ function Section({ label, value, Icon }: { label: string; value: string; Icon: L
 export function DemoPanel({
   account,
   selectedPersona,
+  selectedUseCase,
   onPickPersona,
   onCopy
 }: {
   account: AccountConfig;
   selectedPersona: Persona | null;
+  selectedUseCase: AccountUseCase | null;
   onPickPersona: () => void;
   onCopy: (text: string, label: string) => Promise<void>;
 }) {
@@ -51,7 +53,7 @@ export function DemoPanel({
       <div className="animate-fade-in rounded-xl border border-sf-border bg-white p-8 text-center shadow-panel">
         <div className="text-sm font-semibold text-sf-foreground">Select a persona first</div>
         <div className="mt-1 text-sm text-sf-foreground-muted">
-          The demo recipe and Loom script are persona-specific.
+          Demos are persona-specific. Pick a use case on the Use cases tab to load the proving persona for a wedge.
         </div>
         <button
           type="button"
@@ -64,8 +66,45 @@ export function DemoPanel({
     );
   }
 
+  const misaligned =
+    selectedUseCase && selectedPersona.id !== selectedUseCase.demoPersonaId
+      ? account.personas.find((p) => p.id === selectedUseCase.demoPersonaId)
+      : null;
+
   return (
     <div className="animate-fade-in space-y-6">
+      {selectedUseCase ? (
+        <div
+          className="rounded-xl border px-4 py-3 text-sm leading-relaxed"
+          style={{
+            borderColor: `${account.color}44`,
+            backgroundColor: `${account.color}0d`
+          }}
+        >
+          <div className="font-semibold text-sf-foreground">Proof point alignment · {account.name}</div>
+          <p className="mt-1 text-xs text-sf-foreground-muted">{account.proof_point}</p>
+          <p className="mt-2 text-xs text-sf-foreground">
+            <span className="font-semibold">Use case:</span> {selectedUseCase.title}
+          </p>
+          {misaligned ? (
+            <p className="mt-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-950">
+              This wedge is proven with the <span className="font-semibold">{misaligned.title}</span> demo (
+              {selectedUseCase.first_workload.slice(0, 80)}
+              …). Switch persona or re-select the use case to match.
+            </p>
+          ) : (
+            <p className="mt-2 text-xs font-medium text-emerald-800">
+              Demo matches the proving persona for this use case.
+            </p>
+          )}
+        </div>
+      ) : (
+        <div className="rounded-xl border border-sf-border bg-white p-4 text-sm text-sf-foreground-muted shadow-panel">
+          Select a <span className="font-semibold text-sf-foreground">use case</span> for {account.name} to tie this demo to a wedge and
+          the account proof point.
+        </div>
+      )}
+
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="text-sm font-semibold text-sf-foreground">Demo recipe</div>

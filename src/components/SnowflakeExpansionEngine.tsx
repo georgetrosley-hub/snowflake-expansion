@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { ACCOUNTS, ACCOUNTS_BY_ID, DEFAULT_ACCOUNT_ID } from "@/data/accounts";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { buildEmail } from "@/lib/email";
-import type { MotionKey, Persona, TabKey } from "@/types";
+import type { AccountUseCase, MotionKey, Persona, TabKey } from "@/types";
 import { ProductMark } from "@/components/ProductMark";
 import { Sidebar } from "@/components/Sidebar";
 import { AccountHeader } from "@/components/AccountHeader";
@@ -45,8 +45,8 @@ function AppInner() {
     "see:selectedPersonaId",
     null
   );
-  const [selectedUseCase, setSelectedUseCase] = useLocalStorage<string | null>(
-    "see:selectedUseCase",
+  const [selectedUseCaseId, setSelectedUseCaseId] = useLocalStorage<string | null>(
+    "see:selectedUseCaseId",
     null
   );
   const [motion, setMotion] = useLocalStorage<MotionKey>("see:motion", DEFAULT_MOTION);
@@ -71,12 +71,22 @@ function AppInner() {
     return account.personas.find((p) => p.id === selectedPersonaId) ?? null;
   }, [account, selectedPersonaId]);
 
+  const selectedUseCase = useMemo((): AccountUseCase | null => {
+    if (!account || !selectedUseCaseId) return null;
+    return account.useCases.find((u) => u.id === selectedUseCaseId) ?? null;
+  }, [account, selectedUseCaseId]);
+
   useEffect(() => {
     if (!account) return;
     if (!selectedPersonaId) return;
     const stillExists = account.personas.some((p) => p.id === selectedPersonaId);
     if (!stillExists) setSelectedPersonaId(null);
   }, [account, selectedPersonaId, setSelectedPersonaId]);
+
+  useEffect(() => {
+    if (!account || !selectedUseCaseId) return;
+    if (!account.useCases.some((u) => u.id === selectedUseCaseId)) setSelectedUseCaseId(null);
+  }, [account, selectedUseCaseId, setSelectedUseCaseId]);
 
   const email = useMemo(() => {
     if (!selectedPersona || !selectedUseCase || !account) return null;
@@ -86,7 +96,7 @@ function AppInner() {
   const breadcrumb = useMemo(() => {
     const parts: string[] = [];
     if (selectedPersona) parts.push(selectedPersona.title);
-    if (selectedUseCase) parts.push(selectedUseCase.split("(")[0].trim());
+    if (selectedUseCase) parts.push(selectedUseCase.title);
     if (parts.length === 0) return "Territory brief → personas → plays";
     return parts.join(" · ");
   }, [selectedPersona, selectedUseCase]);
@@ -106,7 +116,7 @@ function AppInner() {
   const handleExportTxt = useCallback(
     (draft: NonNullable<typeof email>) => {
       const persona = selectedPersona?.title ?? "persona";
-      const useCase = selectedUseCase?.split("(")[0].trim() ?? "use-case";
+      const useCase = selectedUseCase?.id ?? "use-case";
       const safe = (s: string) =>
         s
           .toLowerCase()
@@ -126,18 +136,18 @@ function AppInner() {
       URL.revokeObjectURL(url);
       toast.push({ tone: "success", title: "Exported .txt" });
     },
-    [selectedPersona?.title, selectedUseCase, toast]
+    [selectedPersona?.title, selectedUseCase?.id, toast]
   );
 
   const handleAccountSelect = useCallback(
     (id: string) => {
       setSelectedAccountId(id);
       setSelectedPersonaId(null);
-      setSelectedUseCase(null);
+      setSelectedUseCaseId(null);
       setPersonaSearch("");
       setActiveTab("territory");
     },
-    [setActiveTab, setPersonaSearch, setSelectedAccountId, setSelectedPersonaId, setSelectedUseCase]
+    [setActiveTab, setPersonaSearch, setSelectedAccountId, setSelectedPersonaId, setSelectedUseCaseId]
   );
 
   const handlePersonaSelect = useCallback(
@@ -149,11 +159,12 @@ function AppInner() {
   );
 
   const handleUseCaseSelect = useCallback(
-    (useCase: string) => {
-      setSelectedUseCase(useCase);
+    (useCase: AccountUseCase) => {
+      setSelectedUseCaseId(useCase.id);
+      setSelectedPersonaId(useCase.demoPersonaId);
       setActiveTab("outreach");
     },
-    [setActiveTab, setSelectedUseCase]
+    [setActiveTab, setSelectedPersonaId, setSelectedUseCaseId]
   );
 
   return (
@@ -180,7 +191,7 @@ function AppInner() {
           motion={motion}
           onMotionSelect={setMotion}
           selectedPersona={selectedPersona}
-          selectedUseCase={selectedUseCase}
+          selectedUseCaseId={selectedUseCaseId}
         />
 
         <main className="min-h-[calc(100vh-73px)] bg-sf-surface-muted">
@@ -227,7 +238,7 @@ function AppInner() {
                   <UseCaseSelector
                     account={account}
                     selectedPersona={selectedPersona}
-                    selectedUseCase={selectedUseCase}
+                    selectedUseCaseId={selectedUseCaseId}
                     onSelectUseCase={handleUseCaseSelect}
                   />
                 )}
@@ -236,6 +247,7 @@ function AppInner() {
                   <DemoPanel
                     account={account}
                     selectedPersona={selectedPersona}
+                    selectedUseCase={selectedUseCase}
                     onPickPersona={() => setActiveTab("personas")}
                     onCopy={handleCopy}
                   />
@@ -261,9 +273,9 @@ function AppInner() {
                   <div className="text-sm text-sf-foreground-muted">
                     <span className="font-semibold text-sf-foreground">Next step:</span>{" "}
                     {!selectedPersona
-                      ? "Pick a persona."
+                      ? "Pick a persona (or select a use case to load one)."
                       : !selectedUseCase
-                        ? "Pick a use case to generate outreach."
+                        ? "Pick an account use case to generate outreach."
                         : "Copy or export the outreach email."}
                   </div>
                   <div className="flex flex-col gap-2 sm:flex-row">

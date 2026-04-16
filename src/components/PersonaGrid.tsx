@@ -44,7 +44,8 @@ export const PersonaGrid = memo(function PersonaGrid({
         <div className="min-w-0">
           <div className="text-sm font-semibold text-sf-foreground">Pick a persona</div>
           <div className="text-xs text-sf-foreground-muted">
-            This selection drives the demo recipe and Loom script.
+            Account-specific roster for <span className="font-medium text-sf-foreground">{account.name}</span> — drives
+            demo recipe and Loom script.
           </div>
         </div>
 

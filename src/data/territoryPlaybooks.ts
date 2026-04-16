@@ -1,6 +1,7 @@
-import type { PlaybookKey, TerritoryPlaybook } from "@/types";
+import type { IndustryPlaybook, PlaybookKey } from "@/types";
 
-export const TERRITORY_PLAYBOOKS: Record<PlaybookKey, TerritoryPlaybook> = {
+/** Persona + exec-trigger library by industry. Use cases are defined per account only. */
+export const INDUSTRY_PLAYBOOKS: Record<PlaybookKey, IndustryPlaybook> = {
   pharma: {
     color: "#0EA5E9",
     iconKey: "pharma",
@@ -121,14 +122,6 @@ export const TERRITORY_PLAYBOOKS: Record<PlaybookKey, TerritoryPlaybook> = {
         loomScript:
           "Hi [Name] -- wanted to send something concrete before we connect. My SE set up a working Snowflake Clean Room demo that joins claims and EHR data across two simulated vendors -- neither side sees the other's raw records, full HIPAA posture preserved. It's the architecture most RWE teams we work with move to once they hit the vendor data sharing wall. Quick video, happy to go deeper live."
       }
-    ],
-    useCases: [
-      "Clinical trial data lakehouse (replace SAS/Veeva Vault exports)",
-      "HCP 360 on Snowflake (unify CRM + claims + call activity)",
-      "Supply chain batch traceability (serialized lot data)",
-      "Real-world evidence analytics (claims + EHR joins via clean room)",
-      "Regulatory submission data lineage (audit trail automation)",
-      "Drug interaction signal detection (Cortex LLM on adverse events)"
     ],
     execTriggers: [
       "FDA data integrity warning letter",
@@ -258,14 +251,6 @@ export const TERRITORY_PLAYBOOKS: Record<PlaybookKey, TerritoryPlaybook> = {
         loomScript:
           "Hi [Name] -- [AE] from Snowflake. Before we connect I wanted to show you something we built for wealth and retail analytics teams. It's a working advisor app -- propensity scores, next-best-action, and talk tracks surfaced directly to the advisor inside Snowflake. No BI exports, no separate tool. If your team has the model but advisors aren't acting on it, this is usually why. Short video, worth a look."
       }
-    ],
-    useCases: [
-      "Risk data aggregation (BCBS 239 / Basel IV compliance)",
-      "Real-time fraud signal sharing via clean rooms",
-      "Quant research lakehouse (tick data + alternative data)",
-      "Advisor next-best-action app (Streamlit on Snowflake)",
-      "AML transaction monitoring pipeline (replace SAS AML)",
-      "Regulatory reporting automation (CCAR, DFAST, FINREP)"
     ],
     execTriggers: [
       "Regulatory exam or MRA",
@@ -398,14 +383,6 @@ export const TERRITORY_PLAYBOOKS: Record<PlaybookKey, TerritoryPlaybook> = {
           "Hi [Name] -- [AE] from Snowflake. Before we connect I wanted to show you something we built specifically for health system security and governance teams. It's a working demo of dynamic PHI masking plus a research clean room -- one dataset, three governed views, zero PHI exposure to the research team. If de-identification at scale is on your radar I think it's worth 3 minutes before we talk."
       }
     ],
-    useCases: [
-      "Population health analytics (replace fragmented BI tools)",
-      "Revenue cycle intelligence (denial prediction, underpayment ML)",
-      "Clinical data lakehouse (Epic/Cerner Bulk FHIR into Snowflake)",
-      "HEDIS / Stars measure automation",
-      "PHI de-identification pipeline for research (clean rooms)",
-      "Payer-provider data sharing (value-based care contracts)"
-    ],
     execTriggers: [
       "Value-based care contract expansion",
       "Epic upgrade or migration",
@@ -536,14 +513,6 @@ export const TERRITORY_PLAYBOOKS: Record<PlaybookKey, TerritoryPlaybook> = {
         loomScript:
           "Hi [Name] -- [AE] from Snowflake. Before we connect I wanted to show you something built specifically for manufacturing FP&A teams. It's a working demo where an analyst types a plain-English question -- 'which plants had COGS variance over 8% in Q1' -- and gets the answer in 4 seconds with drill-down, on live data. If your team is still building that in Excel after close, worth a quick look."
       }
-    ],
-    useCases: [
-      "OT data lakehouse (SCADA/historian to Snowflake real-time)",
-      "Supplier risk intelligence (multi-tier supply chain visibility)",
-      "Predictive quality / defect traceability (ML on sensor data)",
-      "Digital twin data foundation (replace OSIsoft/InfluxDB silos)",
-      "Plant P&L analytics (replace Excel-based finance ops)",
-      "ESG / carbon accounting data platform"
     ],
     execTriggers: [
       "Supply chain disruption event",

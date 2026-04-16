@@ -26,12 +26,26 @@ export type TerritoryIconKey = "pharma" | "financial" | "healthcare" | "manufact
 
 export type PlaybookKey = TerritoryIconKey;
 
-export interface TerritoryPlaybook {
+/** Shared library: personas + exec trigger ideas by industry (no generic use-case list). */
+export interface IndustryPlaybook {
   color: string;
   iconKey: TerritoryIconKey;
   personas: Persona[];
-  useCases: string[];
   execTriggers: string[];
+}
+
+/**
+ * Account-scoped wedge: business problem, initial workload, and the persona demo that proves it.
+ */
+export interface AccountUseCase {
+  id: string;
+  title: string;
+  /** Short account-specific problem statement (not generic vertical copy). */
+  summary: string;
+  /** Initial workload to land for this wedge. */
+  first_workload: string;
+  /** Persona id on this account whose demo recipe proves the wedge / proof point. */
+  demoPersonaId: string;
 }
 
 export type AccountTier = 1 | 2 | 3;
@@ -41,11 +55,13 @@ export interface DealPath {
   expansionFlow: string[];
 }
 
-/** Named enterprise account with playbook content (personas, use cases, exec triggers). */
-export interface AccountConfig extends TerritoryPlaybook {
+/** Named enterprise account: its own personas, use cases, and exec triggers. */
+export interface AccountConfig {
   id: string;
   name: string;
   tier: AccountTier;
+  color: string;
+  iconKey: TerritoryIconKey;
   /** Industry label shown with the account (e.g. “Pharma / Life Sciences”). */
   industry: string;
   /** One-line context under industry (executive briefing). */
@@ -57,6 +73,9 @@ export interface AccountConfig extends TerritoryPlaybook {
   proof_point: string;
   economic_impact: string;
   deal_path: DealPath;
+  personas: Persona[];
+  useCases: AccountUseCase[];
+  execTriggers: string[];
 }
 
 export type MotionKey =

@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Layers, User } from "lucide-react";
-import type { AccountConfig, EmailDraft, MotionKey, Persona } from "@/types";
+import type { AccountConfig, AccountUseCase, EmailDraft, MotionKey, Persona } from "@/types";
 
 function Pill({
   children,
@@ -38,7 +38,7 @@ export function OutreachPanel({
 }: {
   account: AccountConfig;
   selectedPersona: Persona | null;
-  selectedUseCase: string | null;
+  selectedUseCase: AccountUseCase | null;
   motion: MotionKey;
   email: EmailDraft | null;
   onPickPersona: () => void;
@@ -49,9 +49,9 @@ export function OutreachPanel({
   if (!selectedPersona || !selectedUseCase || !email) {
     return (
       <div className="animate-fade-in rounded-xl border border-sf-border bg-white p-8 text-center shadow-panel">
-        <div className="text-sm font-semibold text-sf-foreground">Select a persona and use case</div>
+        <div className="text-sm font-semibold text-sf-foreground">Select a persona and account use case</div>
         <div className="mt-1 text-sm text-sf-foreground-muted">
-          We’ll generate an outreach email draft once both are selected.
+          We’ll generate an outreach email draft for this account’s wedge and proving persona.
         </div>
         <div className="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
           <button
@@ -82,7 +82,7 @@ export function OutreachPanel({
         </Pill>
         <Pill>
           <Layers className="h-3.5 w-3.5 text-sf-foreground-muted" aria-hidden />
-          {selectedUseCase.split("(")[0].trim()}
+          {selectedUseCase.title}
         </Pill>
         <div className="ml-auto">
           <div
@@ -92,6 +92,12 @@ export function OutreachPanel({
             {motion}
           </div>
         </div>
+      </div>
+
+      <div className="rounded-lg border border-sf-border bg-sf-surface-muted/60 px-4 py-3 text-xs leading-relaxed text-sf-foreground">
+        <span className="font-semibold">Wedge:</span> {selectedUseCase.summary}
+        <br />
+        <span className="font-semibold">First workload:</span> {selectedUseCase.first_workload}
       </div>
 
       <div className="rounded-xl border border-sf-border bg-white p-5 shadow-panel">
@@ -154,7 +160,9 @@ export function OutreachPanel({
         <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950">
           <div className="text-xs font-semibold text-amber-900">Next step before sending</div>
           <div className="mt-2 text-amber-900/90">
-            Search: <span className="font-semibold text-amber-950">{`"${account.execTriggers[0]}"`}</span>
+            Search: <span className="font-semibold text-amber-950">{`"[Account] + ${account.execTriggers[0]?.split(" ").slice(0, 4).join(" ") ?? "news"}]"`}</span>
+            {" "}
+            on Google News and LinkedIn before outreach.
           </div>
         </div>
       </div>
